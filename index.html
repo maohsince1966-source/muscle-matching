@@ -3,1358 +3,1488 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>解剖学 筋マッチング（主要30筋）</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Google Fonts: Inter & Noto Sans JP -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"Inter"', '"Noto Sans JP"', 'sans-serif'],
-          },
-          colors: {
-            brand: {
-              50: '#f0fdfa',
-              100: '#ccfbf1',
-              200: '#99f6e4',
-              500: '#14b8a6',
-              600: '#0d9488',
-              700: '#0f766e',
-              800: '#115e59',
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <title>解剖学 筋マッチング（全55筋）</title>
   <style>
-    /* 基本設定とモバイル操作の最適化 */
-    body {
-      -webkit-tap-highlight-color: transparent;
-      overscroll-behavior-y: none;
+    :root {
+      --primary: #2563eb;
+      --primary-light: #eff6ff;
+      --success: #16a34a;
+      --success-light: #dcfce7;
+      --danger: #dc2626;
+      --danger-light: #fee2e2;
+      --warning: #d97706;
+      --warning-light: #fef3c7;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #cbd5e1;
     }
 
-    /* 不正解時のシェイクアニメーション */
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 540px;
+      margin: 0 auto;
+      min-height: 100vh;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      margin: 0;
+      color: var(--primary);
+    }
+
+    .sound-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+
+    .screen {
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+      flex: 1;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    .section-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .section-title {
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: var(--muted);
+      margin: 0 0 10px 0;
+    }
+
+    .unit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .select-btn {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 8px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: var(--text);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+
+    .select-btn.selected {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .select-btn .sub {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: normal;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .mode-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .mode-btn {
+      text-align: left;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .primary-btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 15px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+    }
+
+    .primary-btn:active {
+      transform: scale(0.98);
+    }
+
+    .weak-btn {
+      background: var(--warning-light);
+      color: var(--warning);
+      border: 2px solid var(--warning);
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .secondary-btn {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    /* プレイ画面 */
+    .status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: bold;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    }
+
+    .combo-badge {
+      color: var(--warning);
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 10px;
+      flex: 1;
+      align-content: start;
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .col-header {
+      font-size: 0.75rem;
+      text-align: center;
+      color: var(--muted);
+      font-weight: bold;
+    }
+
+    .card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 10px;
+      min-height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.1s, background-color 0.15s, border-color 0.15s, opacity 0.25s;
+      user-select: none;
+      word-break: break-word;
+    }
+
+    .card.answer-card {
+      font-size: 0.78rem;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    .card.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+      transform: scale(1.02);
+    }
+
+    .card.correct {
+      border-color: var(--success);
+      background: var(--success-light);
+      color: var(--success);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .card.wrong {
+      border-color: var(--danger);
+      background: var(--danger-light);
+      color: var(--danger);
+      animation: shake 0.35s;
+    }
+
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      20% { transform: translateX(-6px); }
-      40% { transform: translateX(6px); }
-      60% { transform: translateX(-4px); }
-      80% { transform: translateX(4px); }
-    }
-    .animate-shake {
-      animation: shake 0.35s cubic-bezier(.36,.07,.19,.97) both;
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
     }
 
-    /* 正解時のポップアニメーション */
-    @keyframes popMatch {
-      0% { transform: scale(1); }
-      40% { transform: scale(1.04); }
-      100% { transform: scale(0.95); opacity: 0.25; }
-    }
-    .animate-match {
-      animation: popMatch 0.35s ease-out forwards;
-    }
-
-    /* バナーのスライドイン */
-    @keyframes slideUp {
-      from { transform: translateY(100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    .animate-slide-up {
-      animation: slideUp 0.25s ease-out forwards;
+    .hint-toast {
+      min-height: 54px;
+      background: var(--danger-light);
+      border: 1px solid #fca5a5;
+      color: #991b1b;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.2s;
     }
 
-    /* スクロールバーの微調整 */
-    ::-webkit-scrollbar {
-      width: 6px;
+    .hint-toast.show {
+      opacity: 1;
     }
-    ::-webkit-scrollbar-track {
-      background: transparent;
+
+    /* リザルト画面 */
+    .result-hero {
+      text-align: center;
+      padding: 18px;
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     }
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 9999px;
+
+    .rank-badge {
+      display: inline-block;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+      margin: 6px 0;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.85rem;
+    }
+
+    .topic-box {
+      background: #eff6ff;
+      border: 2px dashed var(--primary);
+      border-radius: 12px;
+      padding: 14px;
+    }
+
+    .topic-label {
+      font-size: 0.78rem;
+      font-weight: bold;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .topic-muscle {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .toggle-answer-btn {
+      background: #fff;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .topic-answer {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #bfdbfe;
+      font-size: 0.82rem;
+    }
+
+    .topic-answer.open {
+      display: block;
+    }
+
+    .miss-item {
+      border-bottom: 1px solid #e2e8f0;
+      padding: 10px 0;
+      font-size: 0.82rem;
+    }
+
+    .miss-item:last-child {
+      border-bottom: none;
+    }
+
+    .miss-name {
+      font-weight: bold;
+      font-size: 0.95rem;
+      color: var(--danger);
+      margin-bottom: 4px;
+    }
+
+    .best-record {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
     }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex justify-center items-start sm:py-6">
+<body>
+  <div class="container">
+    <header>
+      <h1>解剖学 筋マッチング</h1>
+      <button id="soundToggle" class="sound-btn">🔊 音 ON</button>
+    </header>
 
-  <!-- アプリ全体コンテナ（スマホ縦画面最適化：最大幅480px） -->
-  <div id="app" class="w-full max-w-[480px] min-h-screen sm:min-h-[780px] bg-white sm:rounded-3xl sm:shadow-xl sm:border border-slate-200 flex flex-col relative overflow-hidden">
-
-    <!-- ==========================================
-         画面1: スタート画面
-         ========================================== -->
-    <section id="screen-start" class="flex-1 flex flex-col p-5 pb-8">
-      <!-- ヘッダー -->
-      <header class="flex items-start justify-between mb-5">
-        <div>
-          <span class="inline-block px-2.5 py-0.5 text-xs font-bold tracking-wide text-teal-700 bg-teal-50 border border-teal-200 rounded-full mb-1.5">
-            OT 1年次 基礎解剖学
-          </span>
-          <h1 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight leading-snug">
-            解剖学 筋マッチング<span class="text-teal-600 text-base sm:text-lg block sm:inline sm:ml-1 font-bold">（主要30筋）</span>
-          </h1>
-        </div>
-        <!-- 効果音ON/OFFボタン -->
-        <button type="button" class="btn-sound-toggle p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition active:scale-95" aria-label="効果音の切り替え" title="効果音 ON/OFF">
-          <!-- アイコンはJSで描画 -->
-        </button>
-      </header>
-
-      <!-- 単元選択 -->
-      <div class="mb-5">
-        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-          1. 単元を選ぶ
-        </label>
-        <div id="unit-selector" class="grid grid-cols-1 gap-2">
-          <!-- JSで単元カードを生成 -->
-        </div>
+    <!-- ① スタート画面 -->
+    <section id="startScreen" class="screen active">
+      <div class="section-card">
+        <p class="section-title">1. 単元を選ぶ（全55筋）</p>
+        <div id="unitGrid" class="unit-grid"></div>
       </div>
 
-      <!-- 出題モード選択 -->
-      <div class="mb-5">
-        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
-          2. 出題モードを選ぶ
-        </label>
-        <div id="mode-selector" class="grid grid-cols-1 gap-2">
-          <!-- JSでモードカードを生成 -->
-        </div>
-      </div>
-
-      <!-- 選択中のベストタイム表示 -->
-      <div class="bg-teal-50/70 border border-teal-100 rounded-2xl p-3.5 mb-5 flex items-center justify-between">
-        <div class="flex items-center gap-2 text-teal-800">
-          <svg class="w-5 h-5 text-teal-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <span class="text-xs font-bold">選択中のベストタイム</span>
-        </div>
-        <span id="start-best-time" class="text-base font-extrabold text-teal-700 font-mono">--:--.-</span>
-      </div>
-
-      <!-- スタートボタン群 -->
-      <div class="mt-auto space-y-3">
-        <button id="btn-start-normal" type="button" class="w-full py-4 px-6 bg-teal-600 hover:bg-teal-700 active:scale-[0.98] text-white font-extrabold text-lg rounded-2xl shadow-md shadow-teal-600/20 transition flex items-center justify-center gap-2">
-          <span>スタート！</span>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-          </svg>
-        </button>
-
-        <!-- 弱点だけ復習ボタンエリア -->
-        <div id="weak-section" class="hidden pt-1">
-          <div class="flex items-center gap-2">
-            <button id="btn-start-weak" type="button" class="flex-1 py-3.5 px-4 bg-amber-500 hover:bg-amber-600 active:scale-[0.98] text-white font-bold text-sm rounded-2xl shadow-md shadow-amber-500/20 transition flex items-center justify-center gap-2">
-              <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-              </svg>
-              <span>弱点だけ復習（<span id="weak-count">0</span>筋）</span>
-            </button>
-            <button id="btn-reset-weak" type="button" class="py-3.5 px-3 bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-500 text-xs font-bold rounded-2xl border border-slate-200 transition active:scale-95" title="弱点リストをリセット">
-              リセット
-            </button>
-          </div>
-          <p class="text-[11px] text-slate-500 text-center mt-1.5">
-            ※ 弱点復習でノーミス正解するとリストから自動解除されます
-          </p>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ==========================================
-         画面2: プレイ画面
-         ========================================== -->
-    <section id="screen-play" class="hidden flex-1 flex flex-col h-full bg-slate-50">
-      <!-- 上部ステータスバー -->
-      <header class="bg-white border-b border-slate-200 px-3.5 py-3 flex items-center justify-between gap-2 sticky top-0 z-20">
-        <button id="btn-quit" type="button" class="px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold transition active:scale-95 flex items-center gap-1">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
-          中断
-        </button>
-
-        <div class="flex items-center gap-3">
-          <!-- タイマー -->
-          <div class="text-center">
-            <div class="text-[10px] font-bold text-slate-400 leading-none mb-0.5">TIME</div>
-            <div id="play-timer" class="text-base font-extrabold font-mono text-slate-800 leading-none">00:00.0</div>
-          </div>
-
-          <div class="h-6 w-px bg-slate-200"></div>
-
-          <!-- 残りペア数 -->
-          <div class="text-center">
-            <div class="text-[10px] font-bold text-slate-400 leading-none mb-0.5">残りペア</div>
-            <div id="play-remaining" class="text-sm font-extrabold text-teal-700 leading-none">5/10</div>
-          </div>
-
-          <!-- コンボ表示 -->
-          <div id="play-combo-wrap" class="hidden bg-amber-100 text-amber-800 px-2 py-1 rounded-lg text-xs font-extrabold border border-amber-200">
-            <span id="play-combo">0</span><span class="text-[10px] ml-0.5">COMBO</span>
-          </div>
-        </div>
-
-        <!-- 効果音ON/OFF -->
-        <button type="button" class="btn-sound-toggle p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition active:scale-95" aria-label="効果音の切り替え">
-          <!-- アイコンはJSで描画 -->
-        </button>
-      </header>
-
-      <!-- サブヘッダー（現在のモード・ラウンド情報） -->
-      <div class="px-4 py-2 bg-teal-600 text-white flex items-center justify-between text-xs font-bold">
-        <span id="play-info-label" class="truncate">上肢帯・上腕 / 初級：支配神経</span>
-        <span id="play-round-badge" class="bg-teal-800/60 px-2 py-0.5 rounded-full text-[11px] shrink-0 ml-2">Round 1/2</span>
-      </div>
-
-      <!-- 操作ガイド -->
-      <div class="px-4 pt-3 pb-1 flex justify-between text-[11px] font-bold text-slate-500">
-        <span class="w-[46%] text-center">左：筋名</span>
-        <span class="w-[52%] text-center" id="play-right-col-label">右：支配神経</span>
-      </div>
-
-      <!-- マッチングカード2カラムエリア -->
-      <div id="matching-board" class="flex-1 px-3 py-2 grid grid-cols-12 gap-2.5 content-start pb-28">
-        <!-- 左列（筋名：5カラム幅） -->
-        <div id="col-left" class="col-span-5 flex flex-col gap-2.5">
-          <!-- JSで左カード5枚を生成 -->
-        </div>
-        <!-- 右列（解答：7カラム幅） -->
-        <div id="col-right" class="col-span-7 flex flex-col gap-2.5">
-          <!-- JSで右カード5枚を生成 -->
-        </div>
-      </div>
-
-      <!-- 不正解時のヒントバナー（画面下部固定） -->
-      <div id="hint-banner" class="hidden fixed sm:absolute bottom-0 left-0 right-0 z-30 p-3 pointer-events-none">
-        <div class="max-w-[456px] mx-auto bg-rose-600 text-white rounded-2xl shadow-lg p-3.5 border border-rose-500 animate-slide-up pointer-events-auto">
-          <div class="flex items-start justify-between gap-2 mb-1">
-            <span class="inline-flex items-center gap-1 text-xs font-extrabold bg-rose-800/60 px-2 py-0.5 rounded-md">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-              </svg>
-              正解を確認！
-            </span>
-            <button id="btn-close-hint" type="button" class="text-rose-200 hover:text-white p-0.5">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-            </button>
-          </div>
-          <p id="hint-answer-text" class="text-sm font-extrabold leading-snug mb-1"></p>
-          <p id="hint-tip-text" class="text-xs text-rose-100 leading-relaxed"></p>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- ==========================================
-         画面3: リザルト＆グループ共有画面
-         ========================================== -->
-    <section id="screen-result" class="hidden flex-1 flex flex-col p-5 pb-8 bg-slate-50 overflow-y-auto">
-      <!-- クリアヘッダー -->
-      <div class="text-center mb-5">
-        <div id="result-new-record" class="hidden inline-block mb-1.5 px-3 py-0.5 bg-amber-400 text-amber-950 text-xs font-extrabold rounded-full shadow-sm tracking-wide">
-          ★ NEW RECORD! ★
-        </div>
-        <h2 class="text-2xl font-extrabold text-slate-900">クリア！おつかれさま！</h2>
-        <p id="result-subtitle" class="text-xs font-bold text-slate-500 mt-1"></p>
-      </div>
-
-      <!-- スコアサマリーカード -->
-      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 mb-5">
-        <div class="grid grid-cols-3 divide-x divide-slate-100 text-center">
-          <div class="px-1">
-            <div class="text-[11px] font-bold text-slate-400 mb-1">ランク</div>
-            <div id="result-rank" class="text-3xl font-extrabold text-teal-600 leading-none">S</div>
-          </div>
-          <div class="px-1">
-            <div class="text-[11px] font-bold text-slate-400 mb-1">クリアタイム</div>
-            <div id="result-time" class="text-lg sm:text-xl font-extrabold font-mono text-slate-800 mt-1 leading-none">00:24.5</div>
-          </div>
-          <div class="px-1">
-            <div class="text-[11px] font-bold text-slate-400 mb-1">ミス回数</div>
-            <div id="result-misses" class="text-xl font-extrabold text-slate-800 mt-1 leading-none">0<span class="text-xs font-bold text-slate-400 ml-0.5">回</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- グループ学習用：ひとこと解説お題ボックス -->
-      <div class="bg-gradient-to-br from-teal-600 to-emerald-600 rounded-2xl p-4 text-white shadow-md mb-5">
-        <div class="flex items-center gap-2 mb-2">
-          <span class="bg-white/20 text-white text-[11px] font-extrabold px-2.5 py-0.5 rounded-full">
-            グループ学習用
-          </span>
-          <h3 class="text-sm font-extrabold">ひとこと解説お題</h3>
-        </div>
-        <p id="group-topic-text" class="text-sm font-bold leading-relaxed mb-3 bg-black/10 rounded-xl p-3">
-          <!-- JSでお題テキストを挿入 -->
-        </p>
-
-        <!-- タップで開閉する解答確認ボタン -->
-        <button id="btn-toggle-topic-answer" type="button" class="w-full py-2.5 px-3 bg-white/15 hover:bg-white/25 rounded-xl text-xs font-bold flex items-center justify-between transition">
-          <span>解答データを確認する（起始・停止・神経・作用）</span>
-          <svg id="topic-chevron" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
-          </svg>
-        </button>
-
-        <div id="group-topic-answer" class="hidden mt-2.5 bg-white text-slate-800 rounded-xl p-3.5 text-xs space-y-1.5 shadow-inner">
-          <!-- JSで解答詳細を描画 -->
-        </div>
-      </div>
-
-      <!-- 今回のミス一覧 -->
-      <div class="mb-6">
-        <h3 class="text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-2.5 flex items-center justify-between">
-          <span>今回のミス一覧</span>
-          <span id="result-mistake-count-badge" class="text-[11px] font-bold text-rose-600"></span>
-        </h3>
-        <div id="result-mistakes-container" class="space-y-2.5">
-          <!-- JSでミスカードまたはパーフェクト表示を描画 -->
-        </div>
-      </div>
-
-      <!-- アクションボタン -->
-      <div class="mt-auto grid grid-cols-2 gap-3 pt-2">
-        <button id="btn-retry" type="button" class="py-3.5 px-4 bg-teal-600 hover:bg-teal-700 active:scale-[0.98] text-white font-extrabold text-sm rounded-2xl shadow-md shadow-teal-600/20 transition">
-          もう一度挑戦
-        </button>
-        <button id="btn-back-title" type="button" class="py-3.5 px-4 bg-white hover:bg-slate-100 active:scale-[0.98] text-slate-700 font-extrabold text-sm rounded-2xl border border-slate-300 transition">
-          タイトルへ戻る
-        </button>
-      </div>
-    </section>
-
-
-    <!-- ==========================================
-         カスタム確認モーダル（alert/confirm代替）
-         ========================================== -->
-    <div id="custom-modal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-[2px] flex items-center justify-center p-4">
-      <div class="bg-white w-full max-w-[340px] rounded-2xl p-5 shadow-2xl border border-slate-100">
-        <h3 id="modal-title" class="text-base font-extrabold text-slate-900 mb-2">確認</h3>
-        <p id="modal-message" class="text-sm text-slate-600 leading-relaxed mb-5"></p>
-        <div class="flex gap-2.5 justify-end">
-          <button id="modal-cancel" type="button" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
-            キャンセル
+      <div class="section-card">
+        <p class="section-title">2. モードを選ぶ</p>
+        <div class="mode-list">
+          <button class="select-btn mode-btn selected" data-mode="nerve">
+            <span><strong>初級</strong>：筋名 ↔ 支配神経</span>
+            <span class="sub">まずはここから</span>
           </button>
-          <button id="modal-confirm" type="button" class="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition">
-            実行する
+          <button class="select-btn mode-btn" data-mode="action">
+            <span><strong>中級</strong>：筋名 ↔ 主な作用</span>
+            <span class="sub">動きとセットで定着</span>
+          </button>
+          <button class="select-btn mode-btn" data-mode="originInsertion">
+            <span><strong>上級</strong>：筋名 ↔ 起始・停止</span>
+            <span class="sub">国試フル対策</span>
           </button>
         </div>
       </div>
-    </div>
 
+      <button id="startBtn" class="primary-btn">スタート！</button>
+      <button id="weakBtn" class="weak-btn" style="display:none;">🔥 弱点だけ復習（<span id="weakCount">0</span>筋）</button>
+      <div id="bestRecord" class="best-record"></div>
+    </section>
+
+    <!-- ② プレイ画面 -->
+    <section id="playScreen" class="screen">
+      <div class="status-bar">
+        <span>⏱ <span id="timer">0.0</span>秒</span>
+        <span>残り <span id="remaining">0</span>ペア</span>
+        <span class="combo-badge">🔥 <span id="combo">0</span>連続</span>
+      </div>
+
+      <div class="board">
+        <div class="column">
+          <div class="col-header">筋名</div>
+          <div id="leftCol" class="column"></div>
+        </div>
+        <div class="column">
+          <div id="rightColHeader" class="col-header">支配神経</div>
+          <div id="rightCol" class="column"></div>
+        </div>
+      </div>
+
+      <div id="hintToast" class="hint-toast"></div>
+      <button id="quitBtn" class="secondary-btn">タイトルに戻る</button>
+    </section>
+
+    <!-- ③ リザルト画面 -->
+    <section id="resultScreen" class="screen">
+      <div class="result-hero">
+        <div style="font-size:0.85rem; color:var(--muted);">クリアランク</div>
+        <div id="rankBadge" class="rank-badge">S</div>
+        <div id="resultSub" style="font-size:0.85rem; font-weight:bold;"></div>
+        <div class="stats-row">
+          <div>タイム<br><strong id="finalTime">0.0秒</strong></div>
+          <div>ミス<br><strong id="finalMiss">0回</strong></div>
+          <div>最大連続<br><strong id="finalMaxCombo">0回</strong></div>
+        </div>
+      </div>
+
+      <div class="topic-box">
+        <div class="topic-label">👥 グループ学習「ひとこと解説お題」</div>
+        <div id="topicMuscle" class="topic-muscle"></div>
+        <div style="font-size:0.82rem;">この筋の<strong>起始・停止の位置</strong>と<strong>動き</strong>を、自分の体を使って班のメンバーに1分で説明してみよう！</div>
+        <button id="toggleTopicAnswer" class="toggle-answer-btn">解答・ヒントを見る</button>
+        <div id="topicAnswer" class="topic-answer"></div>
+      </div>
+
+      <div id="missSection" class="section-card" style="display:none;">
+        <p class="section-title">今回ミスした筋（弱点リストに登録済み）</p>
+        <div id="missList"></div>
+      </div>
+
+      <button id="retryBtn" class="primary-btn">もう一度チャレンジ（リベンジ）</button>
+      <button id="backHomeBtn" class="secondary-btn">単元選択に戻る</button>
+    </section>
   </div>
 
   <script>
-    /**
-     * =========================================================================
-     * 1. マスターデータ（作業療法士1年次 主要30筋）
-     * =========================================================================
-     */
-    const MUSCLE_DATA = [
-      { id: "m001", unit: "上肢帯・上腕", name: "僧帽筋", origin: "後頭骨・項靭帯・C7〜T12棘突起", insertion: "鎖骨外側1/3・肩峰・肩甲棘", nerve: "副神経（C2〜C4頸神経）", action: "肩甲骨の挙上・内転・下制・上方回旋", hint: "背中上部を広く覆う筋。上部は肩をすくめる動き。" },
-      { id: "m002", unit: "上肢帯・上腕", name: "前鋸筋", origin: "第1〜9肋骨", insertion: "肩甲骨内側縁（前面）", nerve: "長胸神経（C5〜C7）", action: "肩甲骨の外転・上方回旋", hint: "麻痺すると「翼状肩甲」になるのが国試の超頻出ポイント！" },
-      { id: "m003", unit: "上肢帯・上腕", name: "大胸筋", origin: "鎖骨内側・胸骨・第1〜6肋軟骨", insertion: "上腕骨大結節稜", nerve: "内側・外側胸筋神経（C5〜T1）", action: "肩関節の内転・内旋・水平屈曲", hint: "胸の厚い筋。腕を前に組む・抱きしめる動きで働く。" },
-      { id: "m004", unit: "上肢帯・上腕", name: "広背筋", origin: "T6〜L5棘突起・仙骨・腸骨稜", insertion: "上腕骨小結節稜", nerve: "胸背神経（C6〜C8）", action: "肩関節の伸展・内転・内旋", hint: "松葉杖をつく時や、懸垂で体を引き上げる時に大活躍。" },
-      { id: "m005", unit: "上肢帯・上腕", name: "三角筋", origin: "鎖骨外側1/3・肩峰・肩甲棘", insertion: "上腕骨三角筋粗面", nerve: "腋窩神経（C5〜C6）", action: "肩関節の外転（前部：屈曲、後部：伸展）", hint: "肩の丸みを作る筋。肩関節脱臼で腋窩神経が傷つきやすい。" },
-      { id: "m006", unit: "上肢帯・上腕", name: "棘上筋", origin: "肩甲骨の棘上窩", insertion: "上腕骨大結節（上部）", nerve: "肩甲上神経（C5〜C6）", action: "肩関節の外転（初動）", hint: "回旋筋腱板（ローテーターカフ）の1つ。最も断裂しやすい。" },
-      { id: "m007", unit: "上肢帯・上腕", name: "棘下筋", origin: "肩甲骨の棘下窩", insertion: "上腕骨大結節（中部）", nerve: "肩甲上神経（C5〜C6）", action: "肩関節の外旋", hint: "回旋筋腱板の1つ。肩を外にひねる（外旋）主役。" },
-      { id: "m008", unit: "上肢帯・上腕", name: "肩甲下筋", origin: "肩甲骨の肩甲下窩", insertion: "上腕骨小結節", nerve: "肩甲下神経（C5〜C6）", action: "肩関節の内旋", hint: "回旋筋腱板の中で唯一「小結節」に付くのが引っかけポイント！" },
-      { id: "m009", unit: "上肢帯・上腕", name: "上腕二頭筋", origin: "長頭：関節上結節 / 短頭：烏口突起", insertion: "橈骨粗面・前腕筋膜", nerve: "筋皮神経（C5〜C6）", action: "肘関節の屈曲・前腕の回外", hint: "力こぶを作る筋。ドアノブを回す（回外）動きにも強い。" },
-      { id: "m010", unit: "上肢帯・上腕", name: "上腕三頭筋", origin: "長頭：関節下結節 / 外・内側頭：上腕骨後面", insertion: "尺骨肘頭", nerve: "橈骨神経（C6〜C8）", action: "肘関節の伸展（長頭は肩伸展も）", hint: "二の腕の裏側。肘を伸ばす唯一の主力筋で、プッシュアップに必須。" },
-      { id: "m011", unit: "前腕・手", name: "腕橈骨筋", origin: "上腕骨外側上顆の上部", insertion: "橈骨茎状突起", nerve: "橈骨神経（C5〜C6）", action: "肘関節の屈曲（前腕中間位）", hint: "屈筋なのに支配神経は『橈骨神経』なのが国試の定番ひっかけ！" },
-      { id: "m012", unit: "前腕・手", name: "円回内筋", origin: "上腕骨内側上顆・尺骨鉤状突起", insertion: "橈骨外側面のほぼ中央", nerve: "正中神経（C6〜C7）", action: "前腕の回内・肘関節の屈曲", hint: "手のひらを下に向ける（回内）動きの主役。" },
-      { id: "m013", unit: "前腕・手", name: "橈側手根屈筋", origin: "上腕骨内側上顆", insertion: "第2・3中手骨底（掌側）", nerve: "正中神経（C6〜C7）", action: "手関節の掌屈・橈屈", hint: "手首を親指側に曲げる筋。手首の脈を測るすぐ内側に腱が触れる。" },
-      { id: "m014", unit: "前腕・手", name: "総指伸筋", origin: "上腕骨外側上顆", insertion: "第2〜5指の中節骨・末節骨背側", nerve: "橈骨神経（C7〜C8）", action: "第2〜5指の伸展・手関節の背屈", hint: "麻痺すると手首や指が上がらなくなる「下垂手」になる。" },
-      { id: "m015", unit: "前腕・手", name: "短母指外転筋", origin: "舟状骨・大菱形骨・屈筋支帯", insertion: "母指基節骨底（外側）", nerve: "正中神経（C8〜T1）", action: "母指の外転（掌側外転）", hint: "手根管症候群で真っ先に萎縮する母指球筋。猿手（扁平手）の原因。" },
-      { id: "m016", unit: "股関節・大腿", name: "腸腰筋", origin: "大腰筋：T12〜L5椎体 / 腸骨筋：腸骨窩", insertion: "大腿骨小転子", nerve: "大腿神経・腰神経叢（L1〜L4）", action: "股関節の屈曲", hint: "階段を上る・ももを上げる時の主役。唯一『小転子』に付く。" },
-      { id: "m017", unit: "股関節・大腿", name: "大殿筋", origin: "腸骨翼後面・仙骨・尾骨後面", insertion: "大腿骨殿筋粗面・腸脛靭帯", nerve: "下殿神経（L5〜S2）", action: "股関節の伸展・外旋", hint: "お尻のボリュームを作る筋。椅子からの立ち上がりや階段昇段で働く。" },
-      { id: "m018", unit: "股関節・大腿", name: "中殿筋", origin: "腸骨翼外面", insertion: "大腿骨大転子", nerve: "上殿神経（L4〜S1）", action: "股関節の外転", hint: "片脚立ちで骨盤を水平に保つ筋。筋力低下で『トレンデレンブルグ徴候』！" },
-      { id: "m019", unit: "股関節・大腿", name: "大腿四頭筋", origin: "直筋：下前腸骨棘 / 広筋群：大腿骨", insertion: "膝蓋骨を経て脛骨粗面", nerve: "大腿神経（L2〜L4）", action: "膝関節の伸展（直筋は股屈曲も）", hint: "太ももの前側。4つの頭のうち『大腿直筋』だけが二関節筋。" },
-      { id: "m020", unit: "股関節・大腿", name: "縫工筋", origin: "上前腸骨棘（ASIS）", insertion: "脛骨粗面内側（鵞足）", nerve: "大腿神経（L2〜L3）", action: "股関節の屈曲・外転・外旋、膝屈曲", hint: "人体で最も長い筋。あぐらをかく動作（靴下を履く動き）で働く。" },
-      { id: "m021", unit: "股関節・大腿", name: "大腿二頭筋", origin: "長頭：坐骨結節 / 短頭：大腿骨粗線", insertion: "腓骨頭", nerve: "長頭：脛骨神経 / 短頭：総腓骨神経", action: "膝関節の屈曲・外旋（長頭は股伸展）", hint: "ハムストリングスの外側。長頭と短頭で支配神経が違う（二重神経支配）！" },
-      { id: "m022", unit: "股関節・大腿", name: "半腱様筋", origin: "坐骨結節", insertion: "脛骨粗面内側（鵞足）", nerve: "脛骨神経（L5〜S2）", action: "股関節の伸展、膝関節の屈曲・内旋", hint: "ハムストリングスの内側。縫工筋・薄筋と一緒に『鵞足』を作る。" },
-      { id: "m023", unit: "股関節・大腿", name: "大内転筋", origin: "坐骨結節・坐骨枝・恥骨下枝", insertion: "大腿骨粗線・内転筋結節", nerve: "閉鎖神経・坐骨神経（L2〜L4）", action: "股関節の内転", hint: "太ももの内側で脚を閉じる筋。閉鎖神経と坐骨神経の二重神経支配。" },
-      { id: "m024", unit: "股関節・大腿", name: "梨状筋", origin: "仙骨前面", insertion: "大腿骨大転子", nerve: "仙骨神経叢（L5〜S2）", action: "股関節の外旋", hint: "お尻の深層にある筋。すぐ下を坐骨神経が通るため圧迫の原因になる。" },
-      { id: "m025", unit: "股関節・大腿", name: "大腿筋膜張筋", origin: "上前腸骨棘（ASIS）", insertion: "腸脛靭帯を経て脛骨外側顆", nerve: "上殿神経（L4〜S1）", action: "股関節の屈曲・外転・内旋", hint: "中殿筋と同じ『上殿神経』支配。腸脛靭帯をピンと張る役割。" },
-      { id: "m026", unit: "下腿・足", name: "前脛骨筋", origin: "脛骨外側面・下腿骨間膜", insertion: "内側楔状骨・第1中足骨底", nerve: "深腓骨神経（L4〜L5）", action: "足関節の背屈・内反", hint: "すねの前側。麻痺するとつま先が垂れる『下垂足（鶏歩）』になる！" },
-      { id: "m027", unit: "下腿・足", name: "長腓骨筋", origin: "腓骨頭・腓骨外側面", insertion: "内側楔状骨・第1中足骨底（足底）", nerve: "浅腓骨神経（L5〜S1）", action: "足関節の外反・底屈", hint: "すねの外側。足首を外側に返す（外反）主役で、浅腓骨神経支配。" },
-      { id: "m028", unit: "下腿・足", name: "下腿三頭筋", origin: "腓腹筋：大腿骨内外側顆 / ヒラメ筋：脛・腓骨", insertion: "踵骨隆起（アキレス腱）", nerve: "脛骨神経（S1〜S2）", action: "足関節の底屈（腓腹筋は膝屈曲も）", hint: "ふくらはぎ。つま先立ちや歩行時の蹴り出し（プッシュオフ）に必須。" },
-      { id: "m029", unit: "下腿・足", name: "後脛骨筋", origin: "脛骨・腓骨後面・下腿骨間膜", insertion: "舟状骨・楔状骨・立方骨など", nerve: "脛骨神経（L4〜L5）", action: "足関節の底屈・内反", hint: "土踏まず（内側縦アーチ）を支える重要なインナーマッスル。" },
-      { id: "m030", unit: "下腿・足", name: "長趾伸筋", origin: "脛骨外側顆・腓骨前面", insertion: "第2〜5趾の中節骨・末節骨背側", nerve: "深腓骨神経（L4〜S1）", action: "第2〜5趾の伸展・足関節の背屈", hint: "足の指を反らす筋。前脛骨筋と同じ『深腓骨神経』支配。" },
-      { id: "m031", unit: "体幹・頭頸部", name: "胸鎖乳突筋", origin: "胸骨柄・鎖骨内側1/3", insertion: "側頭骨乳様突起", nerve: "副神経・頸神経（C2〜C3）", action: "両側：頸部屈曲 / 片側：同側側屈・反対側回旋", hint: "首を横に回すと浮き出る筋。片側が働くと『反対側』を向くのが国試の定番！" },
-      { id: "m032", unit: "体幹・頭頸部", name: "斜角筋（前・中・後）", origin: "頸椎横突起", insertion: "第1・2肋骨", nerve: "頸神経叢・腕神経叢の筋枝", action: "頸部の屈曲・側屈、第1・2肋骨の挙上（吸気補助）", hint: "前・中斜角筋の間を『腕神経叢』と『鎖骨下動脈』が通る（胸郭出口症候群）。" },
-      { id: "m033", unit: "体幹・頭頸部", name: "咬筋", origin: "頬骨弓", insertion: "下顎骨咬筋粗面", nerve: "下顎神経（三叉神経第3枝）", action: "下顎の挙上（閉口）", hint: "奥歯を噛みしめると頬で硬くなる咀嚼筋。支配神経は『三叉神経』！" },
-      { id: "m034", unit: "体幹・頭頸部", name: "側頭筋", origin: "側頭窩", insertion: "下顎骨筋突起", nerve: "下顎神経（三叉神経第3枝）", action: "下顎の挙上（閉口）・後方移動", hint: "こめかみ付近に広がる咀嚼筋。咬筋と同じく三叉神経支配。" },
-      { id: "m035", unit: "体幹・頭頸部", name: "眼輪筋", origin: "内側眼瞼靭帯・上顎骨前頭突起", insertion: "眼瞼の皮膚（輪状）", nerve: "顔面神経", action: "閉眼（まばたき）", hint: "表情筋の1つ。顔面神経麻痺（ベル麻痺）で目が閉じなくなる（兎眼）。" },
-      { id: "m036", unit: "体幹・頭頸部", name: "口輪筋", origin: "上下の口唇周囲", insertion: "口角の皮膚（輪状）", nerve: "顔面神経", action: "口唇の閉鎖・突出", hint: "口笛を吹く・ストローを吸う筋。顔面神経麻痺で口角から水が漏れる。" },
-      { id: "m037", unit: "体幹・頭頸部", name: "腹直筋", origin: "恥骨結合・恥骨稜", insertion: "第5〜7肋軟骨・剣状突起", nerve: "肋間神経（T5〜T12）", action: "体幹の屈曲（前屈）・骨盤の後傾", hint: "いわゆるシックスパック。起き上がり動作や強制呼気で働く。" },
-      { id: "m037", unit: "体幹・頭頸部", name: "腹直筋", origin: "恥骨結合・恥骨稜", insertion: "第5〜7肋軟骨・剣状突起", nerve: "肋間神経（T5〜T12）", action: "体幹の屈曲（前屈）・骨盤の後傾", hint: "いわゆるシックスパック。起き上がり動作や強制呼気で働く。" },
-      { id: "m038", unit: "体幹・頭頸部", name: "外腹斜筋", origin: "第5〜12肋骨外面", insertion: "腸骨稜・白線・鼠径靭帯", nerve: "肋間神経・腸骨下腹・腸骨鼠径神経", action: "両側：体幹屈曲 / 片側：同側側屈・反対側回旋", hint: "ポケットに手を入れる走行。片側が働くと体幹を『反対側』へ回旋！" },
-      { id: "m039", unit: "体幹・頭頸部", name: "内腹斜筋", origin: "胸腰筋膜・腸骨稜・鼠径靭帯", insertion: "第10〜12肋骨・白線", nerve: "肋間神経・腸骨下腹・腸骨鼠径神経", action: "両側：体幹屈曲 / 片側：同側側屈・同側回旋", hint: "外腹斜筋の深層。片側が働くと体幹を『同側』へ回旋する！" },
-      { id: "m040", unit: "体幹・頭頸部", name: "腹横筋", origin: "第7〜12肋軟骨・胸腰筋膜・腸骨稜", insertion: "白線・恥骨", nerve: "肋間神経・腸骨下腹・腸骨鼠径神経", action: "腹圧の上昇・体幹の安定化・強制呼気", hint: "腹筋群の最も深層にある天然のコルセット。息を強く吐く時に働く。" },
-      { id: "m041", unit: "体幹・頭頸部", name: "脊柱起立筋", origin: "仙骨・腸骨稜・腰椎棘突起", insertion: "肋骨・胸椎・頸椎・側頭骨", nerve: "脊髄神経後枝", action: "脊柱の伸展（背屈）・姿勢の保持", hint: "腸肋筋・最長筋・棘筋の3つの総称。背骨をまっすぐ支える抗重力筋。" },
-      { id: "m042", unit: "体幹・頭頸部", name: "腰方形筋", origin: "腸骨稜・腸腰靭帯", insertion: "第12肋骨・L1〜L4横突起", nerve: "肋下神経・腰神経叢（T12〜L3）", action: "体幹の同側側屈・骨盤の挙上（ヒップハイク）", hint: "片麻痺患者が足を振り出す時の『骨盤引き上げ（分回し）』で重要。" },
-      { id: "m043", unit: "体幹・頭頸部", name: "横隔膜", origin: "胸骨部・肋骨部・腰椎部", insertion: "腱中心", nerve: "横隔神経（C3〜C5）", action: "安静時吸気（収縮して下降し、胸腔を広げる）", hint: "『C3・4・5で横隔膜が生きている』！高位頸髄損傷の呼吸管理で超重要。" },
-      { id: "m044", unit: "体幹・頭頸部", name: "外肋間筋", origin: "上位肋骨の下縁", insertion: "下位肋骨の上縁", nerve: "肋間神経（T1〜T11）", action: "肋骨の挙上（安静時吸気）", hint: "横隔膜とともに安静時の『吸気（息を吸う）』を担う主役。" },
-      { id: "m045", unit: "体幹・頭頸部", name: "内肋間筋", origin: "下位肋骨の上縁", insertion: "上位肋骨の下縁", nerve: "肋間神経（T1〜T11）", action: "肋骨の下制（努力呼気）", hint: "外肋間筋と逆の『呼気（息を強く吐く）』で働くのがポイント！" },
-      { id: "m046", unit: "手の内在筋", name: "母指対立筋", origin: "大菱形骨・屈筋支帯", insertion: "第1中手骨の外側縁", nerve: "正中神経（C8〜T1）", action: "母指の対立", hint: "親指と小指を向かい合わせる（つまみ動作の要）筋。正中神経支配。" },
-      { id: "m047", unit: "手の内在筋", name: "短母指屈筋", origin: "浅頭：屈筋支帯 / 深頭：大・小菱形骨・有頭骨", insertion: "母指基節骨底（外側種子骨）", nerve: "浅頭：正中神経 / 深頭：尺骨神経", action: "母指MP関節の屈曲", hint: "浅頭は正中神経、深頭は尺骨神経の『二重神経支配』が国試の超頻出！" },
-      { id: "m048", unit: "手の内在筋", name: "母指内転筋", origin: "斜頭：有頭骨・第2〜3中手骨底 / 横頭：第3中手骨", insertion: "母指基節骨底（内側種子骨）", nerve: "尺骨神経（C8〜T1）", action: "母指の内転", hint: "紙を親指と人差し指で挟む筋。麻痺すると『フローマン徴候』が陽性！" },
-      { id: "m049", unit: "手の内在筋", name: "小指外転筋", origin: "豆状骨・尺側手根屈筋腱", insertion: "小指基節骨底（内側）", nerve: "尺骨神経（C8〜T1）", action: "小指の外転", hint: "小指球の最も外側にある筋。小指球筋はすべて『尺骨神経』支配。" },
-      { id: "m050", unit: "手の内在筋", name: "小指対立筋", origin: "有鈎骨鈎・屈筋支帯", insertion: "第5中手骨の内側縁", nerve: "尺骨神経（C8〜T1）", action: "小指の対立（手掌のくぼみを作る）", hint: "物を握るときに手のひらをカップ状に丸める（横アーチ形成）役割。" },
-      { id: "m051", unit: "手の内在筋", name: "短小指屈筋", origin: "有鈎骨鈎・屈筋支帯", insertion: "小指基節骨底", nerve: "尺骨神経（C8〜T1）", action: "小指MP関節の屈曲", hint: "小指の付け根を曲げる筋。尺骨神経麻痺で小指球全体が萎縮する。" },
-      { id: "m052", unit: "手の内在筋", name: "背側骨間筋", origin: "隣り合う中手骨の対向面（4個）", insertion: "第2〜4指の基節骨底・指背腱膜", nerve: "尺骨神経（C8〜T1）", action: "第2〜4指の外転（パーを開く）・MP屈曲・IP伸展", hint: "覚え方は『DAB（Dorsal＝背側はABduction＝外転）』！すべて尺骨神経。" },
-      { id: "m053", unit: "手の内在筋", name: "掌側骨間筋", origin: "第2・4・5中手骨の掌側面（3個）", insertion: "第2・4・5指の基節骨底・指背腱膜", nerve: "尺骨神経（C8〜T1）", action: "第2・4・5指の内転（指を閉じる）・MP屈曲・IP伸展", hint: "覚え方は『PAD（Palmar＝掌側はADduction＝内転）』！中指には付かない。" },
-      { id: "m054", unit: "手の内在筋", name: "虫様筋", origin: "深指屈筋腱（第2〜5指）", insertion: "第2〜5指の指背腱膜（橈側）", nerve: "第1・2：正中神経 / 第3・4：尺骨神経", action: "MP関節の屈曲、PIP・DIP関節の伸展", hint: "『内在筋プラス肢位』を作る超重要筋。第1・2と第3・4で二重神経支配！" },
-      {id: "m055", unit: "手の内在筋", name: "短掌筋", origin: "手掌腱膜の内側縁", insertion: "小指球の皮膚", nerve: "尺骨神経（浅枝）", action: "小指球の皮膚にシワを寄せる", hint: "手掌の尺側で物をしっかり把持する補助をする皮筋。" }
+    // ==========================================
+    // 全55筋マスターデータ
+    // ==========================================
+    const MUSCLES = [
+      {
+        id: "m001",
+        unit: "上肢帯・上腕",
+        name: "僧帽筋",
+        origin: "後頭骨・項靭帯・C7〜T12棘突起",
+        insertion: "鎖骨外側1/3・肩峰・肩甲棘",
+        nerve: "副神経（C2〜C4頸神経）",
+        action: "肩甲骨の挙上・内転・下制・上方回旋",
+        hint: "背中上部を広く覆う筋。上部は肩をすくめる動き。"
+      },
+      {
+        id: "m002",
+        unit: "上肢帯・上腕",
+        name: "前鋸筋",
+        origin: "第1〜9肋骨",
+        insertion: "肩甲骨内側縁（前面）",
+        nerve: "長胸神経（C5〜C7）",
+        action: "肩甲骨の外転・上方回旋",
+        hint: "麻痺すると「翼状肩甲」になるのが国試の超頻出ポイント！"
+      },
+      {
+        id: "m003",
+        unit: "上肢帯・上腕",
+        name: "大胸筋",
+        origin: "鎖骨内側・胸骨・第1〜6肋軟骨",
+        insertion: "上腕骨大結節稜",
+        nerve: "内側・外側胸筋神経（C5〜T1）",
+        action: "肩関節の内転・内旋・水平屈曲",
+        hint: "胸の厚い筋。腕を前に組む・抱きしめる動きで働く。"
+      },
+      {
+        id: "m004",
+        unit: "上肢帯・上腕",
+        name: "広背筋",
+        origin: "T6〜L5棘突起・仙骨・腸骨稜",
+        insertion: "上腕骨小結節稜",
+        nerve: "胸背神経（C6〜C8）",
+        action: "肩関節の伸展・内転・内旋",
+        hint: "松葉杖をつく時や、懸垂で体を引き上げる時に大活躍。"
+      },
+      {
+        id: "m005",
+        unit: "上肢帯・上腕",
+        name: "三角筋",
+        origin: "鎖骨外側1/3・肩峰・肩甲棘",
+        insertion: "上腕骨三角筋粗面",
+        nerve: "腋窩神経（C5〜C6）",
+        action: "肩関節の外転（前部：屈曲、後部：伸展）",
+        hint: "肩の丸みを作る筋。肩関節脱臼で腋窩神経が傷つきやすい。"
+      },
+      {
+        id: "m006",
+        unit: "上肢帯・上腕",
+        name: "棘上筋",
+        origin: "肩甲骨の棘上窩",
+        insertion: "上腕骨大結節（上部）",
+        nerve: "肩甲上神経（C5〜C6）",
+        action: "肩関節の外転（初動）",
+        hint: "回旋筋腱板（ローテーターカフ）の1つ。最も断裂しやすい。"
+      },
+      {
+        id: "m007",
+        unit: "上肢帯・上腕",
+        name: "棘下筋",
+        origin: "肩甲骨の棘下窩",
+        insertion: "上腕骨大結節（中部）",
+        nerve: "肩甲上神経（C5〜C6）",
+        action: "肩関節の外旋",
+        hint: "回旋筋腱板の1つ。肩を外にひねる（外旋）主役。"
+      },
+      {
+        id: "m008",
+        unit: "上肢帯・上腕",
+        name: "肩甲下筋",
+        origin: "肩甲骨の肩甲下窩",
+        insertion: "上腕骨小結節",
+        nerve: "肩甲下神経（C5〜C6）",
+        action: "肩関節の内旋",
+        hint: "回旋筋腱板の中で唯一「小結節」に付くのが引っかけポイント！"
+      },
+      {
+        id: "m009",
+        unit: "上肢帯・上腕",
+        name: "上腕二頭筋",
+        origin: "長頭：関節上結節 / 短頭：烏口突起",
+        insertion: "橈骨粗面・前腕筋膜",
+        nerve: "筋皮神経（C5〜C6）",
+        action: "肘関節の屈曲・前腕の回外",
+        hint: "力こぶを作る筋。ドアノブを回す（回外）動きにも強い。"
+      },
+      {
+        id: "m010",
+        unit: "上肢帯・上腕",
+        name: "上腕三頭筋",
+        origin: "長頭：関節下結節 / 外・内側頭：上腕骨後面",
+        insertion: "尺骨肘頭",
+        nerve: "橈骨神経（C6〜C8）",
+        action: "肘関節の伸展（長頭は肩伸展も）",
+        hint: "二の腕の裏側。肘を伸ばす唯一の主力筋で、プッシュアップに必須。"
+      },
+      {
+        id: "m011",
+        unit: "前腕・手",
+        name: "腕橈骨筋",
+        origin: "上腕骨外側上顆の上部",
+        insertion: "橈骨茎状突起",
+        nerve: "橈骨神経（C5〜C6）",
+        action: "肘関節の屈曲（前腕中間位）",
+        hint: "屈筋なのに支配神経は『橈骨神経』なのが国試の定番ひっかけ！"
+      },
+      {
+        id: "m012",
+        unit: "前腕・手",
+        name: "円回内筋",
+        origin: "上腕骨内側上顆・尺骨鉤状突起",
+        insertion: "橈骨外側面のほぼ中央",
+        nerve: "正中神経（C6〜C7）",
+        action: "前腕の回内・肘関節の屈曲",
+        hint: "手のひらを下に向ける（回内）動きの主役。"
+      },
+      {
+        id: "m013",
+        unit: "前腕・手",
+        name: "橈側手根屈筋",
+        origin: "上腕骨内側上顆",
+        insertion: "第2・3中手骨底（掌側）",
+        nerve: "正中神経（C6〜C7）",
+        action: "手関節の掌屈・橈屈",
+        hint: "手首を親指側に曲げる筋。手首の脈を測るすぐ内側に腱が触れる。"
+      },
+      {
+        id: "m014",
+        unit: "前腕・手",
+        name: "総指伸筋",
+        origin: "上腕骨外側上顆",
+        insertion: "第2〜5指の中節骨・末節骨背側",
+        nerve: "橈骨神経（C7〜C8）",
+        action: "第2〜5指の伸展・手関節の背屈",
+        hint: "麻痺すると手首や指が上がらなくなる「下垂手」になる。"
+      },
+      {
+        id: "m015",
+        unit: "前腕・手",
+        name: "短母指外転筋",
+        origin: "舟状骨・大菱形骨・屈筋支帯",
+        insertion: "母指基節骨底（外側）",
+        nerve: "正中神経（C8〜T1）",
+        action: "母指の外転（掌側外転）",
+        hint: "手根管症候群で真っ先に萎縮する母指球筋。猿手（扁平手）の原因。"
+      },
+      {
+        id: "m016",
+        unit: "股関節・大腿",
+        name: "腸腰筋",
+        origin: "大腰筋：T12〜L5椎体 / 腸骨筋：腸骨窩",
+        insertion: "大腿骨小転子",
+        nerve: "大腿神経・腰神経叢（L1〜L4）",
+        action: "股関節の屈曲",
+        hint: "階段を上る・ももを上げる時の主役。唯一『小転子』に付く。"
+      },
+      {
+        id: "m017",
+        unit: "股関節・大腿",
+        name: "大殿筋",
+        origin: "腸骨翼後面・仙骨・尾骨後面",
+        insertion: "大腿骨殿筋粗面・腸脛靭帯",
+        nerve: "下殿神経（L5〜S2）",
+        action: "股関節の伸展・外旋",
+        hint: "お尻のボリュームを作る筋。椅子からの立ち上がりや階段昇段で働く。"
+      },
+      {
+        id: "m018",
+        unit: "股関節・大腿",
+        name: "中殿筋",
+        origin: "腸骨翼外面",
+        insertion: "大腿骨大転子",
+        nerve: "上殿神経（L4〜S1）",
+        action: "股関節の外転",
+        hint: "片脚立ちで骨盤を水平に保つ筋。筋力低下で『トレンデレンブルグ徴候』！"
+      },
+      {
+        id: "m019",
+        unit: "股関節・大腿",
+        name: "大腿四頭筋",
+        origin: "直筋：下前腸骨棘 / 広筋群：大腿骨",
+        insertion: "膝蓋骨を経て脛骨粗面",
+        nerve: "大腿神経（L2〜L4）",
+        action: "膝関節の伸展（直筋は股屈曲も）",
+        hint: "太ももの前側。4つの頭のうち『大腿直筋』だけが二関節筋。"
+      },
+      {
+        id: "m020",
+        unit: "股関節・大腿",
+        name: "縫工筋",
+        origin: "上前腸骨棘（ASIS）",
+        insertion: "脛骨粗面内側（鵞足）",
+        nerve: "大腿神経（L2〜L3）",
+        action: "股関節の屈曲・外転・外旋、膝屈曲",
+        hint: "人体で最も長い筋。あぐらをかく動作（靴下を履く動き）で働く。"
+      },
+      {
+        id: "m021",
+        unit: "股関節・大腿",
+        name: "大腿二頭筋",
+        origin: "長頭：坐骨結節 / 短頭：大腿骨粗線",
+        insertion: "腓骨頭",
+        nerve: "長頭：脛骨神経 / 短頭：総腓骨神経",
+        action: "膝関節の屈曲・外旋（長頭は股伸展）",
+        hint: "ハムストリングスの外側。長頭と短頭で支配神経が違う（二重神経支配）！"
+      },
+      {
+        id: "m022",
+        unit: "股関節・大腿",
+        name: "半腱様筋",
+        origin: "坐骨結節",
+        insertion: "脛骨粗面内側（鵞足）",
+        nerve: "脛骨神経（L5〜S2）",
+        action: "股関節の伸展、膝関節の屈曲・内旋",
+        hint: "ハムストリングスの内側。縫工筋・薄筋と一緒に『鵞足』を作る。"
+      },
+      {
+        id: "m023",
+        unit: "股関節・大腿",
+        name: "大内転筋",
+        origin: "坐骨結節・坐骨枝・恥骨下枝",
+        insertion: "大腿骨粗線・内転筋結節",
+        nerve: "閉鎖神経・坐骨神経（L2〜L4）",
+        action: "股関節の内転",
+        hint: "太ももの内側で脚を閉じる筋。閉鎖神経と坐骨神経の二重神経支配。"
+      },
+      {
+        id: "m024",
+        unit: "股関節・大腿",
+        name: "梨状筋",
+        origin: "仙骨前面",
+        insertion: "大腿骨大転子",
+        nerve: "仙骨神経叢（L5〜S2）",
+        action: "股関節の外旋",
+        hint: "お尻の深層にある筋。すぐ下を坐骨神経が通るため圧迫の原因になる。"
+      },
+      {
+        id: "m025",
+        unit: "股関節・大腿",
+        name: "大腿筋膜張筋",
+        origin: "上前腸骨棘（ASIS）",
+        insertion: "腸脛靭帯を経て脛骨外側顆",
+        nerve: "上殿神経（L4〜S1）",
+        action: "股関節の屈曲・外転・内旋",
+        hint: "中殿筋と同じ『上殿神経』支配。腸脛靭帯をピンと張る役割。"
+      },
+      {
+        id: "m026",
+        unit: "下腿・足",
+        name: "前脛骨筋",
+        origin: "脛骨外側面・下腿骨間膜",
+        insertion: "内側楔状骨・第1中足骨底",
+        nerve: "深腓骨神経（L4〜L5）",
+        action: "足関節の背屈・内反",
+        hint: "すねの前側。麻痺するとつま先が垂れる『下垂足（鶏歩）』になる！"
+      },
+      {
+        id: "m027",
+        unit: "下腿・足",
+        name: "長腓骨筋",
+        origin: "腓骨頭・腓骨外側面",
+        insertion: "内側楔状骨・第1中足骨底（足底）",
+        nerve: "浅腓骨神経（L5〜S1）",
+        action: "足関節の外反・底屈",
+        hint: "すねの外側。足首を外側に返す（外反）主役で、浅腓骨神経支配。"
+      },
+      {
+        id: "m028",
+        unit: "下腿・足",
+        name: "下腿三頭筋",
+        origin: "腓腹筋：大腿骨内外側顆 / ヒラメ筋：脛・腓骨",
+        insertion: "踵骨隆起（アキレス腱）",
+        nerve: "脛骨神経（S1〜S2）",
+        action: "足関節の底屈（腓腹筋は膝屈曲も）",
+        hint: "ふくらはぎ。つま先立ちや歩行時の蹴り出し（プッシュオフ）に必須。"
+      },
+      {
+        id: "m029",
+        unit: "下腿・足",
+        name: "後脛骨筋",
+        origin: "脛骨・腓骨後面・下腿骨間膜",
+        insertion: "舟状骨・楔状骨・立方骨など",
+        nerve: "脛骨神経（L4〜L5）",
+        action: "足関節の底屈・内反",
+        hint: "土踏まず（内側縦アーチ）を支える重要なインナーマッスル。"
+      },
+      {
+        id: "m030",
+        unit: "下腿・足",
+        name: "長趾伸筋",
+        origin: "脛骨外側顆・腓骨前面",
+        insertion: "第2〜5趾の中節骨・末節骨背側",
+        nerve: "深腓骨神経（L4〜S1）",
+        action: "第2〜5趾の伸展・足関節の背屈",
+        hint: "足の指を反らす筋。前脛骨筋と同じ『深腓骨神経』支配。"
+      },
+      {
+        id: "m031",
+        unit: "体幹・頭頸部",
+        name: "胸鎖乳突筋",
+        origin: "胸骨柄・鎖骨内側1/3",
+        insertion: "側頭骨乳様突起",
+        nerve: "副神経・頸神経（C2〜C3）",
+        action: "両側：頸部屈曲 / 片側：同側側屈・反対側回旋",
+        hint: "首を横に回すと浮き出る筋。片側が働くと『反対側』を向くのが国試の定番！"
+      },
+      {
+        id: "m032",
+        unit: "体幹・頭頸部",
+        name: "斜角筋（前・中・後）",
+        origin: "頸椎横突起",
+        insertion: "第1・2肋骨",
+        nerve: "頸神経叢・腕神経叢の筋枝",
+        action: "頸部の屈曲・側屈、第1・2肋骨の挙上（吸気補助）",
+        hint: "前・中斜角筋の間を『腕神経叢』と『鎖骨下動脈』が通る（胸郭出口症候群）。"
+      },
+      {
+        id: "m033",
+        unit: "体幹・頭頸部",
+        name: "咬筋",
+        origin: "頬骨弓",
+        insertion: "下顎骨咬筋粗面",
+        nerve: "下顎神経（三叉神経第3枝）",
+        action: "下顎の挙上（閉口）",
+        hint: "奥歯を噛みしめると頬で硬くなる咀嚼筋。支配神経は『三叉神経』！"
+      },
+      {
+        id: "m034",
+        unit: "体幹・頭頸部",
+        name: "側頭筋",
+        origin: "側頭窩",
+        insertion: "下顎骨筋突起",
+        nerve: "下顎神経（三叉神経第3枝）",
+        action: "下顎の挙上（閉口）・後方移動",
+        hint: "こめかみ付近に広がる咀嚼筋。咬筋と同じく三叉神経支配。"
+      },
+      {
+        id: "m035",
+        unit: "体幹・頭頸部",
+        name: "眼輪筋",
+        origin: "内側眼瞼靭帯・上顎骨前頭突起",
+        insertion: "眼瞼の皮膚（輪状）",
+        nerve: "顔面神経",
+        action: "閉眼（まばたき）",
+        hint: "表情筋の1つ。顔面神経麻痺（ベル麻痺）で目が閉じなくなる（兎眼）。"
+      },
+      {
+        id: "m036",
+        unit: "体幹・頭頸部",
+        name: "口輪筋",
+        origin: "上下の口唇周囲",
+        insertion: "口角の皮膚（輪状）",
+        nerve: "顔面神経",
+        action: "口唇の閉鎖・突出",
+        hint: "口笛を吹く・ストローを吸う筋。顔面神経麻痺で口角から水が漏れる。"
+      },
+      {
+        id: "m037",
+        unit: "体幹・頭頸部",
+        name: "腹直筋",
+        origin: "恥骨結合・恥骨稜",
+        insertion: "第5〜7肋軟骨・剣状突起",
+        nerve: "肋間神経（T5〜T12）",
+        action: "体幹の屈曲（前屈）・骨盤の後傾",
+        hint: "いわゆるシックスパック。起き上がり動作や強制呼気で働く。"
+      },
+      {
+        id: "m038",
+        unit: "体幹・頭頸部",
+        name: "外腹斜筋",
+        origin: "第5〜12肋骨外面",
+        insertion: "腸骨稜・白線・鼠径靭帯",
+        nerve: "肋間神経・腸骨下腹・腸骨鼠径神経",
+        action: "両側：体幹屈曲 / 片側：同側側屈・反対側回旋",
+        hint: "ポケットに手を入れる走行。片側が働くと体幹を『反対側』へ回旋！"
+      },
+      {
+        id: "m039",
+        unit: "体幹・頭頸部",
+        name: "内腹斜筋",
+        origin: "胸腰筋膜・腸骨稜・鼠径靭帯",
+        insertion: "第10〜12肋骨・白線",
+        nerve: "肋間神経・腸骨下腹・腸骨鼠径神経",
+        action: "両側：体幹屈曲 / 片側：同側側屈・同側回旋",
+        hint: "外腹斜筋の深層。片側が働くと体幹を『同側』へ回旋する！"
+      },
+      {
+        id: "m040",
+        unit: "体幹・頭頸部",
+        name: "腹横筋",
+        origin: "第7〜12肋軟骨・胸腰筋膜・腸骨稜",
+        insertion: "白線・恥骨",
+        nerve: "肋間神経・腸骨下腹・腸骨鼠径神経",
+        action: "腹圧の上昇・体幹の安定化・強制呼気",
+        hint: "腹筋群の最も深層にある天然のコルセット。息を強く吐く時に働く。"
+      },
+      {
+        id: "m041",
+        unit: "体幹・頭頸部",
+        name: "脊柱起立筋",
+        origin: "仙骨・腸骨稜・腰椎棘突起",
+        insertion: "肋骨・胸椎・頸椎・側頭骨",
+        nerve: "脊髄神経後枝",
+        action: "脊柱の伸展（背屈）・姿勢の保持",
+        hint: "腸肋筋・最長筋・棘筋の3つの総称。背骨をまっすぐ支える抗重力筋。"
+      },
+      {
+        id: "m042",
+        unit: "体幹・頭頸部",
+        name: "腰方形筋",
+        origin: "腸骨稜・腸腰靭帯",
+        insertion: "第12肋骨・L1〜L4横突起",
+        nerve: "肋下神経・腰神経叢（T12〜L3）",
+        action: "体幹の同側側屈・骨盤の挙上（ヒップハイク）",
+        hint: "片麻痺患者が足を振り出す時の『骨盤引き上げ（分回し）』で重要。"
+      },
+      {
+        id: "m043",
+        unit: "体幹・頭頸部",
+        name: "横隔膜",
+        origin: "胸骨部・肋骨部・腰椎部",
+        insertion: "腱中心",
+        nerve: "横隔神経（C3〜C5）",
+        action: "安静時吸気（収縮して下降し、胸腔を広げる）",
+        hint: "『C3・4・5で横隔膜が生きている』！高位頸髄損傷の呼吸管理で超重要。"
+      },
+      {
+        id: "m044",
+        unit: "体幹・頭頸部",
+        name: "外肋間筋",
+        origin: "上位肋骨の下縁",
+        insertion: "下位肋骨の上縁",
+        nerve: "肋間神経（T1〜T11）",
+        action: "肋骨の挙上（安静時吸気）",
+        hint: "横隔膜とともに安静時の『吸気（息を吸う）』を担う主役。"
+      },
+      {
+        id: "m045",
+        unit: "体幹・頭頸部",
+        name: "内肋間筋",
+        origin: "下位肋骨の上縁",
+        insertion: "上位肋骨の下縁",
+        nerve: "肋間神経（T1〜T11）",
+        action: "肋骨の下制（努力呼気）",
+        hint: "外肋間筋と逆の『呼気（息を強く吐く）』で働くのがポイント！"
+      },
+      {
+        id: "m046",
+        unit: "手の内在筋",
+        name: "母指対立筋",
+        origin: "大菱形骨・屈筋支帯",
+        insertion: "第1中手骨の外側縁",
+        nerve: "正中神経（C8〜T1）",
+        action: "母指の対立",
+        hint: "親指と小指を向かい合わせる（つまみ動作の要）筋。正中神経支配。"
+      },
+      {
+        id: "m047",
+        unit: "手の内在筋",
+        name: "短母指屈筋",
+        origin: "浅頭：屈筋支帯 / 深頭：大・小菱形骨・有頭骨",
+        insertion: "母指基節骨底（外側種子骨）",
+        nerve: "浅頭：正中神経 / 深頭：尺骨神経",
+        action: "母指MP関節の屈曲",
+        hint: "浅頭は正中神経、深頭は尺骨神経の『二重神経支配』が国試の超頻出！"
+      },
+      {
+        id: "m048",
+        unit: "手の内在筋",
+        name: "母指内転筋",
+        origin: "斜頭：有頭骨・第2〜3中手骨底 / 横頭：第3中手骨",
+        insertion: "母指基節骨底（内側種子骨）",
+        nerve: "尺骨神経（C8〜T1）",
+        action: "母指の内転",
+        hint: "紙を親指と人差し指で挟む筋。麻痺すると『フローマン徴候』が陽性！"
+      },
+      {
+        id: "m049",
+        unit: "手の内在筋",
+        name: "小指外転筋",
+        origin: "豆状骨・尺側手根屈筋腱",
+        insertion: "小指基節骨底（内側）",
+        nerve: "尺骨神経（C8〜T1）",
+        action: "小指の外転",
+        hint: "小指球の最も外側にある筋。小指球筋はすべて『尺骨神経』支配。"
+      },
+      {
+        id: "m050",
+        unit: "手の内在筋",
+        name: "小指対立筋",
+        origin: "有鈎骨鈎・屈筋支帯",
+        insertion: "第5中手骨の内側縁",
+        nerve: "尺骨神経（C8〜T1）",
+        action: "小指の対立（手掌のくぼみを作る）",
+        hint: "物を握るときに手のひらをカップ状に丸める（横アーチ形成）役割。"
+      },
+      {
+        id: "m051",
+        unit: "手の内在筋",
+        name: "短小指屈筋",
+        origin: "有鈎骨鈎・屈筋支帯",
+        insertion: "小指基節骨底",
+        nerve: "尺骨神経（C8〜T1）",
+        action: "小指MP関節の屈曲",
+        hint: "小指の付け根を曲げる筋。尺骨神経麻痺で小指球全体が萎縮する。"
+      },
+      {
+        id: "m052",
+        unit: "手の内在筋",
+        name: "背側骨間筋",
+        origin: "隣り合う中手骨の対向面（4個）",
+        insertion: "第2〜4指の基節骨底・指背腱膜",
+        nerve: "尺骨神経（C8〜T1）",
+        action: "第2〜4指の外転（パーを開く）・MP屈曲・IP伸展",
+        hint: "覚え方は『DAB（Dorsal＝背側はABduction＝外転）』！すべて尺骨神経。"
+      },
+      {
+        id: "m053",
+        unit: "手の内在筋",
+        name: "掌側骨間筋",
+        origin: "第2・4・5中手骨の掌側面（3個）",
+        insertion: "第2・4・5指の基節骨底・指背腱膜",
+        nerve: "尺骨神経（C8〜T1）",
+        action: "第2・4・5指の内転（指を閉じる）・MP屈曲・IP伸展",
+        hint: "覚え方は『PAD（Palmar＝掌側はADduction＝内転）』！中指には付かない。"
+      },
+      {
+        id: "m054",
+        unit: "手の内在筋",
+        name: "虫様筋",
+        origin: "深指屈筋腱（第2〜5指）",
+        insertion: "第2〜5指の指背腱膜（橈側）",
+        nerve: "第1・2：正中神経 / 第3・4：尺骨神経",
+        action: "MP関節の屈曲、PIP・DIP関節の伸展",
+        hint: "『内在筋プラス肢位』を作る超重要筋。第1・2と第3・4で二重神経支配！"
+      },
+      {
+        id: "m055",
+        unit: "手の内在筋",
+        name: "短掌筋",
+        origin: "手掌腱膜の内側縁",
+        insertion: "小指球の皮膚",
+        nerve: "尺骨神経（浅枝）",
+        action: "小指球の皮膚にシワを寄せる",
+        hint: "手掌の尺側で物をしっかり把持する補助をする皮筋。"
+      }
     ];
 
-    const UNITS = [
-      { id: "上肢帯・上腕", label: "上肢帯・上腕", countLabel: "10筋" },
-      { id: "前腕・手", label: "前腕・手", countLabel: "5筋" },
-      { id: "股関節・大腿", label: "股関節・大腿", countLabel: "10筋" },
-      { id: "下腿・足", label: "下腿・足", countLabel: "5筋" },
-      { id: "ALL_RANDOM", label: "全単元ランダム", countLabel: "10筋出題" }
-    ];
+    // ==========================================
+    // 状態管理
+    // ==========================================
+    const STORAGE_WEAK_KEY = "ot_muscle_weak_ids_v1";
+    const STORAGE_BEST_KEY = "ot_muscle_best_v1";
 
-    const MODES = [
-      { id: "nerve", badge: "初級", label: "筋名 ↔ 支配神経", colLabel: "右：支配神経" },
-      { id: "action", badge: "中級", label: "筋名 ↔ 主な作用", colLabel: "右：主な作用" },
-      { id: "origin_insertion", badge: "上級", label: "筋名 ↔ 起始・停止", colLabel: "右：起始・停止" }
-    ];
+    let selectedUnit = "上肢帯・上腕";
+    let selectedMode = "nerve";
+    let soundOn = true;
+    let isWeakMode = false;
 
-    const STORAGE_KEYS = {
-      WEAK: "ot_muscle_match_weak_v1",
-      BEST: "ot_muscle_match_best_v1",
-      MUTE: "ot_muscle_match_mute_v1"
-    };
+    let queue = [];
+    let currentBatch = [];
+    let selectedLeft = null;
+    let selectedRight = null;
+    let matchedInBatch = 0;
 
-    /**
-     * =========================================================================
-     * 2. Web Audio API サウンドマネージャー（外部音声ファイル不要）
-     * =========================================================================
-     */
-    const SoundManager = {
-      ctx: null,
-      isMuted: false,
+    let timerInterval = null;
+    let startTime = 0;
+    let elapsedSec = 0;
+    let missCount = 0;
+    let combo = 0;
+    let maxCombo = 0;
+    let missedSet = new Set();
+    let playedMuscles = [];
+    let hintTimeout = null;
 
-      init() {
-        try {
-          const savedMute = localStorage.getItem(STORAGE_KEYS.MUTE);
-          this.isMuted = savedMute === "true";
-        } catch (e) {
-          this.isMuted = false;
-        }
-        this.updateButtons();
-      },
-
-      ensureContext() {
-        if (!this.ctx) {
-          const AudioCtx = window.AudioContext || window.webkitAudioContext;
-          if (AudioCtx) {
-            this.ctx = new AudioCtx();
-          }
-        }
-        if (this.ctx && this.ctx.state === "suspended") {
-          this.ctx.resume();
-        }
-      },
-
-      toggleMute() {
-        this.isMuted = !this.isMuted;
-        try {
-          localStorage.setItem(STORAGE_KEYS.MUTE, String(this.isMuted));
-        } catch (e) {}
-        this.updateButtons();
-        if (!this.isMuted) {
-          this.playTap();
-        }
-      },
-
-      updateButtons() {
-        const iconOn = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>`;
-        const iconOff = `<svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path></svg>`;
-        document.querySelectorAll(".btn-sound-toggle").forEach(btn => {
-          btn.innerHTML = this.isMuted ? iconOff : iconOn;
-        });
-      },
-
-      playTone(freq, duration, type = "sine", volume = 0.12, delay = 0) {
-        if (this.isMuted) return;
-        try {
-          this.ensureContext();
-          if (!this.ctx) return;
-          const now = this.ctx.currentTime + delay;
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = type;
-          osc.frequency.setValueAtTime(freq, now);
-          gain.gain.setValueAtTime(volume, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
+    // Web Audio API 効果音
+    let audioCtx = null;
+    function playTone(type) {
+      if (!soundOn) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        const now = audioCtx.currentTime;
+        if (type === "ok") {
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(660, now);
+          osc.frequency.exponentialRampToValueAtTime(990, now + 0.12);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
           osc.start(now);
-          osc.stop(now + duration);
-        } catch (e) {}
-      },
-
-      playTap() {
-        this.playTone(520, 0.06, "sine", 0.06);
-      },
-
-      playCorrect() {
-        // 爽やかな2音チャイム（ピンポン）
-        this.playTone(659.25, 0.12, "sine", 0.12, 0);     // E5
-        this.playTone(880.00, 0.22, "sine", 0.14, 0.08);  // A5
-      },
-
-      playWrong() {
-        // 控えめなブザー音
-        this.playTone(220, 0.18, "triangle", 0.14, 0);
-        this.playTone(185, 0.22, "triangle", 0.14, 0.1);
-      },
-
-      playFanfare() {
-        // クリアファンファーレ（C5-E5-G5-C6）
-        const notes = [523.25, 659.25, 783.99, 1046.50];
-        notes.forEach((n, idx) => {
-          this.playTone(n, idx === 3 ? 0.45 : 0.14, "sine", 0.13, idx * 0.1);
-        });
-      }
-    };
-
-    /**
-     * =========================================================================
-     * 3. ストレージ管理（弱点リスト・ベストタイム）
-     * =========================================================================
-     */
-    const Storage = {
-      getWeakList() {
-        try {
-          const raw = localStorage.getItem(STORAGE_KEYS.WEAK);
-          const parsed = raw ? JSON.parse(raw) : [];
-          return Array.isArray(parsed) ? parsed : [];
-        } catch (e) {
-          return [];
-        }
-      },
-
-      saveWeakList(list) {
-        try {
-          const unique = Array.from(new Set(list));
-          localStorage.setItem(STORAGE_KEYS.WEAK, JSON.stringify(unique));
-        } catch (e) {}
-      },
-
-      addWeak(muscleId) {
-        const list = this.getWeakList();
-        if (!list.includes(muscleId)) {
-          list.push(muscleId);
-          this.saveWeakList(list);
-        }
-      },
-
-      removeWeak(muscleId) {
-        const list = this.getWeakList().filter(id => id !== muscleId);
-        this.saveWeakList(list);
-      },
-
-      clearWeak() {
-        this.saveWeakList([]);
-      },
-
-      getBestTimes() {
-        try {
-          const raw = localStorage.getItem(STORAGE_KEYS.BEST);
-          return raw ? JSON.parse(raw) : {};
-        } catch (e) {
-          return {};
-        }
-      },
-
-      getBestTime(unitId, modeId) {
-        const bests = this.getBestTimes();
-        const key = `${unitId}_${modeId}`;
-        return typeof bests[key] === "number" ? bests[key] : null;
-      },
-
-      updateBestTime(unitId, modeId, elapsedMs) {
-        const bests = this.getBestTimes();
-        const key = `${unitId}_${modeId}`;
-        const prev = bests[key];
-        if (typeof prev !== "number" || elapsedMs < prev) {
-          bests[key] = elapsedMs;
-          try {
-            localStorage.setItem(STORAGE_KEYS.BEST, JSON.stringify(bests));
-          } catch (e) {}
-          return true; // 新記録
-        }
-        return false;
-      }
-    };
-
-    /**
-     * =========================================================================
-     * 4. アプリ状態管理
-     * =========================================================================
-     */
-    const state = {
-      selectedUnit: UNITS[0].id,
-      selectedMode: MODES[0].id,
-      isWeakMode: false,
-
-      // プレイ中状態
-      allSessionMuscles: [], // 今回のセッションで出題する全筋
-      batches: [],           // 5筋ずつのラウンド配列
-      currentBatchIndex: 0,
-      leftCards: [],         // 現ラウンドの左列5枚
-      rightCards: [],        // 現ラウンドの右列5枚
-      matchedLeftSlots: new Set(),
-      matchedRightSlots: new Set(),
-      selectedLeftSlot: null,
-      selectedRightSlot: null,
-      isProcessingMismatch: false,
-
-      totalPairs: 0,
-      clearedPairs: 0,
-      misses: 0,
-      combo: 0,
-      sessionMistakeIds: new Set(), // 今回1回でも間違えた筋ID
-
-      // タイマー
-      startTime: 0,
-      elapsedMs: 0,
-      timerInterval: null,
-      hintTimeout: null
-    };
-
-    /**
-     * =========================================================================
-     * 5. ユーティリティ関数
-     * =========================================================================
-     */
-    function shuffle(array) {
-      const arr = [...array];
-      for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-      }
-      return arr;
-    }
-
-    function formatTime(ms) {
-      const totalSeconds = Math.floor(ms / 1000);
-      const minutes = Math.floor(totalSeconds / 60);
-      const seconds = totalSeconds % 60;
-      const tenths = Math.floor((ms % 1000) / 100);
-      return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}.${tenths}`;
-    }
-
-    /**
-     * 出題モードに応じた解答テキスト（比較・表示用）を取得
-     */
-    function getAnswerText(muscle, modeId) {
-      if (modeId === "nerve") return muscle.nerve;
-      if (modeId === "action") return muscle.action;
-      if (modeId === "origin_insertion") return `起始:${muscle.origin} / 停止:${muscle.insertion}`;
-      return muscle.nerve;
-    }
-
-    /**
-     * 右カード表示用のHTML（上級は起始・停止を見やすく2行分け）
-     */
-    function getAnswerCardHTML(muscle, modeId) {
-      if (modeId === "origin_insertion") {
-        return `
-          <div class="text-left w-full space-y-1">
-            <div class="leading-tight"><span class="inline-block text-[10px] font-extrabold text-teal-700 bg-teal-50 px-1 rounded mr-1">起</span><span class="text-[11px] font-semibold text-slate-700">${muscle.origin}</span></div>
-            <div class="leading-tight"><span class="inline-block text-[10px] font-extrabold text-emerald-700 bg-emerald-50 px-1 rounded mr-1">停</span><span class="text-[11px] font-semibold text-slate-700">${muscle.insertion}</span></div>
-          </div>
-        `;
-      }
-      return `<span class="text-xs sm:text-[13px] font-bold leading-snug text-slate-800">${getAnswerText(muscle, modeId)}</span>`;
-    }
-
-    /**
-     * 同じ5枚バッチ内に同一解答テキストが極力被らないようにバッチ分割する
-     */
-    function buildSmartBatches(muscles, modeId, batchSize = 5) {
-      const shuffled = shuffle(muscles);
-      const totalBatches = Math.ceil(shuffled.length / batchSize);
-      if (totalBatches <= 1) {
-        return [shuffled];
-      }
-
-      const batches = Array.from({ length: totalBatches }, () => []);
-      const leftovers = [];
-
-      // まず、各バッチに解答テキストが重複しないように優先配置
-      for (const m of shuffled) {
-        const ans = getAnswerText(m, modeId);
-        let placed = false;
-        // 最も枚数が少ないバッチのうち、同じ解答がないバッチを探す
-        const candidateIndices = batches
-          .map((b, idx) => ({ idx, len: b.length }))
-          .filter(item => item.len < batchSize)
-          .sort((a, b) => a.len - b.len);
-
-        for (const c of candidateIndices) {
-          const hasDup = batches[c.idx].some(existing => getAnswerText(existing, modeId) === ans);
-          if (!hasDup) {
-            batches[c.idx].push(m);
-            placed = true;
-            break;
-          }
-        }
-        if (!placed) {
-          leftovers.push(m);
-        }
-      }
-
-      // どうしても重複せざるを得ない残りを空きスロットに配置
-      for (const m of leftovers) {
-        const target = batches.find(b => b.length < batchSize);
-        if (target) target.push(m);
-      }
-
-      return batches.filter(b => b.length > 0);
-    }
-
-    /**
-     * =========================================================================
-     * 6. カスタムモーダル（alert/confirm代替）
-     * =========================================================================
-     */
-    function showModal({ title, message, confirmText = "実行する", confirmClass = "bg-rose-600 hover:bg-rose-700", onConfirm }) {
-      const modal = document.getElementById("custom-modal");
-      document.getElementById("modal-title").textContent = title;
-      document.getElementById("modal-message").textContent = message;
-
-      const btnConfirm = document.getElementById("modal-confirm");
-      const btnCancel = document.getElementById("modal-cancel");
-
-      btnConfirm.textContent = confirmText;
-      btnConfirm.className = `px-4 py-2.5 rounded-xl text-white text-xs font-bold transition ${confirmClass}`;
-
-      const close = () => {
-        modal.classList.add("hidden");
-        btnConfirm.onclick = null;
-        btnCancel.onclick = null;
-      };
-
-      btnCancel.onclick = close;
-      btnConfirm.onclick = () => {
-        close();
-        if (onConfirm) onConfirm();
-      };
-
-      modal.classList.remove("hidden");
-    }
-
-    /**
-     * =========================================================================
-     * 7. 画面切り替え＆スタート画面描画
-     * =========================================================================
-     */
-    function showScreen(screenId) {
-      ["screen-start", "screen-play", "screen-result"].forEach(id => {
-        const el = document.getElementById(id);
-        if (id === screenId) {
-          el.classList.remove("hidden");
+          osc.stop(now + 0.15);
         } else {
-          el.classList.add("hidden");
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(220, now);
+          osc.frequency.linearRampToValueAtTime(150, now + 0.18);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+          osc.start(now);
+          osc.stop(now + 0.2);
         }
-      });
-      window.scrollTo({ top: 0, behavior: "instant" });
+      } catch (e) {}
+    }
+
+    function getWeakIds() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_WEAK_KEY) || "[]");
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveWeakIds(ids) {
+      try {
+        localStorage.setItem(STORAGE_WEAK_KEY, JSON.stringify([...new Set(ids)]));
+      } catch (e) {}
+    }
+
+    function getBestRecords() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_BEST_KEY) || "{}");
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveBestRecord(key, sec) {
+      try {
+        const data = getBestRecords();
+        if (!data[key] || sec < data[key]) {
+          data[key] = sec;
+          localStorage.setItem(STORAGE_BEST_KEY, JSON.stringify(data));
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    function getAnswerText(muscle, mode) {
+      if (mode === "nerve") return muscle.nerve;
+      if (mode === "action") return muscle.action;
+      return `【起】${muscle.origin}\n【停】${muscle.insertion}`;
+    }
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    // ==========================================
+    // 初期化・画面切り替え
+    // ==========================================
+    function showScreen(id) {
+      document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
     }
 
     function renderStartScreen() {
-      // 単元リスト描画
-      const unitContainer = document.getElementById("unit-selector");
-      unitContainer.innerHTML = "";
-      UNITS.forEach(u => {
-        const isSelected = state.selectedUnit === u.id;
+      const units = [...new Set(MUSCLES.map(m => m.unit))];
+      const unitGrid = document.getElementById("unitGrid");
+      unitGrid.innerHTML = "";
+
+      units.forEach(u => {
+        const count = MUSCLES.filter(m => m.unit === u).length;
         const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = `w-full px-3.5 py-2.5 rounded-xl border-2 text-left flex items-center justify-between transition active:scale-[0.99] ${
-          isSelected
-            ? "border-teal-600 bg-teal-50/80 text-teal-900 shadow-sm"
-            : "border-slate-200 bg-white text-slate-700 hover:border-teal-300"
-        }`;
-        btn.innerHTML = `
-          <div class="flex items-center gap-2.5">
-            <span class="w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${
-              isSelected ? "border-teal-600" : "border-slate-300"
-            }">
-              ${isSelected ? '<span class="w-2 h-2 rounded-full bg-teal-600"></span>' : ""}
-            </span>
-            <span class="text-sm font-bold">${u.label}</span>
-          </div>
-          <span class="text-xs font-bold px-2 py-0.5 rounded-full ${
-            isSelected ? "bg-teal-600 text-white" : "bg-slate-100 text-slate-500"
-          }">${u.countLabel}</span>
-        `;
+        btn.className = "select-btn" + (selectedUnit === u ? " selected" : "");
+        btn.innerHTML = `${u}<span class="sub">${count}筋</span>`;
         btn.onclick = () => {
-          SoundManager.playTap();
-          state.selectedUnit = u.id;
+          selectedUnit = u;
           renderStartScreen();
         };
-        unitContainer.appendChild(btn);
+        unitGrid.appendChild(btn);
       });
 
-      // 出題モード描画
-      const modeContainer = document.getElementById("mode-selector");
-      modeContainer.innerHTML = "";
-      MODES.forEach(m => {
-        const isSelected = state.selectedMode === m.id;
-        const badgeColor = m.id === "nerve"
-          ? "bg-emerald-100 text-emerald-800"
-          : m.id === "action"
-          ? "bg-sky-100 text-sky-800"
-          : "bg-indigo-100 text-indigo-800";
+      // 全単元ランダム（10筋）
+      const allBtn = document.createElement("button");
+      allBtn.className = "select-btn" + (selectedUnit === "ALL" ? " selected" : "");
+      allBtn.style.gridColumn = "span 2";
+      allBtn.innerHTML = `全単元ランダム出題<span class="sub">55筋からランダム10筋</span>`;
+      allBtn.onclick = () => {
+        selectedUnit = "ALL";
+        renderStartScreen();
+      };
+      unitGrid.appendChild(allBtn);
 
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.className = `w-full px-3.5 py-2.5 rounded-xl border-2 text-left flex items-center justify-between transition active:scale-[0.99] ${
-          isSelected
-            ? "border-teal-600 bg-teal-50/80 text-teal-900 shadow-sm"
-            : "border-slate-200 bg-white text-slate-700 hover:border-teal-300"
-        }`;
-        btn.innerHTML = `
-          <div class="flex items-center gap-2.5">
-            <span class="text-[11px] font-extrabold px-2 py-0.5 rounded-md ${badgeColor}">${m.badge}</span>
-            <span class="text-sm font-bold">${m.label}</span>
-          </div>
-          ${isSelected ? '<svg class="w-5 h-5 text-teal-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>' : ""}
-        `;
-        btn.onclick = () => {
-          SoundManager.playTap();
-          state.selectedMode = m.id;
-          renderStartScreen();
-        };
-        modeContainer.appendChild(btn);
-      });
-
-      // ベストタイム表示更新
-      const bestMs = Storage.getBestTime(state.selectedUnit, state.selectedMode);
-      document.getElementById("start-best-time").textContent = bestMs !== null ? formatTime(bestMs) : "--:--.-";
-
-      // 弱点復習ボタン更新
-      const weakIds = Storage.getWeakList();
-      const weakSection = document.getElementById("weak-section");
+      // 弱点ボタン
+      const weakIds = getWeakIds();
+      const weakBtn = document.getElementById("weakBtn");
       if (weakIds.length > 0) {
-        weakSection.classList.remove("hidden");
-        document.getElementById("weak-count").textContent = weakIds.length;
+        weakBtn.style.display = "block";
+        document.getElementById("weakCount").textContent = weakIds.length;
       } else {
-        weakSection.classList.add("hidden");
+        weakBtn.style.display = "none";
       }
+
+      // ベストタイム表示
+      const bestKey = `${selectedUnit}_${selectedMode}`;
+      const best = getBestRecords()[bestKey];
+      document.getElementById("bestRecord").textContent = best
+        ? `この条件のベストタイム：${best.toFixed(1)}秒`
+        : "まだクリア記録がありません";
     }
 
-    /**
-     * =========================================================================
-     * 8. ゲーム開始・進行ロジック
-     * =========================================================================
-     */
-    function startGame(isWeakMode = false) {
-      SoundManager.playTap();
-      state.isWeakMode = isWeakMode;
+    // ==========================================
+    // ゲーム開始・進行
+    // ==========================================
+    function startGame(weakOnly = false) {
+      isWeakMode = weakOnly;
+      let targetMuscles = [];
 
-      let pool = [];
-      if (isWeakMode) {
-        const weakIds = Storage.getWeakList();
-        pool = MUSCLE_DATA.filter(m => weakIds.includes(m.id));
-        if (pool.length === 0) {
-          renderStartScreen();
-          return;
-        }
-      } else if (state.selectedUnit === "ALL_RANDOM") {
-        pool = shuffle(MUSCLE_DATA).slice(0, 10);
+      if (weakOnly) {
+        const weakIds = getWeakIds();
+        targetMuscles = MUSCLES.filter(m => weakIds.includes(m.id));
+        if (targetMuscles.length === 0) return;
+      } else if (selectedUnit === "ALL") {
+        targetMuscles = shuffle(MUSCLES).slice(0, 10);
       } else {
-        pool = MUSCLE_DATA.filter(m => m.unit === state.selectedUnit);
+        targetMuscles = MUSCLES.filter(m => m.unit === selectedUnit);
       }
 
-      state.allSessionMuscles = pool;
-      state.batches = buildSmartBatches(pool, state.selectedMode, 5);
-      state.currentBatchIndex = 0;
-      state.totalPairs = pool.length;
-      state.clearedPairs = 0;
-      state.misses = 0;
-      state.combo = 0;
-      state.sessionMistakeIds = new Set();
+      playedMuscles = [...targetMuscles];
+      queue = shuffle(targetMuscles);
+      missCount = 0;
+      combo = 0;
+      maxCombo = 0;
+      missedSet = new Set();
+      selectedLeft = null;
+      selectedRight = null;
 
-      // ヘッダーラベル更新
-      const modeObj = MODES.find(m => m.id === state.selectedMode);
-      const unitLabel = isWeakMode
-        ? "弱点復習"
-        : (UNITS.find(u => u.id === state.selectedUnit)?.label || "");
-      document.getElementById("play-info-label").textContent = `${unitLabel} / ${modeObj.badge}：${modeObj.label.replace("筋名 ↔ ", "")}`;
-      document.getElementById("play-right-col-label").textContent = modeObj.colLabel;
+      const headerMap = {
+        nerve: "支配神経",
+        action: "主な作用",
+        originInsertion: "起始・停止"
+      };
+      document.getElementById("rightColHeader").textContent = headerMap[selectedMode];
+      document.getElementById("combo").textContent = "0";
+      document.getElementById("hintToast").classList.remove("show");
 
-      hideHintBanner();
-      showScreen("screen-play");
-      loadBatch(0);
-      startTimer();
+      showScreen("playScreen");
+      startTime = Date.now();
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        elapsedSec = (Date.now() - startTime) / 1000;
+        document.getElementById("timer").textContent = elapsedSec.toFixed(1);
+      }, 100);
+
+      nextBatch();
     }
 
-    function loadBatch(batchIndex) {
-      state.currentBatchIndex = batchIndex;
-      const batch = state.batches[batchIndex];
-      state.leftCards = shuffle(batch);
-      state.rightCards = shuffle(batch);
-      state.matchedLeftSlots = new Set();
-      state.matchedRightSlots = new Set();
-      state.selectedLeftSlot = null;
-      state.selectedRightSlot = null;
-      state.isProcessingMismatch = false;
-
-      // ラウンド表示
-      const roundBadge = document.getElementById("play-round-badge");
-      if (state.batches.length > 1) {
-        roundBadge.classList.remove("hidden");
-        roundBadge.textContent = `Round ${batchIndex + 1}/${state.batches.length}`;
-      } else {
-        roundBadge.classList.add("hidden");
-      }
-
-      updatePlayStats();
-      renderBoard();
-    }
-
-    function updatePlayStats() {
-      const remaining = state.totalPairs - state.clearedPairs;
-      document.getElementById("play-remaining").textContent = `${remaining}/${state.totalPairs}`;
-
-      const comboWrap = document.getElementById("play-combo-wrap");
-      if (state.combo >= 2) {
-        comboWrap.classList.remove("hidden");
-        document.getElementById("play-combo").textContent = state.combo;
-      } else {
-        comboWrap.classList.add("hidden");
-      }
-    }
-
-    function renderBoard() {
-      const colLeft = document.getElementById("col-left");
-      const colRight = document.getElementById("col-right");
-      colLeft.innerHTML = "";
-      colRight.innerHTML = "";
-
-      // 左列（筋名）
-      state.leftCards.forEach((muscle, idx) => {
-        const isMatched = state.matchedLeftSlots.has(idx);
-        const isSelected = state.selectedLeftSlot === idx;
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.id = `left-card-${idx}`;
-        btn.disabled = isMatched;
-        btn.className = `w-full min-h-[76px] p-2.5 rounded-2xl border-2 font-extrabold text-sm sm:text-[15px] flex items-center justify-center text-center transition-all duration-150 select-none ${
-          isMatched
-            ? "border-emerald-200 bg-emerald-50/50 text-emerald-700/40 opacity-35 cursor-default scale-95"
-            : isSelected
-            ? "border-teal-600 bg-teal-50 text-teal-900 shadow-md ring-2 ring-teal-500/30 scale-[1.02]"
-            : "border-slate-200 bg-white text-slate-800 hover:border-teal-300 shadow-sm active:scale-95"
-        }`;
-        btn.innerHTML = isMatched
-          ? `<span class="flex items-center gap-1 text-xs"><svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>${muscle.name}</span>`
-          : `<span>${muscle.name}</span>`;
-
-        if (!isMatched) {
-          btn.onclick = () => onSelectCard("left", idx);
-        }
-        colLeft.appendChild(btn);
-      });
-
-      // 右列（解答）
-      state.rightCards.forEach((muscle, idx) => {
-        const isMatched = state.matchedRightSlots.has(idx);
-        const isSelected = state.selectedRightSlot === idx;
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.id = `right-card-${idx}`;
-        btn.disabled = isMatched;
-        btn.className = `w-full min-h-[76px] p-2.5 rounded-2xl border-2 flex items-center justify-center text-center transition-all duration-150 select-none ${
-          isMatched
-            ? "border-emerald-200 bg-emerald-50/50 text-emerald-700/40 opacity-35 cursor-default scale-95"
-            : isSelected
-            ? "border-teal-600 bg-teal-50 text-teal-900 shadow-md ring-2 ring-teal-500/30 scale-[1.02]"
-            : "border-slate-200 bg-white text-slate-800 hover:border-teal-300 shadow-sm active:scale-95"
-        }`;
-        btn.innerHTML = isMatched
-          ? `<span class="text-xs font-bold text-emerald-600">✓ クリア</span>`
-          : getAnswerCardHTML(muscle, state.selectedMode);
-
-        if (!isMatched) {
-          btn.onclick = () => onSelectCard("right", idx);
-        }
-        colRight.appendChild(btn);
-      });
-    }
-
-    function onSelectCard(side, slotIdx) {
-      if (state.isProcessingMismatch) return;
-
-      SoundManager.playTap();
-
-      if (side === "left") {
-        state.selectedLeftSlot = (state.selectedLeftSlot === slotIdx) ? null : slotIdx;
-      } else {
-        state.selectedRightSlot = (state.selectedRightSlot === slotIdx) ? null : slotIdx;
-      }
-
-      // 両方選択されたら判定
-      if (state.selectedLeftSlot !== null && state.selectedRightSlot !== null) {
-        checkMatch(state.selectedLeftSlot, state.selectedRightSlot);
-      } else {
-        renderBoard();
-      }
-    }
-
-    function checkMatch(leftIdx, rightIdx) {
-      const leftMuscle = state.leftCards[leftIdx];
-      const rightMuscle = state.rightCards[rightIdx];
-
-      // 正解判定：ID一致 または 解答テキスト完全一致
-      const isCorrect =
-        leftMuscle.id === rightMuscle.id ||
-        getAnswerText(leftMuscle, state.selectedMode) === getAnswerText(rightMuscle, state.selectedMode);
-
-      const leftEl = document.getElementById(`left-card-${leftIdx}`);
-      const rightEl = document.getElementById(`right-card-${rightIdx}`);
-
-      if (isCorrect) {
-        // 正解演出
-        SoundManager.playCorrect();
-        state.matchedLeftSlots.add(leftIdx);
-        state.matchedRightSlots.add(rightIdx);
-        state.selectedLeftSlot = null;
-        state.selectedRightSlot = null;
-        state.clearedPairs++;
-        state.combo++;
-
-        // 弱点復習モードで今回ノーミス正解なら弱点から自動解除
-        if (state.isWeakMode && !state.sessionMistakeIds.has(leftMuscle.id)) {
-          Storage.removeWeak(leftMuscle.id);
-        }
-
-        if (leftEl) {
-          leftEl.classList.remove("border-teal-600", "bg-teal-50");
-          leftEl.classList.add("border-emerald-500", "bg-emerald-100", "animate-match");
-        }
-        if (rightEl) {
-          rightEl.classList.remove("border-teal-600", "bg-teal-50");
-          rightEl.classList.add("border-emerald-500", "bg-emerald-100", "animate-match");
-        }
-
-        updatePlayStats();
-
-        setTimeout(() => {
-          // ラウンド終了チェック
-          if (state.matchedLeftSlots.size === state.leftCards.length) {
-            if (state.currentBatchIndex + 1 < state.batches.length) {
-              loadBatch(state.currentBatchIndex + 1);
-            } else {
-              finishGame();
-            }
-          } else {
-            renderBoard();
-          }
-        }, 280);
-
-      } else {
-        // 不正解演出
-        SoundManager.playWrong();
-        state.isProcessingMismatch = true;
-        state.misses++;
-        state.combo = 0;
-        state.sessionMistakeIds.add(leftMuscle.id);
-        Storage.addWeak(leftMuscle.id);
-
-        updatePlayStats();
-
-        if (leftEl) {
-          leftEl.classList.remove("border-teal-600", "bg-teal-50");
-          leftEl.classList.add("border-rose-500", "bg-rose-50", "text-rose-700", "animate-shake");
-        }
-        if (rightEl) {
-          rightEl.classList.remove("border-teal-600", "bg-teal-50");
-          rightEl.classList.add("border-rose-500", "bg-rose-50", "text-rose-700", "animate-shake");
-        }
-
-        // ヒントバナー表示（3秒間）
-        showHintBanner(leftMuscle);
-
-        setTimeout(() => {
-          state.selectedLeftSlot = null;
-          state.selectedRightSlot = null;
-          state.isProcessingMismatch = false;
-          renderBoard();
-        }, 420);
-      }
-    }
-
-    function showHintBanner(muscle) {
-      const banner = document.getElementById("hint-banner");
-      const ansText = getAnswerText(muscle, state.selectedMode);
-      document.getElementById("hint-answer-text").textContent = `【${muscle.name}】${ansText}`;
-      document.getElementById("hint-tip-text").textContent = `ヒント：${muscle.hint}`;
-
-      banner.classList.remove("hidden");
-      if (state.hintTimeout) clearTimeout(state.hintTimeout);
-      state.hintTimeout = setTimeout(() => {
-        hideHintBanner();
-      }, 3500);
-    }
-
-    function hideHintBanner() {
-      document.getElementById("hint-banner").classList.add("hidden");
-      if (state.hintTimeout) {
-        clearTimeout(state.hintTimeout);
-        state.hintTimeout = null;
-      }
-    }
-
-    /**
-     * =========================================================================
-     * 9. タイマー制御
-     * =========================================================================
-     */
-    function startTimer() {
-      stopTimer();
-      state.startTime = performance.now();
-      state.elapsedMs = 0;
-      document.getElementById("play-timer").textContent = "00:00.0";
-      state.timerInterval = setInterval(() => {
-        state.elapsedMs = performance.now() - state.startTime;
-        document.getElementById("play-timer").textContent = formatTime(state.elapsedMs);
-      }, 50);
-    }
-
-    function stopTimer() {
-      if (state.timerInterval) {
-        clearInterval(state.timerInterval);
-        state.timerInterval = null;
-      }
-    }
-
-    /**
-     * =========================================================================
-     * 10. クリア処理＆リザルト画面描画
-     * =========================================================================
-     */
-    function finishGame() {
-      stopTimer();
-      hideHintBanner();
-      SoundManager.playFanfare();
-
-      // ベストタイム更新（通常モード時のみ）
-      let isNewRecord = false;
-      if (!state.isWeakMode) {
-        isNewRecord = Storage.updateBestTime(state.selectedUnit, state.selectedMode, state.elapsedMs);
-      }
-
-      // ランク計算
-      let rank = "B";
-      let rankColor = "text-amber-600";
-      if (state.misses === 0) {
-        rank = "S";
-        rankColor = "text-teal-600";
-      } else if (state.misses <= 2) {
-        rank = "A";
-        rankColor = "text-sky-600";
-      }
-
-      // ヘッダー・スコア反映
-      const newRecordEl = document.getElementById("result-new-record");
-      if (isNewRecord) {
-        newRecordEl.classList.remove("hidden");
-      } else {
-        newRecordEl.classList.add("hidden");
-      }
-
-      const modeObj = MODES.find(m => m.id === state.selectedMode);
-      const unitLabel = state.isWeakMode
-        ? "弱点復習モード"
-        : (UNITS.find(u => u.id === state.selectedUnit)?.label || "");
-      document.getElementById("result-subtitle").textContent = `${unitLabel} ／ ${modeObj.badge}：${modeObj.label}`;
-
-      const rankEl = document.getElementById("result-rank");
-      rankEl.textContent = rank;
-      rankEl.className = `text-3xl font-extrabold leading-none ${rankColor}`;
-
-      document.getElementById("result-time").textContent = formatTime(state.elapsedMs);
-      document.getElementById("result-misses").innerHTML = `${state.misses}<span class="text-xs font-bold text-slate-400 ml-0.5">回</span>`;
-
-      // ミスした筋のリスト
-      const mistakeMuscles = Array.from(state.sessionMistakeIds)
-        .map(id => MUSCLE_DATA.find(m => m.id === id))
-        .filter(Boolean);
-
-      // グループ学習用：ひとこと解説お題のピックアップ
-      const topicPool = mistakeMuscles.length > 0 ? mistakeMuscles : state.allSessionMuscles;
-      const topicMuscle = topicPool[Math.floor(Math.random() * topicPool.length)];
-      renderGroupTopic(topicMuscle);
-
-      // 今回のミス一覧描画
-      renderMistakeList(mistakeMuscles);
-
-      showScreen("screen-result");
-    }
-
-    function renderGroupTopic(muscle) {
-      document.getElementById("group-topic-text").textContent =
-        `「${muscle.name}」の起始・停止と動きを、自分の体を使って班のメンバーに実演・解説してみよう！`;
-
-      const answerBox = document.getElementById("group-topic-answer");
-      answerBox.classList.add("hidden");
-      document.getElementById("topic-chevron").classList.remove("rotate-180");
-
-      answerBox.innerHTML = `
-        <div class="font-extrabold text-sm text-teal-800 pb-1 border-b border-slate-100">${muscle.name}（${muscle.unit}）</div>
-        <div><span class="font-bold text-slate-500">起始：</span>${muscle.origin}</div>
-        <div><span class="font-bold text-slate-500">停止：</span>${muscle.insertion}</div>
-        <div><span class="font-bold text-slate-500">支配神経：</span><span class="font-bold text-teal-700">${muscle.nerve}</span></div>
-        <div><span class="font-bold text-slate-500">作用：</span>${muscle.action}</div>
-        <div class="pt-1 text-amber-800 bg-amber-50 p-2 rounded-lg"><span class="font-bold">💡 ヒント：</span>${muscle.hint}</div>
-      `;
-    }
-
-    function renderMistakeList(mistakeMuscles) {
-      const container = document.getElementById("result-mistakes-container");
-      const badge = document.getElementById("result-mistake-count-badge");
-      container.innerHTML = "";
-
-      if (mistakeMuscles.length === 0) {
-        badge.textContent = "ミスなし！";
-        badge.className = "text-[11px] font-bold text-emerald-600";
-        container.innerHTML = `
-          <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 text-center">
-            <div class="text-2xl mb-1">🎉</div>
-            <p class="text-sm font-extrabold text-emerald-800">パーフェクト！全問ノーミスでクリアしました</p>
-            <p class="text-xs text-emerald-700 mt-1">この調子で次のモードや単元にも挑戦しよう！</p>
-          </div>
-        `;
+    function nextBatch() {
+      if (queue.length === 0) {
+        finishGame();
         return;
       }
 
-      badge.textContent = `${mistakeMuscles.length}筋を弱点リストに登録`;
-      badge.className = "text-[11px] font-bold text-rose-600";
+      // 同じ解答テキストが極力かぶらないように最大5枚抽出
+      currentBatch = [];
+      const usedAnswers = new Set();
+      const leftover = [];
 
-      mistakeMuscles.forEach(m => {
-        const card = document.createElement("div");
-        card.className = "bg-white rounded-2xl p-3.5 border border-rose-100 shadow-sm text-xs space-y-1.5";
-        card.innerHTML = `
-          <div class="flex items-center justify-between border-b border-slate-100 pb-1.5">
-            <span class="text-sm font-extrabold text-slate-900">${m.name}</span>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">${m.unit}</span>
-          </div>
-          <div><span class="font-bold text-slate-400">起始：</span><span class="text-slate-700">${m.origin}</span></div>
-          <div><span class="font-bold text-slate-400">停止：</span><span class="text-slate-700">${m.insertion}</span></div>
-          <div><span class="font-bold text-slate-400">支配神経：</span><span class="font-bold text-teal-700">${m.nerve}</span></div>
-          <div><span class="font-bold text-slate-400">作用：</span><span class="text-slate-700">${m.action}</span></div>
-          <div class="pt-1 text-rose-800 bg-rose-50/70 p-2 rounded-lg leading-relaxed"><span class="font-bold">💡 </span>${m.hint}</div>
-        `;
-        container.appendChild(card);
-      });
-    }
-
-    /**
-     * =========================================================================
-     * 11. イベントリスナー登録＆初期化
-     * =========================================================================
-     */
-    function initApp() {
-      SoundManager.init();
-      renderStartScreen();
-
-      // 効果音ON/OFF（スタート画面・プレイ画面共通）
-      document.querySelectorAll(".btn-sound-toggle").forEach(btn => {
-        btn.addEventListener("click", () => SoundManager.toggleMute());
-      });
-
-      // 通常スタート
-      document.getElementById("btn-start-normal").addEventListener("click", () => {
-        startGame(false);
-      });
-
-      // 弱点復習スタート
-      document.getElementById("btn-start-weak").addEventListener("click", () => {
-        startGame(true);
-      });
-
-      // 弱点リセット
-      document.getElementById("btn-reset-weak").addEventListener("click", () => {
-        SoundManager.playTap();
-        showModal({
-          title: "弱点リストをリセット",
-          message: "保存されている弱点リスト（間違えた筋）をすべて削除しますか？",
-          confirmText: "リセットする",
-          onConfirm: () => {
-            Storage.clearWeak();
-            renderStartScreen();
-          }
-        });
-      });
-
-      // プレイ中断
-      document.getElementById("btn-quit").addEventListener("click", () => {
-        SoundManager.playTap();
-        showModal({
-          title: "プレイを中断",
-          message: "タイトル画面に戻りますか？（現在のタイムは記録されません）",
-          confirmText: "タイトルへ戻る",
-          confirmClass: "bg-teal-600 hover:bg-teal-700",
-          onConfirm: () => {
-            stopTimer();
-            hideHintBanner();
-            renderStartScreen();
-            showScreen("screen-start");
-          }
-        });
-      });
-
-      // ヒントバナー手動閉じる
-      document.getElementById("btn-close-hint").addEventListener("click", hideHintBanner);
-
-      // グループお題の解答開閉
-      document.getElementById("btn-toggle-topic-answer").addEventListener("click", () => {
-        SoundManager.playTap();
-        const box = document.getElementById("group-topic-answer");
-        const chevron = document.getElementById("topic-chevron");
-        box.classList.toggle("hidden");
-        chevron.classList.toggle("rotate-180");
-      });
-
-      // リザルト：もう一度挑戦
-      document.getElementById("btn-retry").addEventListener("click", () => {
-        // 弱点モードですべて解除された場合はタイトルへ戻す
-        if (state.isWeakMode && Storage.getWeakList().length === 0) {
-          renderStartScreen();
-          showScreen("screen-start");
-          return;
+      for (const m of queue) {
+        const ans = getAnswerText(m, selectedMode);
+        if (currentBatch.length < 5 && !usedAnswers.has(ans)) {
+          currentBatch.push(m);
+          usedAnswers.add(ans);
+        } else {
+          leftover.push(m);
         }
-        startGame(state.isWeakMode);
+      }
+      while (currentBatch.length < 5 && leftover.length > 0) {
+        currentBatch.push(leftover.shift());
+      }
+      queue = leftover;
+      matchedInBatch = 0;
+      selectedLeft = null;
+      selectedRight = null;
+
+      updateRemaining();
+      renderBoard();
+    }
+
+    function updateRemaining() {
+      const rem = queue.length + (currentBatch.length - matchedInBatch);
+      document.getElementById("remaining").textContent = rem;
+    }
+
+    function renderBoard() {
+      const leftCol = document.getElementById("leftCol");
+      const rightCol = document.getElementById("rightCol");
+      leftCol.innerHTML = "";
+      rightCol.innerHTML = "";
+
+      const leftItems = shuffle(currentBatch);
+      const rightItems = shuffle(currentBatch);
+
+      leftItems.forEach(m => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.textContent = m.name;
+        card.dataset.id = m.id;
+        card.dataset.answer = getAnswerText(m, selectedMode);
+        card.onclick = () => selectCard("left", card, m);
+        leftCol.appendChild(card);
       });
 
-      // リザルト：タイトルへ戻る
-      document.getElementById("btn-back-title").addEventListener("click", () => {
-        SoundManager.playTap();
-        renderStartScreen();
-        showScreen("screen-start");
+      rightItems.forEach(m => {
+        const card = document.createElement("div");
+        card.className = "card answer-card";
+        card.style.whiteSpace = "pre-line";
+        card.textContent = getAnswerText(m, selectedMode);
+        card.dataset.id = m.id;
+        card.dataset.answer = getAnswerText(m, selectedMode);
+        card.onclick = () => selectCard("right", card, m);
+        rightCol.appendChild(card);
       });
     }
 
-    document.addEventListener("DOMContentLoaded", initApp);
+    function selectCard(side, el, muscle) {
+      if (el.classList.contains("correct")) return;
+
+      if (side === "left") {
+        if (selectedLeft) selectedLeft.el.classList.remove("selected");
+        selectedLeft = { el, muscle };
+        el.classList.add("selected");
+      } else {
+        if (selectedRight) selectedRight.el.classList.remove("selected");
+        selectedRight = { el, muscle };
+        el.classList.add("selected");
+      }
+
+      if (selectedLeft && selectedRight) {
+        checkMatch();
+      }
+    }
+
+    function checkMatch() {
+      const l = selectedLeft;
+      const r = selectedRight;
+      selectedLeft = null;
+      selectedRight = null;
+
+      // 解答テキストが一致すれば正解（同一神経の筋が並んだ場合にも対応）
+      const isMatch = l.el.dataset.answer === r.el.dataset.answer;
+
+      if (isMatch) {
+        playTone("ok");
+        l.el.classList.remove("selected");
+        r.el.classList.remove("selected");
+        l.el.classList.add("correct");
+        r.el.classList.add("correct");
+
+        combo++;
+        if (combo > maxCombo) maxCombo = combo;
+        document.getElementById("combo").textContent = combo;
+
+        matchedInBatch++;
+        updateRemaining();
+
+        // 弱点復習モードでノーミス正解なら弱点から解除
+        if (isWeakMode && !missedSet.has(l.muscle.id)) {
+          const weakIds = getWeakIds().filter(id => id !== l.muscle.id);
+          saveWeakIds(weakIds);
+        }
+
+        if (matchedInBatch === currentBatch.length) {
+          setTimeout(nextBatch, 320);
+        }
+      } else {
+        playTone("ng");
+        missCount++;
+        combo = 0;
+        document.getElementById("combo").textContent = "0";
+
+        missedSet.add(l.muscle.id);
+        const weakIds = getWeakIds();
+        weakIds.push(l.muscle.id);
+        saveWeakIds(weakIds);
+
+        l.el.classList.remove("selected");
+        r.el.classList.remove("selected");
+        l.el.classList.add("wrong");
+        r.el.classList.add("wrong");
+        setTimeout(() => {
+          l.el.classList.remove("wrong");
+          r.el.classList.remove("wrong");
+        }, 380);
+
+        showHint(`💡 ${l.muscle.name}：${l.muscle.hint}`);
+      }
+    }
+
+    function showHint(text) {
+      const toast = document.getElementById("hintToast");
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(hintTimeout);
+      hintTimeout = setTimeout(() => toast.classList.remove("show"), 3500);
+    }
+
+    // ==========================================
+    // リザルト画面
+    // ==========================================
+    function finishGame() {
+      clearInterval(timerInterval);
+      elapsedSec = (Date.now() - startTime) / 1000;
+
+      let rank = "B";
+      if (missCount === 0) rank = "S";
+      else if (missCount <= 2) rank = "A";
+
+      document.getElementById("rankBadge").textContent = rank;
+      document.getElementById("finalTime").textContent = `${elapsedSec.toFixed(1)}秒`;
+      document.getElementById("finalMiss").textContent = `${missCount}回`;
+      document.getElementById("finalMaxCombo").textContent = `${maxCombo}回`;
+
+      let subText = missCount === 0 ? "パーフェクト！素晴らしい！" : "ミスした筋を確認してリベンジしよう！";
+      if (!isWeakMode) {
+        const bestKey = `${selectedUnit}_${selectedMode}`;
+        if (saveBestRecord(bestKey, elapsedSec)) {
+          subText = "🎉 ベストタイム更新！ " + subText;
+        }
+      }
+      document.getElementById("resultSub").textContent = subText;
+
+      // グループ学習お題（ミスした筋があればそこから、なければ今回プレイした筋からランダム）
+      const missedMuscles = playedMuscles.filter(m => missedSet.has(m.id));
+      const topicPool = missedMuscles.length > 0 ? missedMuscles : playedMuscles;
+      const topic = topicPool[Math.floor(Math.random() * topicPool.length)];
+
+      document.getElementById("topicMuscle").textContent = `お題：${topic.name}`;
+      const topicAns = document.getElementById("topicAnswer");
+      topicAns.classList.remove("open");
+      topicAns.innerHTML = `
+        <div><strong>起始：</strong>${topic.origin}</div>
+        <div><strong>停止：</strong>${topic.insertion}</div>
+        <div><strong>支配神経：</strong>${topic.nerve}</div>
+        <div><strong>作用：</strong>${topic.action}</div>
+        <div style="margin-top:4px; color:var(--primary);"><strong>💡 ヒント：</strong>${topic.hint}</div>
+      `;
+
+      // ミス一覧
+      const missSection = document.getElementById("missSection");
+      const missList = document.getElementById("missList");
+      if (missedMuscles.length > 0) {
+        missSection.style.display = "block";
+        missList.innerHTML = missedMuscles.map(m => `
+          <div class="miss-item">
+            <div class="miss-name">${m.name}</div>
+            <div><strong>支配神経：</strong>${m.nerve}</div>
+            <div><strong>作用：</strong>${m.action}</div>
+            <div><strong>起始：</strong>${m.origin} ／ <strong>停止：</strong>${m.insertion}</div>
+            <div style="color:var(--muted); margin-top:2px;">💡 ${m.hint}</div>
+          </div>
+        `).join("");
+      } else {
+        missSection.style.display = "none";
+      }
+
+      showScreen("resultScreen");
+    }
+
+    // ==========================================
+    // イベント登録
+    // ==========================================
+    document.querySelectorAll(".mode-btn").forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("selected"));
+        btn.classList.add("selected");
+        selectedMode = btn.dataset.mode;
+        renderStartScreen();
+      };
+    });
+
+    document.getElementById("soundToggle").onclick = (e) => {
+      soundOn = !soundOn;
+      e.target.textContent = soundOn ? "🔊 音 ON" : "🔇 音 OFF";
+    };
+
+    document.getElementById("startBtn").onclick = () => startGame(false);
+    document.getElementById("weakBtn").onclick = () => startGame(true);
+    document.getElementById("quitBtn").onclick = () => {
+      clearInterval(timerInterval);
+      renderStartScreen();
+      showScreen("startScreen");
+    };
+    document.getElementById("retryBtn").onclick = () => startGame(isWeakMode);
+    document.getElementById("backHomeBtn").onclick = () => {
+      renderStartScreen();
+      showScreen("startScreen");
+    };
+    document.getElementById("toggleTopicAnswer").onclick = () => {
+      document.getElementById("topicAnswer").classList.toggle("open");
+    };
+
+    // 初期描画
+    renderStartScreen();
   </script>
 </body>
 </html>
