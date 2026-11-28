@@ -3,17 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>解剖学 筋マッチング（全55筋）</title>
+  <title>💪 筋マッチング（主要55筋）</title>
   <style>
     :root {
       --primary: #2563eb;
+      --primary-dark: #1d4ed8;
       --primary-light: #eff6ff;
+      --primary-border: #bfdbfe;
+
+      --accent: #10b981;
+      --accent-dark: #059669;
+      --accent-light: #ecfdf5;
+      --accent-border: #a7f3d0;
+
+      --gold: #d97706;
+      --gold-dark: #92400e;
+      --gold-bg: #fef3c7;
+      --gold-border: #f59e0b;
+
       --success: #16a34a;
       --success-light: #dcfce7;
       --danger: #dc2626;
       --danger-light: #fee2e2;
       --warning: #d97706;
       --warning-light: #fef3c7;
+
       --bg: #f8fafc;
       --card: #ffffff;
       --text: #1e293b;
@@ -29,7 +43,7 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.5;
@@ -39,38 +53,66 @@
       max-width: 540px;
       margin: 0 auto;
       min-height: 100vh;
-      padding: 16px;
+      padding: 14px 14px 20px;
       display: flex;
       flex-direction: column;
     }
 
+    /* ==========================================
+       ヘッダー
+       ========================================== */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
+      gap: 8px;
+    }
+
+    .header-title-wrap {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
     }
 
     h1 {
-      font-size: 1.25rem;
+      font-size: 1.18rem;
+      font-weight: 800;
       margin: 0;
       color: var(--primary);
+      letter-spacing: -0.02em;
+    }
+
+    .header-sub {
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-weight: 600;
     }
 
     .sound-btn {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 6px 12px;
-      font-size: 0.8rem;
+      padding: 7px 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
       cursor: pointer;
       color: var(--text);
+      flex-shrink: 0;
+      transition: background-color 0.15s;
     }
 
+    .sound-btn:active {
+      background: #e2e8f0;
+    }
+
+    /* ==========================================
+       画面切替・共通UI
+       ========================================== */
     .screen {
       display: none;
       flex-direction: column;
-      gap: 16px;
+      gap: 13px;
       flex: 1;
     }
 
@@ -80,18 +122,125 @@
 
     .section-card {
       background: var(--card);
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+      border: 1px solid #e2e8f0;
     }
 
     .section-title {
-      font-size: 0.9rem;
-      font-weight: bold;
+      font-size: 0.84rem;
+      font-weight: 800;
       color: var(--muted);
       margin: 0 0 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
+    .primary-btn {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 0.98rem;
+      font-weight: 800;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.28);
+      transition: transform 0.1s, background-color 0.15s;
+    }
+
+    .primary-btn:active {
+      transform: scale(0.98);
+      background: var(--primary-dark);
+    }
+
+    .weak-btn {
+      background: var(--warning-light);
+      color: var(--warning);
+      border: 2px solid var(--warning);
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      cursor: pointer;
+      width: 100%;
+      transition: transform 0.1s;
+    }
+
+    .weak-btn:active {
+      transform: scale(0.98);
+    }
+
+    .secondary-btn {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .secondary-btn:active {
+      background: #f1f5f9;
+    }
+
+    /* ==========================================
+       3タブナビゲーション
+       ========================================== */
+    .game-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 5px;
+      background: #e2e8f0;
+      padding: 4px;
+      border-radius: 14px;
+    }
+
+    .game-tab-btn {
+      background: transparent;
+      border: none;
+      border-radius: 10px;
+      padding: 9px 4px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .game-tab-btn.active {
+      background: var(--card);
+      color: var(--primary);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+    }
+
+    .game-tab-sub {
+      font-size: 0.63rem;
+      font-weight: 600;
+      opacity: 0.85;
+    }
+
+    .tab-panel {
+      display: none;
+      flex-direction: column;
+      gap: 13px;
+    }
+
+    .tab-panel.active {
+      display: flex;
+    }
+
+    /* 単元・レベル選択 */
     .unit-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -103,8 +252,8 @@
       border: 2px solid var(--border);
       border-radius: 10px;
       padding: 10px 8px;
-      font-size: 0.85rem;
-      font-weight: bold;
+      font-size: 0.82rem;
+      font-weight: 800;
       color: var(--text);
       cursor: pointer;
       text-align: center;
@@ -119,10 +268,14 @@
 
     .select-btn .sub {
       display: block;
-      font-size: 0.72rem;
-      font-weight: normal;
+      font-size: 0.68rem;
+      font-weight: 600;
       color: var(--muted);
       margin-top: 2px;
+    }
+
+    .select-btn.selected .sub {
+      color: var(--primary-dark);
     }
 
     .mode-list {
@@ -133,74 +286,92 @@
 
     .mode-btn {
       text-align: left;
-      padding: 12px 14px;
+      padding: 11px 13px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
     }
 
-    .primary-btn {
-      background: var(--primary);
-      color: #fff;
-      border: none;
+    .mode-btn .sub {
+      margin-top: 0;
+      flex-shrink: 0;
+    }
+
+    .best-record {
+      font-size: 0.79rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .mini-rank {
+      display: inline-block;
+      padding: 1px 7px;
+      border-radius: 8px;
+      font-size: 0.74rem;
+      font-weight: 900;
+      margin-right: 4px;
+    }
+
+    .mini-rank.S { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-border); }
+    .mini-rank.A { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
+    .mini-rank.B { background: var(--accent-light); color: var(--accent-dark); border: 1px solid var(--accent-border); }
+
+    /* 3つ集め紹介ボックス */
+    .collect-intro-box {
+      background: var(--primary-light);
+      border: 1px solid var(--primary-border);
       border-radius: 12px;
-      padding: 15px;
-      font-size: 1rem;
-      font-weight: bold;
-      cursor: pointer;
-      width: 100%;
-      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+      padding: 13px;
+      font-size: 0.81rem;
+      color: #1e3a8a;
+      line-height: 1.6;
     }
 
-    .primary-btn:active {
-      transform: scale(0.98);
+    .challenge-preview-list {
+      margin: 10px 0 0 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
-    .weak-btn {
-      background: var(--warning-light);
-      color: var(--warning);
-      border: 2px solid var(--warning);
-      border-radius: 12px;
-      padding: 12px;
-      font-size: 0.95rem;
-      font-weight: bold;
-      cursor: pointer;
-      width: 100%;
+    .challenge-preview-list li {
+      background: #ffffff;
+      border: 1px solid var(--primary-border);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 0.77rem;
+      font-weight: 800;
+      color: var(--primary-dark);
     }
 
-    .secondary-btn {
-      background: var(--card);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px;
-      font-size: 0.9rem;
-      font-weight: bold;
-      cursor: pointer;
-      width: 100%;
-    }
-
-    /* プレイ画面 */
+    /* ==========================================
+       ステータスバー・マッチング画面
+       ========================================== */
     .status-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
       background: var(--card);
       padding: 10px 14px;
-      border-radius: 10px;
-      font-size: 0.85rem;
-      font-weight: bold;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+      border-radius: 12px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      font-variant-numeric: tabular-nums;
     }
 
-    .combo-badge {
-      color: var(--warning);
-    }
+    .combo-badge { color: var(--warning); }
+    .miss-badge { color: var(--danger); }
 
     .board {
       display: grid;
-      grid-template-columns: 1fr 1.25fr;
-      gap: 10px;
+      grid-template-columns: 1fr 1.32fr;
+      gap: 9px;
       flex: 1;
       align-content: start;
     }
@@ -208,37 +379,38 @@
     .column {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 9px;
     }
 
     .col-header {
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       text-align: center;
       color: var(--muted);
-      font-weight: bold;
+      font-weight: 800;
     }
 
     .card {
       background: var(--card);
       border: 2px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 10px;
-      min-height: 68px;
+      border-radius: 12px;
+      padding: 10px 8px;
+      min-height: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      font-size: 0.85rem;
-      font-weight: bold;
+      font-size: 0.84rem;
+      font-weight: 800;
       cursor: pointer;
       transition: transform 0.1s, background-color 0.15s, border-color 0.15s, opacity 0.25s;
       user-select: none;
       word-break: break-word;
+      line-height: 1.3;
     }
 
     .card.answer-card {
-      font-size: 0.78rem;
-      font-weight: 600;
+      font-size: 0.74rem;
+      font-weight: 700;
       line-height: 1.35;
     }
 
@@ -266,83 +438,347 @@
 
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      75% { transform: translateX(6px); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
     }
 
     .hint-toast {
-      min-height: 54px;
+      min-height: 60px;
       background: var(--danger-light);
       border: 1px solid #fca5a5;
       color: #991b1b;
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 10px 12px;
-      font-size: 0.82rem;
+      font-size: 0.79rem;
+      font-weight: 700;
       display: flex;
       align-items: center;
       opacity: 0;
       transition: opacity 0.2s;
+      line-height: 1.42;
     }
 
     .hint-toast.show {
       opacity: 1;
     }
 
-    /* リザルト画面 */
+    /* ==========================================
+       タブ2：3つ集めチャレンジ プレイ画面
+       ========================================== */
+    .challenge-banner {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      border-radius: 14px;
+      padding: 15px 14px;
+      text-align: center;
+      box-shadow: 0 3px 10px rgba(37, 99, 235, 0.25);
+    }
+
+    .challenge-question-title {
+      font-size: 1rem;
+      font-weight: 900;
+      line-height: 1.45;
+      margin: 0 0 8px 0;
+    }
+
+    .select-counter-pill {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.24);
+      padding: 3px 13px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 800;
+    }
+
+    .collect-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      flex: 1;
+      align-content: start;
+    }
+
+    .collect-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 10px;
+      min-height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+      line-height: 1.35;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+    }
+
+    .collect-card:active {
+      transform: scale(0.97);
+    }
+
+    .collect-card.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+    }
+
+    .collect-card.correct {
+      border-color: var(--success);
+      background: var(--success-light);
+      color: var(--success);
+    }
+
+    .collect-card.wrong {
+      border-color: var(--danger);
+      background: var(--danger-light);
+      color: var(--danger);
+      animation: shake 0.38s;
+    }
+
+    .collect-feedback {
+      min-height: 76px;
+      border-radius: 12px;
+      padding: 11px 13px;
+      font-size: 0.79rem;
+      font-weight: 800;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      line-height: 1.45;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .collect-feedback.show-ok {
+      opacity: 1;
+      background: var(--success-light);
+      border: 1px solid #86efac;
+      color: #166534;
+    }
+
+    .collect-feedback.show-ng {
+      opacity: 1;
+      background: var(--danger-light);
+      border: 1px solid #fca5a5;
+      color: #991b1b;
+    }
+
+    /* ==========================================
+       タブ3：55筋まとめ（チートシート）
+       ========================================== */
+    .mini-cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .cheat-mini-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      padding: 9px 10px;
+      font-size: 0.74rem;
+      line-height: 1.45;
+    }
+
+    .cheat-mini-card strong {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--accent-dark);
+      margin-bottom: 3px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+      font-family: inherit;
+      background: var(--bg);
+      color: var(--text);
+      margin-bottom: 8px;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      background: #ffffff;
+    }
+
+    .filter-chips {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .filter-chip {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      border-radius: 20px;
+      padding: 5px 10px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .filter-chip.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .cheat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .cheat-item {
+      background: var(--card);
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 11px 12px;
+      font-size: 0.78rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .cheat-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .cheat-name {
+      font-size: 0.92rem;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    .group-badge {
+      font-size: 0.66rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      white-space: nowrap;
+    }
+
+    .cheat-row strong {
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .cheat-hint {
+      background: #f8fafc;
+      border-left: 3px solid var(--primary);
+      padding: 5px 8px;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #334155;
+      margin-top: 2px;
+    }
+
+    /* ==========================================
+       共通リザルト画面
+       ========================================== */
     .result-hero {
       text-align: center;
-      padding: 18px;
+      padding: 16px;
       background: var(--card);
-      border-radius: 12px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+    }
+
+    .new-record-badge {
+      display: inline-block;
+      background: var(--warning-light);
+      color: var(--warning);
+      border: 1px solid #fcd34d;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 3px 11px;
+      border-radius: 20px;
+      margin-bottom: 6px;
     }
 
     .rank-badge {
       display: inline-block;
-      font-size: 2.5rem;
+      font-size: 2.9rem;
       font-weight: 900;
-      color: var(--primary);
-      line-height: 1;
-      margin: 6px 0;
+      line-height: 1.05;
+      margin: 4px 0;
     }
+
+    .rank-badge.S { color: #d97706; }
+    .rank-badge.A { color: #2563eb; }
+    .rank-badge.B { color: #16a34a; }
 
     .stats-row {
       display: flex;
       justify-content: space-around;
       margin-top: 12px;
       padding-top: 12px;
-      border-top: 1px solid #e2e8f0;
-      font-size: 0.85rem;
+      border-top: 1px solid #f1f5f9;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .stats-row strong {
+      display: block;
+      font-size: 1rem;
+      color: var(--text);
+      margin-top: 2px;
     }
 
     .topic-box {
-      background: #eff6ff;
+      background: var(--primary-light);
       border: 2px dashed var(--primary);
-      border-radius: 12px;
-      padding: 14px;
+      border-radius: 14px;
+      padding: 13px;
     }
 
     .topic-label {
-      font-size: 0.78rem;
-      font-weight: bold;
+      font-size: 0.76rem;
+      font-weight: 800;
       color: var(--primary);
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
-    .topic-muscle {
-      font-size: 1.1rem;
-      font-weight: bold;
+    .topic-target {
+      font-size: 1.04rem;
+      font-weight: 800;
       margin-bottom: 6px;
     }
 
     .toggle-answer-btn {
-      background: #fff;
+      background: #ffffff;
       border: 1px solid var(--primary);
       color: var(--primary);
       border-radius: 8px;
       padding: 6px 12px;
-      font-size: 0.8rem;
-      font-weight: bold;
+      font-size: 0.78rem;
+      font-weight: 800;
       cursor: pointer;
       margin-top: 8px;
     }
@@ -351,8 +787,9 @@
       display: none;
       margin-top: 10px;
       padding-top: 10px;
-      border-top: 1px solid #bfdbfe;
-      font-size: 0.82rem;
+      border-top: 1px solid var(--primary-border);
+      font-size: 0.8rem;
+      line-height: 1.55;
     }
 
     .topic-answer.open {
@@ -361,71 +798,602 @@
 
     .miss-item {
       border-bottom: 1px solid #e2e8f0;
-      padding: 10px 0;
-      font-size: 0.82rem;
+      padding: 9px 0;
+      font-size: 0.79rem;
+      line-height: 1.5;
     }
 
     .miss-item:last-child {
       border-bottom: none;
+      padding-bottom: 0;
     }
 
     .miss-name {
-      font-weight: bold;
-      font-size: 0.95rem;
+      font-weight: 900;
+      font-size: 0.9rem;
       color: var(--danger);
+      margin-bottom: 3px;
+    }
+
+    .perfect-box {
+      background: var(--success-light);
+      border: 1px solid #86efac;
+      color: #166534;
+      border-radius: 12px;
+      padding: 13px;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    /* ==========================================
+       【共通モジュール】国家試験過去問モード（.kokushi-*）
+       ========================================== */
+    .kokushi-banner-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 2px solid #f59e0b;
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      cursor: pointer;
+      color: #92400e;
+      font-size: 0.88rem;
+      font-weight: 900;
+      box-shadow: 0 3px 10px rgba(217, 119, 6, 0.18);
+      transition: transform 0.12s;
+      text-align: left;
+    }
+
+    .kokushi-banner-btn:active {
+      transform: scale(0.98);
+    }
+
+    .kokushi-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .kokushi-banner-sub {
+      font-size: 0.73rem;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.8);
+      color: #b45309;
+      padding: 2px 8px;
+      border-radius: 20px;
+      border: 1px solid #fcd34d;
+    }
+
+    .kokushi-hero-card {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border: 2px solid #f59e0b;
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .kokushi-hero-title {
+      font-size: 1.06rem;
+      font-weight: 900;
+      color: #92400e;
+      margin: 0;
+    }
+
+    .kokushi-progress-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #92400e;
+    }
+
+    .kokushi-progress-track {
+      width: 100%;
+      height: 11px;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #fcd34d;
+    }
+
+    .kokushi-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #f59e0b, #d97706);
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    .kokushi-course-btn {
+      width: 100%;
+      background: var(--card);
+      border: 2px solid #e2e8f0;
+      border-radius: 13px;
+      padding: 14px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+    }
+
+    .kokushi-course-btn:active {
+      transform: scale(0.98);
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    .kokushi-course-btn.primary-course {
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    .kokushi-course-btn.weak-course {
+      border-color: #f97316;
+      background: #fff7ed;
+    }
+
+    .kokushi-course-main {
+      font-size: 0.93rem;
+      font-weight: 900;
+      color: var(--text);
+      display: block;
+    }
+
+    .kokushi-course-btn.weak-course .kokushi-course-main {
+      color: #c2410c;
+    }
+
+    .kokushi-course-sub {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--muted);
+      display: block;
+      margin-top: 2px;
+    }
+
+    .kokushi-play-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      background: var(--card);
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 10px 13px;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .kokushi-meta-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .kokushi-meta-badge {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+      padding: 3px 9px;
+      border-radius: 8px;
+      font-size: 0.76rem;
+      font-weight: 900;
+    }
+
+    .kokushi-type-badge {
+      padding: 3px 9px;
+      border-radius: 8px;
+      font-size: 0.73rem;
+      font-weight: 900;
+    }
+
+    .kokushi-type-badge.single {
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      border: 1px solid var(--primary-border);
+    }
+
+    .kokushi-type-badge.multi {
+      background: #fee2e2;
+      color: #dc2626;
+      border: 1px solid #fca5a5;
+    }
+
+    .kokushi-question-card {
+      background: var(--card);
+      border: 1px solid #e2e8f0;
+      border-radius: 15px;
+      padding: 15px;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+    }
+
+    .kokushi-question-text {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .kokushi-choices-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .kokushi-choice-btn {
+      width: 100%;
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: var(--text);
+      font-size: 0.87rem;
+      font-weight: 700;
+      line-height: 1.42;
+    }
+
+    .kokushi-choice-btn:active:not(:disabled) {
+      transform: scale(0.985);
+    }
+
+    .kokushi-choice-btn:disabled {
+      cursor: default;
+    }
+
+    .kokushi-choice-num {
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      background: #f1f5f9;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 900;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid #cbd5e1;
+    }
+
+    .kokushi-choice-btn.selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    .kokushi-choice-btn.selected .kokushi-choice-num {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .kokushi-choice-btn.is-correct {
+      border-color: var(--success);
+      background: var(--success-light);
+      color: #166534;
+    }
+
+    .kokushi-choice-btn.is-correct .kokushi-choice-num {
+      background: var(--success);
+      color: #ffffff;
+      border-color: var(--success);
+    }
+
+    .kokushi-choice-btn.is-wrong {
+      border-color: var(--danger);
+      background: var(--danger-light);
+      color: #991b1b;
+    }
+
+    .kokushi-choice-btn.is-wrong .kokushi-choice-num {
+      background: var(--danger);
+      color: #ffffff;
+      border-color: var(--danger);
+    }
+
+    .kokushi-explain-card {
+      background: var(--card);
+      border-radius: 15px;
+      padding: 15px;
+      border: 2px solid #e2e8f0;
+      display: none;
+      flex-direction: column;
+      gap: 11px;
+      box-shadow: 0 3px 10px rgba(15, 23, 42, 0.06);
+    }
+
+    .kokushi-explain-card.open {
+      display: flex;
+    }
+
+    .kokushi-explain-card.ok {
+      border-color: #86efac;
+      background: #f0fdf4;
+    }
+
+    .kokushi-explain-card.ng {
+      border-color: #fca5a5;
+      background: #fef2f2;
+    }
+
+    .kokushi-judge-title {
+      font-size: 1.05rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .kokushi-judge-title.ok { color: #15803d; }
+    .kokushi-judge-title.ng { color: #b91c1c; }
+
+    .kokushi-point-box {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 10px 12px;
+      border: 1px solid #e2e8f0;
+      font-size: 0.83rem;
+      line-height: 1.55;
+      color: var(--text);
+    }
+
+    .kokushi-notes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 10px 12px;
+      border: 1px solid #e2e8f0;
+      font-size: 0.77rem;
+      line-height: 1.48;
+    }
+
+    .kokushi-note-row {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed #e2e8f0;
+    }
+
+    .kokushi-note-row:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .kokushi-note-num {
+      font-weight: 900;
+      color: var(--muted);
+      flex-shrink: 0;
+      min-width: 18px;
+    }
+
+    .kokushi-note-row.ans-row {
+      color: #15803d;
+      font-weight: 800;
+    }
+
+    .kokushi-next-btn {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 0.96rem;
+      font-weight: 900;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 3px 8px rgba(180, 83, 9, 0.28);
+    }
+
+    .kokushi-next-btn:active {
+      transform: scale(0.98);
+    }
+
+    .kokushi-miss-item {
+      border-bottom: 1px solid #e2e8f0;
+      padding: 10px 0;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .kokushi-miss-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .kokushi-miss-meta {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #b45309;
+      margin-bottom: 2px;
+    }
+
+    .kokushi-miss-q {
+      font-weight: 800;
+      color: var(--text);
       margin-bottom: 4px;
     }
 
-    .best-record {
-      font-size: 0.78rem;
-      color: var(--muted);
+    /* ==========================================
+       フッター
+       ========================================== */
+    footer {
       text-align: center;
+      padding: 20px 12px 10px;
+      color: #64748b;
+      font-size: 12px;
+      letter-spacing: 0.03em;
+      margin-top: auto;
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <!-- ヘッダー -->
     <header>
-      <h1>解剖学 筋マッチング</h1>
-      <button id="soundToggle" class="sound-btn">🔊 音 ON</button>
+      <div class="header-title-wrap">
+        <h1>💪 筋マッチング（主要55筋）</h1>
+        <span class="header-sub">OT 1・2年次 解剖学・運動学（国試過去問42問収録）</span>
+      </div>
+      <button id="soundToggle" class="sound-btn" type="button">🔊 音 ON</button>
     </header>
 
-    <!-- ① スタート画面 -->
+    <!-- ==========================================
+         1. メインスタート画面（国試バナー ＋ 3タブ）
+         ========================================== -->
     <section id="startScreen" class="screen active">
-      <div class="section-card">
-        <p class="section-title">1. 単元を選ぶ（全55筋）</p>
-        <div id="unitGrid" class="unit-grid"></div>
+      <!-- 【共通モジュール入口】国家試験過去問バナー -->
+      <button id="kokushiEntryBtn" class="kokushi-banner-btn" type="button">
+        <span class="kokushi-banner-left">
+          <span>🎓 国家試験過去問に挑戦</span>
+          <span id="kokushiEntryBadge" class="kokushi-banner-sub">クリア済 0 / 42問</span>
+        </span>
+        <span>▶</span>
+      </button>
+
+      <!-- 3タブ切り替え -->
+      <nav class="game-tabs" aria-label="学習モード切替">
+        <button id="tabMatchBtn" class="game-tab-btn active" type="button">
+          <span>⚡ マッチング</span>
+          <span class="game-tab-sub">主要55筋特訓</span>
+        </button>
+        <button id="tabCollectBtn" class="game-tab-btn" type="button">
+          <span>🎯 3つ集め</span>
+          <span class="game-tab-sub">全5問連続</span>
+        </button>
+        <button id="tabSummaryBtn" class="game-tab-btn" type="button">
+          <span>📖 55筋まとめ</span>
+          <span class="game-tab-sub">検索・チートシート</span>
+        </button>
+      </nav>
+
+      <!-- タブ①：⚡ マッチング -->
+      <div id="panelMatch" class="tab-panel active">
+        <div class="section-card">
+          <p class="section-title">1. 単元を選ぶ（全55筋）</p>
+          <div id="unitGrid" class="unit-grid"></div>
+        </div>
+
+        <div class="section-card">
+          <p class="section-title">2. レベルを選ぶ</p>
+          <div class="mode-list">
+            <button class="select-btn mode-btn selected" type="button" data-mode="nerve">
+              <span><strong>初級</strong>：筋名 ↔ 支配神経</span>
+              <span class="sub">まずは神経支配</span>
+            </button>
+            <button class="select-btn mode-btn" type="button" data-mode="action">
+              <span><strong>中級</strong>：筋名 ↔ 主な作用</span>
+              <span class="sub">関節運動とセット</span>
+            </button>
+            <button class="select-btn mode-btn" type="button" data-mode="originInsertion">
+              <span><strong>上級</strong>：筋名 ↔ 起始・停止</span>
+              <span class="sub">国試の最重要領域</span>
+            </button>
+          </div>
+        </div>
+
+        <button id="startMatchBtn" class="primary-btn" type="button">マッチングをスタート！</button>
+        <button id="weakBtn" class="weak-btn" type="button" style="display:none;">
+          🔥 弱点だけ復習（<span id="weakCount">0</span>筋）
+        </button>
+        <div id="matchBestRecord" class="best-record"></div>
       </div>
 
-      <div class="section-card">
-        <p class="section-title">2. モードを選ぶ</p>
-        <div class="mode-list">
-          <button class="select-btn mode-btn selected" data-mode="nerve">
-            <span><strong>初級</strong>：筋名 ↔ 支配神経</span>
-            <span class="sub">まずはここから</span>
-          </button>
-          <button class="select-btn mode-btn" data-mode="action">
-            <span><strong>中級</strong>：筋名 ↔ 主な作用</span>
-            <span class="sub">動きとセットで定着</span>
-          </button>
-          <button class="select-btn mode-btn" data-mode="originInsertion">
-            <span><strong>上級</strong>：筋名 ↔ 起始・停止</span>
-            <span class="sub">国試フル対策</span>
-          </button>
+      <!-- タブ②：🎯 3つ集めチャレンジ（全5問連続クリア） -->
+      <div id="panelCollect" class="tab-panel">
+        <div class="section-card">
+          <p class="section-title">🎯 ルール説明（全5問連続クリア）</p>
+          <div class="collect-intro-box">
+            国試超頻出のテーマに当てはまる筋を、6枚の中から<strong>3枚</strong>タップして集めます。<br>
+            3枚目をタップした瞬間に自動判定！<strong>1回でも間違えると第1問からやり直し</strong>になる実力試しです。
+            <ul class="challenge-preview-list">
+              <li>第1問：筋皮神経支配の筋を3つ選べ！</li>
+              <li>第2問：回旋筋腱板（ローテーターカフ）を3つ選べ！</li>
+              <li>第3問：二重神経支配の筋を3つ選べ！</li>
+              <li>第4問：二関節筋を3つ選べ！</li>
+              <li>第5問：足関節を背屈させる筋（深腓骨神経支配）を3つ選べ！</li>
+            </ul>
+          </div>
+        </div>
+
+        <button id="startCollectBtn" class="primary-btn" type="button">3つ集めチャレンジ開始！（全5問）</button>
+        <div id="collectBestRecord" class="best-record"></div>
+      </div>
+
+      <!-- タブ③：📖 55筋まとめ（チートシート） -->
+      <div id="panelSummary" class="tab-panel">
+        <div class="section-card" style="padding: 13px;">
+          <p class="section-title">🔥 国試超頻出まとめ（暗記ミニカード）</p>
+          <div class="mini-cards-grid">
+            <div class="cheat-mini-card">
+              <strong>回旋筋腱板（4筋）</strong>
+              棘上筋・棘下筋・小円筋（大結節）、肩甲下筋（小結節）
+            </div>
+            <div class="cheat-mini-card">
+              <strong>二重神経支配（代表）</strong>
+              上腕筋（筋皮＋橈骨）、深指屈筋（正中＋尺骨）、恥骨筋（大腿＋閉鎖）、大内転筋（閉鎖＋坐骨）
+            </div>
+            <div class="cheat-mini-card">
+              <strong>二関節筋（下肢代表）</strong>
+              大腿直筋、縫工筋、薄筋、ハムストリングス（半腱・半膜・二頭筋長頭）、腓腹筋
+            </div>
+            <div class="cheat-mini-card">
+              <strong>鵞足（がそく・3筋）</strong>
+              縫工筋・薄筋・半腱様筋（脛骨粗面内側に停止）
+            </div>
+            <div class="cheat-mini-card">
+              <strong>手根管の通過筋腱</strong>
+              浅指屈筋・深指屈筋・長母指屈筋（＋正中神経）。※尺側手根屈筋は通らない！
+            </div>
+            <div class="cheat-mini-card">
+              <strong>足根管（内果後方）</strong>
+              後脛骨筋・長趾屈筋・長母趾屈筋（＋脛骨神経・後脛骨動脈）
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card" style="padding: 13px;">
+          <p class="section-title">
+            <span>📋 全55筋 検索・一覧</span>
+            <span id="summaryCountText" style="color:var(--primary);">55筋</span>
+          </p>
+          <input id="summarySearch" class="search-input" type="search" placeholder="キーワード検索（例：橈骨神経、大結節、背屈、鵞足…）">
+          <div id="summaryFilters" class="filter-chips"></div>
+          <div id="cheatList" class="cheat-list"></div>
         </div>
       </div>
-
-      <button id="startBtn" class="primary-btn">スタート！</button>
-      <button id="weakBtn" class="weak-btn" style="display:none;">🔥 弱点だけ復習（<span id="weakCount">0</span>筋）</button>
-      <div id="bestRecord" class="best-record"></div>
     </section>
 
-    <!-- ② プレイ画面 -->
-    <section id="playScreen" class="screen">
+    <!-- ==========================================
+         2. プレイ画面（タブ①：スピード・マッチング）
+         ========================================== -->
+    <section id="matchPlayScreen" class="screen">
       <div class="status-bar">
-        <span>⏱ <span id="timer">0.0</span>秒</span>
-        <span>残り <span id="remaining">0</span>ペア</span>
-        <span class="combo-badge">🔥 <span id="combo">0</span>連続</span>
+        <span>⏱ <span id="matchTimer">0.0</span>秒</span>
+        <span>残り <span id="matchRemaining">0</span>ペア</span>
+        <span class="combo-badge">🔥 <span id="matchCombo">0</span>連続</span>
       </div>
 
       <div class="board">
@@ -440,693 +1408,760 @@
       </div>
 
       <div id="hintToast" class="hint-toast"></div>
-      <button id="quitBtn" class="secondary-btn">タイトルに戻る</button>
+      <button id="quitMatchBtn" class="secondary-btn" type="button">タイトルに戻る</button>
     </section>
 
-    <!-- ③ リザルト画面 -->
+    <!-- ==========================================
+         3. プレイ画面（タブ②：3つ集めチャレンジ）
+         ========================================== -->
+    <section id="collectPlayScreen" class="screen">
+      <div class="status-bar">
+        <span>⏱ <span id="collectTimer">0.0</span>秒</span>
+        <span id="collectProgress">第1問 / 全5問</span>
+        <span class="miss-badge">挑戦 <span id="collectTryCount">1</span>回目</span>
+      </div>
+
+      <div class="challenge-banner">
+        <div id="collectQuestionTitle" class="challenge-question-title">お題</div>
+        <span id="collectSelectCount" class="select-counter-pill">選択中: 0 / 3</span>
+      </div>
+
+      <div id="collectGrid" class="collect-grid"></div>
+
+      <div id="collectFeedback" class="collect-feedback"></div>
+      <button id="quitCollectBtn" class="secondary-btn" type="button">タイトルに戻る</button>
+    </section>
+
+    <!-- ==========================================
+         4. 共通リザルト画面（基礎学習用）
+         ========================================== -->
     <section id="resultScreen" class="screen">
       <div class="result-hero">
-        <div style="font-size:0.85rem; color:var(--muted);">クリアランク</div>
-        <div id="rankBadge" class="rank-badge">S</div>
-        <div id="resultSub" style="font-size:0.85rem; font-weight:bold;"></div>
+        <div id="newRecordBadge" class="new-record-badge" style="display:none;">🎉 ベストタイム更新！</div>
+        <div style="font-size:0.8rem; font-weight:700; color:var(--muted);">クリアランク</div>
+        <div id="rankBadge" class="rank-badge S">S</div>
+        <div id="resultSub" style="font-size:0.84rem; font-weight:800;"></div>
         <div class="stats-row">
-          <div>タイム<br><strong id="finalTime">0.0秒</strong></div>
-          <div>ミス<br><strong id="finalMiss">0回</strong></div>
-          <div>最大連続<br><strong id="finalMaxCombo">0回</strong></div>
+          <div>クリアタイム<strong id="finalTime">0.0秒</strong></div>
+          <div>ミス回数<strong id="finalMiss">0回</strong></div>
+          <div><span id="finalThirdLabel">最大連続</span><strong id="finalThirdValue">0回</strong></div>
         </div>
       </div>
 
       <div class="topic-box">
         <div class="topic-label">👥 グループ学習「ひとこと解説お題」</div>
-        <div id="topicMuscle" class="topic-muscle"></div>
-        <div style="font-size:0.82rem;">この筋の<strong>起始・停止の位置</strong>と<strong>動き</strong>を、自分の体を使って班のメンバーに1分で説明してみよう！</div>
-        <button id="toggleTopicAnswer" class="toggle-answer-btn">解答・ヒントを見る</button>
+        <div id="topicTarget" class="topic-target"></div>
+        <div style="font-size:0.8rem;">この筋の<strong>起始・停止・支配神経・作用</strong>を、自分の体で位置を指しながら班のメンバーに1分で説明してみよう！</div>
+        <button id="toggleTopicAnswer" class="toggle-answer-btn" type="button">解答・ヒントを見る</button>
         <div id="topicAnswer" class="topic-answer"></div>
       </div>
 
-      <div id="missSection" class="section-card" style="display:none;">
-        <p class="section-title">今回ミスした筋（弱点リストに登録済み）</p>
+      <div class="section-card">
+        <p id="missSectionTitle" class="section-title">今回ミスした筋（弱点リストに登録済み）</p>
         <div id="missList"></div>
       </div>
 
-      <button id="retryBtn" class="primary-btn">もう一度チャレンジ（リベンジ）</button>
-      <button id="backHomeBtn" class="secondary-btn">単元選択に戻る</button>
+      <button id="retryBtn" class="primary-btn" type="button">もう一度チャレンジ</button>
+      <button id="backHomeBtn" class="secondary-btn" type="button">タイトルに戻る</button>
     </section>
+
+    <!-- ==========================================
+         5. 【共通モジュール】国家試験過去問モード画面群
+         ========================================== -->
+    <!-- 5-1. 過去問スタート画面 -->
+    <section id="kokushiStartScreen" class="screen">
+      <div class="kokushi-hero-card">
+        <h2 class="kokushi-hero-title">🎓 国家試験過去問に挑戦（筋・全42問）</h2>
+        <div class="kokushi-progress-row">
+          <span id="kokushiStartProgressText">クリア済 0 / 42問</span>
+          <span id="kokushiStartProgressPct">0%</span>
+        </div>
+        <div class="kokushi-progress-track">
+          <div id="kokushiStartProgressBar" class="kokushi-progress-fill" style="width:0%;"></div>
+        </div>
+      </div>
+
+      <div class="section-card" style="display:flex; flex-direction:column; gap:9px;">
+        <p class="section-title" style="margin-bottom:2px;">コースを選ぶ</p>
+        <button id="kokushiBtnRand5" class="kokushi-course-btn primary-course" type="button">
+          <div>
+            <span class="kokushi-course-main">⚡ ランダム5問（約3分）</span>
+            <span class="kokushi-course-sub">通学・休み時間のスピード確認に</span>
+          </div>
+          <span>▶</span>
+        </button>
+
+        <button id="kokushiBtnRand10" class="kokushi-course-btn" type="button">
+          <div>
+            <span class="kokushi-course-main">📘 ランダム10問</span>
+            <span class="kokushi-course-sub">実力をしっかりテストしたいときに</span>
+          </div>
+          <span>▶</span>
+        </button>
+
+        <button id="kokushiBtnAll" class="kokushi-course-btn" type="button">
+          <div>
+            <span class="kokushi-course-main">🏆 全42問チャレンジ</span>
+            <span class="kokushi-course-sub">収録している筋の過去問を完全制覇</span>
+          </div>
+          <span>▶</span>
+        </button>
+
+        <button id="kokushiBtnWeak" class="kokushi-course-btn weak-course" type="button" style="display:none;">
+          <div>
+            <span class="kokushi-course-main">🔥 間違えた問題だけ復習（<span id="kokushiWeakCount">0</span>問）</span>
+            <span class="kokushi-course-sub">正解すると自動で弱点リストから解除されます</span>
+          </div>
+          <span>▶</span>
+        </button>
+      </div>
+
+      <button id="kokushiBackToBaseBtn" class="secondary-btn" type="button">← 基礎学習に戻る</button>
+    </section>
+
+    <!-- 5-2. 過去問出題画面 -->
+    <section id="kokushiPlayScreen" class="screen">
+      <div class="kokushi-play-header">
+        <div class="kokushi-meta-group">
+          <span id="kokushiMetaBadge" class="kokushi-meta-badge">第52回 午前 問55</span>
+          <span id="kokushiTypeBadge" class="kokushi-type-badge single">1つ選べ</span>
+        </div>
+        <span id="kokushiPlayProgress" style="color:var(--muted); font-variant-numeric:tabular-nums;">1 / 5</span>
+      </div>
+
+      <div class="kokushi-question-card">
+        <p id="kokushiQuestionText" class="kokushi-question-text"></p>
+      </div>
+
+      <div id="kokushiChoicesList" class="kokushi-choices-list"></div>
+
+      <div id="kokushiExplainCard" class="kokushi-explain-card">
+        <div id="kokushiJudgeTitle" class="kokushi-judge-title"></div>
+        <div id="kokushiPointBox" class="kokushi-point-box"></div>
+        <div id="kokushiNotesList" class="kokushi-notes-list"></div>
+        <button id="kokushiNextBtn" class="kokushi-next-btn" type="button">次の問題へ ▶</button>
+      </div>
+
+      <button id="kokushiQuitBtn" class="secondary-btn" type="button">過去問トップに戻る</button>
+    </section>
+
+    <!-- 5-3. 過去問リザルト画面 -->
+    <section id="kokushiResultScreen" class="screen">
+      <div class="result-hero">
+        <div style="font-size:0.8rem; font-weight:700; color:var(--muted);">国試過去問 チャレンジ結果</div>
+        <div id="kokushiRankBadge" class="rank-badge S">S</div>
+        <div id="kokushiResultSub" style="font-size:0.84rem; font-weight:800;"></div>
+        <div class="stats-row">
+          <div>正答数<strong id="kokushiFinalScore">0 / 5問</strong></div>
+          <div>正答率<strong id="kokushiFinalRate">0%</strong></div>
+          <div>累計クリア<strong id="kokushiFinalCleared">0 / 42問</strong></div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <p id="kokushiMissTitle" class="section-title">今回間違えた問題</p>
+        <div id="kokushiMissList"></div>
+      </div>
+
+      <button id="kokushiResultWeakBtn" class="weak-btn" type="button" style="display:none;">
+        🔥 間違えた問題をすぐ復習（<span id="kokushiResultWeakCount">0</span>問）
+      </button>
+      <button id="kokushiToTopBtn" class="kokushi-next-btn" type="button">過去問トップへ戻る</button>
+      <button id="kokushiResultBackBtn" class="secondary-btn" type="button">← 基礎学習に戻る</button>
+    </section>
+
+    <!-- フッター -->
+    <footer>&copy;Created by Shunsuke Usui</footer>
   </div>
 
   <script>
-    // ==========================================
-    // 全55筋マスターデータ
-    // ==========================================
+    /**
+     * =========================================================================
+     * 1. 主要55筋 マスターデータ（5カテゴリ・計55筋）
+     * =========================================================================
+     */
     const MUSCLES = [
+      // --- 1. 上肢（肩・上腕）：16筋 ---
       {
-        id: "m001",
-        unit: "上肢帯・上腕",
-        name: "僧帽筋",
-        origin: "後頭骨・項靭帯・C7〜T12棘突起",
-        insertion: "鎖骨外側1/3・肩峰・肩甲棘",
-        nerve: "副神経（C2〜C4頸神経）",
+        id: "m01", group: "上肢（肩・上腕）", name: "僧帽筋",
+        nerve: "副神経・頸神経叢枝",
         action: "肩甲骨の挙上・内転・下制・上方回旋",
-        hint: "背中上部を広く覆う筋。上部は肩をすくめる動き。"
+        originInsertion: "後頭骨・項靭帯・C7〜T12棘突起 → 鎖骨外側1/3・肩峰・肩甲棘",
+        hint: "全胸椎の棘突起に付着！脳神経（副神経）が支配する代表的な筋。"
       },
       {
-        id: "m002",
-        unit: "上肢帯・上腕",
-        name: "前鋸筋",
-        origin: "第1〜9肋骨",
-        insertion: "肩甲骨内側縁（前面）",
-        nerve: "長胸神経（C5〜C7）",
-        action: "肩甲骨の外転・上方回旋",
-        hint: "麻痺すると「翼状肩甲」になるのが国試の超頻出ポイント！"
-      },
-      {
-        id: "m003",
-        unit: "上肢帯・上腕",
-        name: "大胸筋",
-        origin: "鎖骨内側・胸骨・第1〜6肋軟骨",
-        insertion: "上腕骨大結節稜",
-        nerve: "内側・外側胸筋神経（C5〜T1）",
-        action: "肩関節の内転・内旋・水平屈曲",
-        hint: "胸の厚い筋。腕を前に組む・抱きしめる動きで働く。"
-      },
-      {
-        id: "m004",
-        unit: "上肢帯・上腕",
-        name: "広背筋",
-        origin: "T6〜L5棘突起・仙骨・腸骨稜",
-        insertion: "上腕骨小結節稜",
-        nerve: "胸背神経（C6〜C8）",
+        id: "m02", group: "上肢（肩・上腕）", name: "広背筋",
+        nerve: "胸背神経",
         action: "肩関節の伸展・内転・内旋",
-        hint: "松葉杖をつく時や、懸垂で体を引き上げる時に大活躍。"
+        originInsertion: "T6〜L5棘突起・腸骨稜・第9〜12肋骨 → 上腕骨小結節稜",
+        hint: "腸骨稜・第9〜12肋骨から起こり、小結節稜へ停止する大きな背中の筋。"
       },
       {
-        id: "m005",
-        unit: "上肢帯・上腕",
-        name: "三角筋",
-        origin: "鎖骨外側1/3・肩峰・肩甲棘",
-        insertion: "上腕骨三角筋粗面",
-        nerve: "腋窩神経（C5〜C6）",
+        id: "m03", group: "上肢（肩・上腕）", name: "肩甲挙筋",
+        nerve: "肩甲背神経（・C3〜C4）",
+        action: "肩甲骨の挙上・下方回旋",
+        originInsertion: "C1〜C4横突起 → 肩甲骨上角・内側縁上部",
+        hint: "肩甲骨の「上角」に停止し、肩をすくめる動きに働く。"
+      },
+      {
+        id: "m04", group: "上肢（肩・上腕）", name: "大菱形筋",
+        nerve: "肩甲背神経",
+        action: "肩甲骨の内転・挙上・下方回旋",
+        originInsertion: "T2〜T5棘突起 → 肩甲骨内側縁（肩甲棘より下）",
+        hint: "肩甲挙筋と同じ「肩甲背神経」支配。肩甲骨を背骨に引き寄せる。"
+      },
+      {
+        id: "m05", group: "上肢（肩・上腕）", name: "前鋸筋",
+        nerve: "長胸神経",
+        action: "肩甲骨の外転・上方回旋（胸郭に固定）",
+        originInsertion: "第1〜9肋骨外面 → 肩甲骨内側縁（前面）",
+        hint: "長胸神経麻痺で「翼状肩甲」を起こす国試超頻出の筋！"
+      },
+      {
+        id: "m06", group: "上肢（肩・上腕）", name: "大胸筋",
+        nerve: "内側・外側胸筋神経",
+        action: "肩関節の水平内転・内転・内旋・屈曲",
+        originInsertion: "鎖骨内側・胸骨・第1〜6肋軟骨 → 上腕骨大結節稜",
+        hint: "大結節稜に停止。腕を胸の前で抱え込む（水平内転）主動作筋。"
+      },
+      {
+        id: "m07", group: "上肢（肩・上腕）", name: "小胸筋",
+        nerve: "内側・外側胸筋神経",
+        action: "肩甲骨の下制・外転・下方回旋",
+        originInsertion: "第3〜5肋骨前面 → 肩甲骨の烏口突起",
+        hint: "大胸筋の深層。肩甲骨の「烏口突起」に停止する。"
+      },
+      {
+        id: "m08", group: "上肢（肩・上腕）", name: "三角筋",
+        nerve: "腋窩神経",
         action: "肩関節の外転（前部：屈曲、後部：伸展）",
-        hint: "肩の丸みを作る筋。肩関節脱臼で腋窩神経が傷つきやすい。"
+        originInsertion: "鎖骨外側1/3・肩峰・肩甲棘 → 上腕骨三角筋粗面",
+        hint: "腋窩神経支配。上腕骨外科頸骨折で麻痺しやすい。"
       },
       {
-        id: "m006",
-        unit: "上肢帯・上腕",
-        name: "棘上筋",
-        origin: "肩甲骨の棘上窩",
-        insertion: "上腕骨大結節（上部）",
-        nerve: "肩甲上神経（C5〜C6）",
+        id: "m09", group: "上肢（肩・上腕）", name: "棘上筋",
+        nerve: "肩甲上神経",
         action: "肩関節の外転（初動）",
-        hint: "回旋筋腱板（ローテーターカフ）の1つ。最も断裂しやすい。"
+        originInsertion: "肩甲骨棘上窩 → 上腕骨大結節（上面）",
+        hint: "回旋筋腱板の1つ。僧帽筋の深層にあり、肩外転のスタートを担う。"
       },
       {
-        id: "m007",
-        unit: "上肢帯・上腕",
-        name: "棘下筋",
-        origin: "肩甲骨の棘下窩",
-        insertion: "上腕骨大結節（中部）",
-        nerve: "肩甲上神経（C5〜C6）",
+        id: "m10", group: "上肢（肩・上腕）", name: "棘下筋",
+        nerve: "肩甲上神経",
         action: "肩関節の外旋",
-        hint: "回旋筋腱板の1つ。肩を外にひねる（外旋）主役。"
+        originInsertion: "肩甲骨棘下窩 → 上腕骨大結節（中部）",
+        hint: "回旋筋腱板の1つ。棘上筋と同じ「肩甲上神経」支配。"
       },
       {
-        id: "m008",
-        unit: "上肢帯・上腕",
-        name: "肩甲下筋",
-        origin: "肩甲骨の肩甲下窩",
-        insertion: "上腕骨小結節",
-        nerve: "肩甲下神経（C5〜C6）",
+        id: "m11", group: "上肢（肩・上腕）", name: "小円筋",
+        nerve: "腋窩神経",
+        action: "肩関節の外旋",
+        originInsertion: "肩甲骨外側縁 → 上腕骨大結節（後面下部）",
+        hint: "回旋筋腱板の1つ。三角筋と同じ「腋窩神経」支配で、大結節に停止。"
+      },
+      {
+        id: "m12", group: "上肢（肩・上腕）", name: "大円筋",
+        nerve: "肩甲下神経",
+        action: "肩関節の内旋・内転・伸展",
+        originInsertion: "肩甲骨下角 → 上腕骨小結節稜",
+        hint: "回旋筋腱板には含まれない！外側腋窩隙（四角隙）の下縁を構成。"
+      },
+      {
+        id: "m13", group: "上肢（肩・上腕）", name: "肩甲下筋",
+        nerve: "肩甲下神経",
         action: "肩関節の内旋",
-        hint: "回旋筋腱板の中で唯一「小結節」に付くのが引っかけポイント！"
+        originInsertion: "肩甲骨肩甲下窩 → 上腕骨小結節",
+        hint: "回旋筋腱板の中で唯一「小結節」に停止し、内旋に働く！"
       },
       {
-        id: "m009",
-        unit: "上肢帯・上腕",
-        name: "上腕二頭筋",
-        origin: "長頭：関節上結節 / 短頭：烏口突起",
-        insertion: "橈骨粗面・前腕筋膜",
-        nerve: "筋皮神経（C5〜C6）",
-        action: "肘関節の屈曲・前腕の回外",
-        hint: "力こぶを作る筋。ドアノブを回す（回外）動きにも強い。"
+        id: "m14", group: "上肢（肩・上腕）", name: "烏口腕筋",
+        nerve: "筋皮神経",
+        action: "肩関節の屈曲・内転",
+        originInsertion: "肩甲骨烏口突起 → 上腕骨内側面中央",
+        hint: "筋皮神経が筋腹を貫通する！烏口突起から起始する3筋の1つ。"
       },
       {
-        id: "m010",
-        unit: "上肢帯・上腕",
-        name: "上腕三頭筋",
-        origin: "長頭：関節下結節 / 外・内側頭：上腕骨後面",
-        insertion: "尺骨肘頭",
-        nerve: "橈骨神経（C6〜C8）",
-        action: "肘関節の伸展（長頭は肩伸展も）",
-        hint: "二の腕の裏側。肘を伸ばす唯一の主力筋で、プッシュアップに必須。"
+        id: "m15", group: "上肢（肩・上腕）", name: "上腕二頭筋",
+        nerve: "筋皮神経",
+        action: "肘関節の屈曲・前腕の回外・肩屈曲",
+        originInsertion: "長頭：関節上結節 / 短頭：烏口突起 → 橈骨粗面",
+        hint: "長頭は「関節上結節」、停止は「橈骨粗面」。強力な前腕回外筋！"
       },
       {
-        id: "m011",
-        unit: "前腕・手",
-        name: "腕橈骨筋",
-        origin: "上腕骨外側上顆の上部",
-        insertion: "橈骨茎状突起",
-        nerve: "橈骨神経（C5〜C6）",
-        action: "肘関節の屈曲（前腕中間位）",
-        hint: "屈筋なのに支配神経は『橈骨神経』なのが国試の定番ひっかけ！"
+        id: "m16", group: "上肢（肩・上腕）", name: "上腕筋",
+        nerve: "筋皮神経・橈骨神経（二重支配）",
+        action: "肘関節の純粋な屈曲",
+        originInsertion: "上腕骨前面遠位1/2 → 尺骨粗面・鉤状突起",
+        hint: "筋皮＋橈骨の二重神経支配！停止は橈骨ではなく「尺骨粗面」。"
       },
       {
-        id: "m012",
-        unit: "前腕・手",
-        name: "円回内筋",
-        origin: "上腕骨内側上顆・尺骨鉤状突起",
-        insertion: "橈骨外側面のほぼ中央",
-        nerve: "正中神経（C6〜C7）",
-        action: "前腕の回内・肘関節の屈曲",
-        hint: "手のひらを下に向ける（回内）動きの主役。"
+        id: "m17", group: "上肢（肩・上腕）", name: "上腕三頭筋",
+        nerve: "橈骨神経",
+        action: "肘関節の伸展（長頭：肩伸展・内転）",
+        originInsertion: "長頭：関節下結節 / 外・内側頭：上腕骨後面 → 尺骨肘頭",
+        hint: "長頭は「関節下結節」から起始！二頭筋長頭（関節上結節）と対で暗記。"
+      },
+
+      // --- 2. 上肢（前腕・手）：11筋 ---
+      {
+        id: "m18", group: "上肢（前腕・手）", name: "腕橈骨筋",
+        nerve: "橈骨神経",
+        action: "肘関節の屈曲（前腕中間位で最強）",
+        originInsertion: "上腕骨外側顆上稜 → 橈骨茎状突起基部",
+        hint: "肘屈筋だが「橈骨神経」本幹の支配！前腕中間位での肘屈曲で働く。"
       },
       {
-        id: "m013",
-        unit: "前腕・手",
-        name: "橈側手根屈筋",
-        origin: "上腕骨内側上顆",
-        insertion: "第2・3中手骨底（掌側）",
-        nerve: "正中神経（C6〜C7）",
+        id: "m19", group: "上肢（前腕・手）", name: "円回内筋",
+        nerve: "正中神経",
+        action: "前腕の回内・肘関節の屈曲補助",
+        originInsertion: "上腕骨内側上顆・尺骨鉤状突起 → 橈骨外側面中央",
+        hint: "正中神経が筋腹の間を通過するため、絞扼障害（円回内筋症候群）の原因になる。"
+      },
+      {
+        id: "m20", group: "上肢（前腕・手）", name: "方形回内筋",
+        nerve: "正中神経（前骨間神経）",
+        action: "前腕の回内",
+        originInsertion: "尺骨遠位前面 → 橈骨遠位前面",
+        hint: "手首の深層で尺骨と橈骨を横に結ぶ。前骨間神経支配。"
+      },
+      {
+        id: "m21", group: "上肢（前腕・手）", name: "橈側手根屈筋",
+        nerve: "正中神経",
         action: "手関節の掌屈・橈屈",
-        hint: "手首を親指側に曲げる筋。手首の脈を測るすぐ内側に腱が触れる。"
+        originInsertion: "上腕骨内側上顆 → 第2・3中手骨底（掌側面）",
+        hint: "第2・3中手骨底に停止。手首の親指側で腱を触れやすい。"
       },
       {
-        id: "m014",
-        unit: "前腕・手",
-        name: "総指伸筋",
-        origin: "上腕骨外側上顆",
-        insertion: "第2〜5指の中節骨・末節骨背側",
-        nerve: "橈骨神経（C7〜C8）",
-        action: "第2〜5指の伸展・手関節の背屈",
-        hint: "麻痺すると手首や指が上がらなくなる「下垂手」になる。"
+        id: "m22", group: "上肢（前腕・手）", name: "長掌筋",
+        nerve: "正中神経",
+        action: "手関節の掌屈・手掌腱膜の緊張",
+        originInsertion: "上腕骨内側上顆 → 手掌腱膜・屈筋支帯",
+        hint: "手根管の上（表層）を通って手掌腱膜に停止。先天的に欠損する人もいる。"
       },
       {
-        id: "m015",
-        unit: "前腕・手",
-        name: "短母指外転筋",
-        origin: "舟状骨・大菱形骨・屈筋支帯",
-        insertion: "母指基節骨底（外側）",
-        nerve: "正中神経（C8〜T1）",
-        action: "母指の外転（掌側外転）",
-        hint: "手根管症候群で真っ先に萎縮する母指球筋。猿手（扁平手）の原因。"
+        id: "m23", group: "上肢（前腕・手）", name: "尺側手根屈筋",
+        nerve: "尺骨神経",
+        action: "手関節の掌屈・尺屈",
+        originInsertion: "上腕骨内側上顆・尺骨肘頭 → 豆状骨・有鉤骨鉤・第5中手骨底",
+        hint: "手根管を通らない！豆状骨を種子骨として含む尺骨神経支配の筋。"
       },
       {
-        id: "m016",
-        unit: "股関節・大腿",
-        name: "腸腰筋",
-        origin: "大腰筋：T12〜L5椎体 / 腸骨筋：腸骨窩",
-        insertion: "大腿骨小転子",
-        nerve: "大腿神経・腰神経叢（L1〜L4）",
-        action: "股関節の屈曲",
-        hint: "階段を上る・ももを上げる時の主役。唯一『小転子』に付く。"
+        id: "m24", group: "上肢（前腕・手）", name: "浅指屈筋",
+        nerve: "正中神経",
+        action: "第2〜5指PIP関節の屈曲・手関節掌屈",
+        originInsertion: "上腕骨内側上顆・尺骨・橈骨 → 第2〜5指中節骨底",
+        hint: "上腕尺骨頭と橈骨頭の両方から起始！手根管を通過してPIPを曲げる。"
       },
       {
-        id: "m017",
-        unit: "股関節・大腿",
-        name: "大殿筋",
-        origin: "腸骨翼後面・仙骨・尾骨後面",
-        insertion: "大腿骨殿筋粗面・腸脛靭帯",
-        nerve: "下殿神経（L5〜S2）",
+        id: "m25", group: "上肢（前腕・手）", name: "深指屈筋",
+        nerve: "正中神経（第2・3指）・尺骨神経（第4・5指）",
+        action: "第2〜5指DIP関節の屈曲",
+        originInsertion: "尺骨前面・前腕骨間膜 → 第2〜5指末節骨底",
+        hint: "正中＋尺骨の二重神経支配！尺骨縁の皮下直下で筋腹を触知できる。"
+      },
+      {
+        id: "m26", group: "上肢（前腕・手）", name: "長母指屈筋",
+        nerve: "正中神経（前骨間神経）",
+        action: "母指IP関節の屈曲",
+        originInsertion: "橈骨前面・前腕骨間膜・尺骨鉤状突起 → 母指末節骨底",
+        hint: "手根管を通過。前骨間神経麻痺で母指IPと示指DIPが曲がらない（涙のしずく徴候）。"
+      },
+      {
+        id: "m27", group: "上肢（前腕・手）", name: "長母指外転筋",
+        nerve: "橈骨神経（後骨間神経）",
+        action: "母指CM関節の外転・手関節橈屈",
+        originInsertion: "橈骨後面・尺骨後面・前腕骨間膜 → 第1中手骨底",
+        hint: "橈骨と尺骨の両後面から起始。短母指伸筋と並んでドケルバン病（腱鞘炎）の好発部位。"
+      },
+      {
+        id: "m28", group: "上肢（前腕・手）", name: "短母指伸筋",
+        nerve: "橈骨神経（後骨間神経）",
+        action: "母指MP関節の伸展・CM関節の外転",
+        originInsertion: "橈骨遠位後面・前腕骨間膜 → 母指基節骨底",
+        hint: "名前に「短」が付くが前腕から起こる手の「外来筋」なのが国試のひっかけ！"
+      },
+
+      // --- 3. 下肢（殿部・大腿）：14筋 ---
+      {
+        id: "m29", group: "下肢（殿部・大腿）", name: "腸腰筋",
+        nerve: "大腿神経・腰神経叢筋枝",
+        action: "股関節の強力な屈曲",
+        originInsertion: "大腰筋：T12〜L5椎体 / 腸骨筋：腸骨窩 → 大腿骨小転子",
+        hint: "筋裂孔を通って「小転子」に停止！歩行の遊脚初期の主動作筋。"
+      },
+      {
+        id: "m30", group: "下肢（殿部・大腿）", name: "大殿筋",
+        nerve: "下殿神経",
         action: "股関節の伸展・外旋",
-        hint: "お尻のボリュームを作る筋。椅子からの立ち上がりや階段昇段で働く。"
+        originInsertion: "腸骨外面後方・仙骨・尾骨 → 大腿骨殿筋粗面・腸脛靭帯",
+        hint: "大殿筋は「下」殿神経、中・小殿筋は「上」殿神経！逆にならないよう注意。"
       },
       {
-        id: "m018",
-        unit: "股関節・大腿",
-        name: "中殿筋",
-        origin: "腸骨翼外面",
-        insertion: "大腿骨大転子",
-        nerve: "上殿神経（L4〜S1）",
-        action: "股関節の外転",
-        hint: "片脚立ちで骨盤を水平に保つ筋。筋力低下で『トレンデレンブルグ徴候』！"
+        id: "m31", group: "下肢（殿部・大腿）", name: "中殿筋",
+        nerve: "上殿神経",
+        action: "股関節の外転（骨盤の水平保持）",
+        originInsertion: "腸骨翼外面（前・後殿筋線の間） → 大腿骨大転子",
+        hint: "弱化するとトレンデレンブルグ徴候（立脚期に遊脚側骨盤が下降）が出現！"
       },
       {
-        id: "m019",
-        unit: "股関節・大腿",
-        name: "大腿四頭筋",
-        origin: "直筋：下前腸骨棘 / 広筋群：大腿骨",
-        insertion: "膝蓋骨を経て脛骨粗面",
-        nerve: "大腿神経（L2〜L4）",
-        action: "膝関節の伸展（直筋は股屈曲も）",
-        hint: "太ももの前側。4つの頭のうち『大腿直筋』だけが二関節筋。"
+        id: "m32", group: "下肢（殿部・大腿）", name: "小殿筋",
+        nerve: "上殿神経",
+        action: "股関節の外転・内旋",
+        originInsertion: "腸骨翼外面（前・下殿筋線の間） → 大腿骨大転子前面",
+        hint: "中殿筋の深層にあるため、皮下直下からは触知できない。"
       },
       {
-        id: "m020",
-        unit: "股関節・大腿",
-        name: "縫工筋",
-        origin: "上前腸骨棘（ASIS）",
-        insertion: "脛骨粗面内側（鵞足）",
-        nerve: "大腿神経（L2〜L3）",
-        action: "股関節の屈曲・外転・外旋、膝屈曲",
-        hint: "人体で最も長い筋。あぐらをかく動作（靴下を履く動き）で働く。"
+        id: "m33", group: "下肢（殿部・大腿）", name: "縫工筋",
+        nerve: "大腿神経",
+        action: "股関節の屈曲・外転・外旋、膝関節の屈曲（あぐら）",
+        originInsertion: "上前腸骨棘（ASIS） → 脛骨粗面内側（鵞足）",
+        hint: "大腿神経のみの単一支配！二関節筋かつ鵞足を構成する3筋の1つ。"
       },
       {
-        id: "m021",
-        unit: "股関節・大腿",
-        name: "大腿二頭筋",
-        origin: "長頭：坐骨結節 / 短頭：大腿骨粗線",
-        insertion: "腓骨頭",
+        id: "m34", group: "下肢（殿部・大腿）", name: "大腿直筋",
+        nerve: "大腿神経",
+        action: "股関節の屈曲・膝関節の伸展",
+        originInsertion: "下前腸骨棘（AIIS）・寛骨臼上縁 → 膝蓋骨・脛骨粗面",
+        hint: "大腿四頭筋の中で唯一の「二関節筋」！起始は「下」前腸骨棘。"
+      },
+      {
+        id: "m35", group: "下肢（殿部・大腿）", name: "中間広筋",
+        nerve: "大腿神経",
+        action: "膝関節の伸展",
+        originInsertion: "大腿骨前面・外側面 → 膝蓋骨・脛骨粗面",
+        hint: "大腿直筋の深層にある単関節筋。皮下直下からは触知できない。"
+      },
+      {
+        id: "m36", group: "下肢（殿部・大腿）", name: "恥骨筋",
+        nerve: "大腿神経・閉鎖神経（二重支配）",
+        action: "股関節の内転・屈曲",
+        originInsertion: "恥骨櫛 → 大腿骨恥骨筋線",
+        hint: "大腿神経＋閉鎖神経の二重神経支配！股関節のみを跨ぐ単関節筋。"
+      },
+      {
+        id: "m37", group: "下肢（殿部・大腿）", name: "長内転筋",
+        nerve: "閉鎖神経",
+        action: "股関節の内転・屈曲",
+        originInsertion: "恥骨結節・恥骨上枝 → 大腿骨粗線内側唇",
+        hint: "閉鎖神経の単一支配。起始は「恥骨結節」。"
+      },
+      {
+        id: "m38", group: "下肢（殿部・大腿）", name: "大内転筋",
+        nerve: "閉鎖神経・坐骨神経（二重支配）",
+        action: "股関節の内転・伸展",
+        originInsertion: "恥骨下枝・坐骨結節 → 大腿骨粗線内側唇・内転筋結節",
+        hint: "閉鎖神経＋坐骨神経（脛骨神経部）の二重神経支配！内転筋腱裂孔を作る。"
+      },
+      {
+        id: "m39", group: "下肢（殿部・大腿）", name: "薄筋",
+        nerve: "閉鎖神経",
+        action: "股関節の内転・膝関節の屈曲・内旋",
+        originInsertion: "恥骨結合・恥骨下枝 → 脛骨粗面内側（鵞足）",
+        hint: "内転筋群の中で唯一の「二関節筋」であり、鵞足を構成する！"
+      },
+      {
+        id: "m40", group: "下肢（殿部・大腿）", name: "大腿二頭筋",
         nerve: "長頭：脛骨神経 / 短頭：総腓骨神経",
-        action: "膝関節の屈曲・外旋（長頭は股伸展）",
-        hint: "ハムストリングスの外側。長頭と短頭で支配神経が違う（二重神経支配）！"
+        action: "膝関節の屈曲・外旋（長頭：股伸展）",
+        originInsertion: "長頭：坐骨結節 / 短頭：大腿骨粗線 → 腓骨頭・脛骨外側顆",
+        hint: "ハムストリングスで唯一「腓骨頭」に停止し、長頭と短頭で神経支配が異なる！"
       },
       {
-        id: "m022",
-        unit: "股関節・大腿",
-        name: "半腱様筋",
-        origin: "坐骨結節",
-        insertion: "脛骨粗面内側（鵞足）",
-        nerve: "脛骨神経（L5〜S2）",
-        action: "股関節の伸展、膝関節の屈曲・内旋",
-        hint: "ハムストリングスの内側。縫工筋・薄筋と一緒に『鵞足』を作る。"
+        id: "m41", group: "下肢（殿部・大腿）", name: "半腱様筋",
+        nerve: "坐骨神経（脛骨神経部）",
+        action: "股関節の伸展・膝関節の屈曲・内旋",
+        originInsertion: "坐骨結節 → 脛骨粗面内側（鵞足）",
+        hint: "縫工筋・薄筋とともに「鵞足」を作る！半膜様筋と混同しないこと。"
       },
       {
-        id: "m023",
-        unit: "股関節・大腿",
-        name: "大内転筋",
-        origin: "坐骨結節・坐骨枝・恥骨下枝",
-        insertion: "大腿骨粗線・内転筋結節",
-        nerve: "閉鎖神経・坐骨神経（L2〜L4）",
-        action: "股関節の内転",
-        hint: "太ももの内側で脚を閉じる筋。閉鎖神経と坐骨神経の二重神経支配。"
+        id: "m42", group: "下肢（殿部・大腿）", name: "半膜様筋",
+        nerve: "坐骨神経（脛骨神経部）",
+        action: "股関節の伸展・膝関節の屈曲・内旋",
+        originInsertion: "坐骨結節 → 脛骨内側顆後部",
+        hint: "股・膝を跨ぐ二関節筋。停止は「脛骨内側顆後部」（鵞足ではない）。"
+      },
+
+      // --- 4. 下肢（下腿・足）：8筋 ---
+      {
+        id: "m43", group: "下肢（下腿・足）", name: "前脛骨筋",
+        nerve: "深腓骨神経",
+        action: "足関節の背屈・内がえし",
+        originInsertion: "脛骨外側面・下腿骨間膜 → 内側楔状骨・第1中足骨底",
+        hint: "麻痺すると下垂足・鶏歩になる！停止は「内側楔状骨・第1中足骨底」。"
       },
       {
-        id: "m024",
-        unit: "股関節・大腿",
-        name: "梨状筋",
-        origin: "仙骨前面",
-        insertion: "大腿骨大転子",
-        nerve: "仙骨神経叢（L5〜S2）",
-        action: "股関節の外旋",
-        hint: "お尻の深層にある筋。すぐ下を坐骨神経が通るため圧迫の原因になる。"
+        id: "m44", group: "下肢（下腿・足）", name: "長腓骨筋",
+        nerve: "浅腓骨神経",
+        action: "足関節の底屈・外がえし",
+        originInsertion: "腓骨頭・腓骨外側面 → 内側楔状骨・第1中足骨底（足底側）",
+        hint: "外果後方を通って足底を斜めに横切る！下腿外側で皮下直下に触知可能。"
       },
       {
-        id: "m025",
-        unit: "股関節・大腿",
-        name: "大腿筋膜張筋",
-        origin: "上前腸骨棘（ASIS）",
-        insertion: "腸脛靭帯を経て脛骨外側顆",
-        nerve: "上殿神経（L4〜S1）",
-        action: "股関節の屈曲・外転・内旋",
-        hint: "中殿筋と同じ『上殿神経』支配。腸脛靭帯をピンと張る役割。"
+        id: "m45", group: "下肢（下腿・足）", name: "短腓骨筋",
+        nerve: "浅腓骨神経",
+        action: "足関節の底屈・外がえし",
+        originInsertion: "腓骨外側面下部 → 第5中足骨粗面",
+        hint: "外果後方を通って第5中足骨粗面へ停止（内反捻挫の剥離骨折部位）。"
       },
       {
-        id: "m026",
-        unit: "下腿・足",
-        name: "前脛骨筋",
-        origin: "脛骨外側面・下腿骨間膜",
-        insertion: "内側楔状骨・第1中足骨底",
-        nerve: "深腓骨神経（L4〜L5）",
-        action: "足関節の背屈・内反",
-        hint: "すねの前側。麻痺するとつま先が垂れる『下垂足（鶏歩）』になる！"
+        id: "m46", group: "下肢（下腿・足）", name: "第3腓骨筋",
+        nerve: "深腓骨神経",
+        action: "足関節の背屈・外がえし",
+        originInsertion: "腓骨前面下部 → 第5中足骨底（背側面）",
+        hint: "長・短腓骨筋と違い「外果の前方」を通り、深腓骨神経支配で「背屈」させる！"
       },
       {
-        id: "m027",
-        unit: "下腿・足",
-        name: "長腓骨筋",
-        origin: "腓骨頭・腓骨外側面",
-        insertion: "内側楔状骨・第1中足骨底（足底）",
-        nerve: "浅腓骨神経（L5〜S1）",
-        action: "足関節の外反・底屈",
-        hint: "すねの外側。足首を外側に返す（外反）主役で、浅腓骨神経支配。"
+        id: "m47", group: "下肢（下腿・足）", name: "腓腹筋",
+        nerve: "脛骨神経",
+        action: "足関節の底屈・膝関節の屈曲",
+        originInsertion: "大腿骨内側・外側上顆 → 踵骨隆起（アキレス腱）",
+        hint: "膝と足関節を跨ぐ「二関節筋」！ヒラメ筋（単関節筋）との違いが頻出。"
       },
       {
-        id: "m028",
-        unit: "下腿・足",
-        name: "下腿三頭筋",
-        origin: "腓腹筋：大腿骨内外側顆 / ヒラメ筋：脛・腓骨",
-        insertion: "踵骨隆起（アキレス腱）",
-        nerve: "脛骨神経（S1〜S2）",
-        action: "足関節の底屈（腓腹筋は膝屈曲も）",
-        hint: "ふくらはぎ。つま先立ちや歩行時の蹴り出し（プッシュオフ）に必須。"
+        id: "m48", group: "下肢（下腿・足）", name: "ヒラメ筋",
+        nerve: "脛骨神経",
+        action: "足関節の底屈",
+        originInsertion: "腓骨頭・脛骨ヒラメ筋線 → 踵骨隆起（アキレス腱）",
+        hint: "足関節のみを跨ぐ「単関節筋」。タイプⅠ線維（遅筋）が豊富な抗重力筋。"
       },
       {
-        id: "m029",
-        unit: "下腿・足",
-        name: "後脛骨筋",
-        origin: "脛骨・腓骨後面・下腿骨間膜",
-        insertion: "舟状骨・楔状骨・立方骨など",
-        nerve: "脛骨神経（L4〜L5）",
-        action: "足関節の底屈・内反",
-        hint: "土踏まず（内側縦アーチ）を支える重要なインナーマッスル。"
+        id: "m49", group: "下肢（下腿・足）", name: "後脛骨筋",
+        nerve: "脛骨神経",
+        action: "足関節の底屈・内がえし（内側縦アーチ保持）",
+        originInsertion: "脛骨・腓骨後面・下腿骨間膜 → 舟状骨粗面・楔状骨等",
+        hint: "脛骨と腓骨の両方から起始し、内果後方の「足根管」を通過する！"
       },
       {
-        id: "m030",
-        unit: "下腿・足",
-        name: "長趾伸筋",
-        origin: "脛骨外側顆・腓骨前面",
-        insertion: "第2〜5趾の中節骨・末節骨背側",
-        nerve: "深腓骨神経（L4〜S1）",
-        action: "第2〜5趾の伸展・足関節の背屈",
-        hint: "足の指を反らす筋。前脛骨筋と同じ『深腓骨神経』支配。"
+        id: "m50", group: "下肢（下腿・足）", name: "膝窩筋",
+        nerve: "脛骨神経",
+        action: "膝関節の屈曲・下腿の内旋（伸展位のロック解除）",
+        originInsertion: "大腿骨外側上顆 → 脛骨後面（ヒラメ筋線より上）",
+        hint: "膝を伸ばしきった状態（終末強制回旋）のロックを外す単関節筋。"
       },
+
+      // --- 5. 体幹・頭頸部：5筋 ---
       {
-        id: "m031",
-        unit: "体幹・頭頸部",
-        name: "胸鎖乳突筋",
-        origin: "胸骨柄・鎖骨内側1/3",
-        insertion: "側頭骨乳様突起",
-        nerve: "副神経・頸神経（C2〜C3）",
-        action: "両側：頸部屈曲 / 片側：同側側屈・反対側回旋",
-        hint: "首を横に回すと浮き出る筋。片側が働くと『反対側』を向くのが国試の定番！"
-      },
-      {
-        id: "m032",
-        unit: "体幹・頭頸部",
-        name: "斜角筋（前・中・後）",
-        origin: "頸椎横突起",
-        insertion: "第1・2肋骨",
-        nerve: "頸神経叢・腕神経叢の筋枝",
-        action: "頸部の屈曲・側屈、第1・2肋骨の挙上（吸気補助）",
-        hint: "前・中斜角筋の間を『腕神経叢』と『鎖骨下動脈』が通る（胸郭出口症候群）。"
-      },
-      {
-        id: "m033",
-        unit: "体幹・頭頸部",
-        name: "咬筋",
-        origin: "頬骨弓",
-        insertion: "下顎骨咬筋粗面",
-        nerve: "下顎神経（三叉神経第3枝）",
-        action: "下顎の挙上（閉口）",
-        hint: "奥歯を噛みしめると頬で硬くなる咀嚼筋。支配神経は『三叉神経』！"
-      },
-      {
-        id: "m034",
-        unit: "体幹・頭頸部",
-        name: "側頭筋",
-        origin: "側頭窩",
-        insertion: "下顎骨筋突起",
-        nerve: "下顎神経（三叉神経第3枝）",
-        action: "下顎の挙上（閉口）・後方移動",
-        hint: "こめかみ付近に広がる咀嚼筋。咬筋と同じく三叉神経支配。"
-      },
-      {
-        id: "m035",
-        unit: "体幹・頭頸部",
-        name: "眼輪筋",
-        origin: "内側眼瞼靭帯・上顎骨前頭突起",
-        insertion: "眼瞼の皮膚（輪状）",
-        nerve: "顔面神経",
-        action: "閉眼（まばたき）",
-        hint: "表情筋の1つ。顔面神経麻痺（ベル麻痺）で目が閉じなくなる（兎眼）。"
-      },
-      {
-        id: "m036",
-        unit: "体幹・頭頸部",
-        name: "口輪筋",
-        origin: "上下の口唇周囲",
-        insertion: "口角の皮膚（輪状）",
-        nerve: "顔面神経",
-        action: "口唇の閉鎖・突出",
-        hint: "口笛を吹く・ストローを吸う筋。顔面神経麻痺で口角から水が漏れる。"
-      },
-      {
-        id: "m037",
-        unit: "体幹・頭頸部",
-        name: "腹直筋",
-        origin: "恥骨結合・恥骨稜",
-        insertion: "第5〜7肋軟骨・剣状突起",
+        id: "m51", group: "体幹・頭頸部", name: "腹直筋",
         nerve: "肋間神経（T5〜T12）",
-        action: "体幹の屈曲（前屈）・骨盤の後傾",
-        hint: "いわゆるシックスパック。起き上がり動作や強制呼気で働く。"
+        action: "体幹の屈曲・骨盤後傾・腹圧上昇",
+        originInsertion: "恥骨結合・恥骨稜 → 第5〜7肋軟骨・剣状突起",
+        hint: "左右の腹直筋鞘が正中で癒合した「白線」と、途中の「腱画」が特徴。"
       },
       {
-        id: "m038",
-        unit: "体幹・頭頸部",
-        name: "外腹斜筋",
-        origin: "第5〜12肋骨外面",
-        insertion: "腸骨稜・白線・鼠径靭帯",
+        id: "m52", group: "体幹・頭頸部", name: "外腹斜筋",
         nerve: "肋間神経・腸骨下腹・腸骨鼠径神経",
-        action: "両側：体幹屈曲 / 片側：同側側屈・反対側回旋",
-        hint: "ポケットに手を入れる走行。片側が働くと体幹を『反対側』へ回旋！"
+        action: "体幹の屈曲・同側側屈・反対側への回旋",
+        originInsertion: "第5〜12肋骨外面 → 腸骨稜・鼠径靭帯・白線",
+        hint: "ポケットに手を入れる走行。右の外腹斜筋が働くと体幹は「左」に回旋する！"
       },
       {
-        id: "m039",
-        unit: "体幹・頭頸部",
-        name: "内腹斜筋",
-        origin: "胸腰筋膜・腸骨稜・鼠径靭帯",
-        insertion: "第10〜12肋骨・白線",
-        nerve: "肋間神経・腸骨下腹・腸骨鼠径神経",
-        action: "両側：体幹屈曲 / 片側：同側側屈・同側回旋",
-        hint: "外腹斜筋の深層。片側が働くと体幹を『同側』へ回旋する！"
+        id: "m53", group: "体幹・頭頸部", name: "咬筋",
+        nerve: "三叉神経第3枝（下顎神経）",
+        action: "下顎の挙上（閉口・咀嚼）",
+        originInsertion: "頬骨弓 → 下顎骨咬筋粗面",
+        hint: "代表的な咀嚼筋！顔面神経（表情筋）ではなく「下顎神経」支配。"
       },
       {
-        id: "m040",
-        unit: "体幹・頭頸部",
-        name: "腹横筋",
-        origin: "第7〜12肋軟骨・胸腰筋膜・腸骨稜",
-        insertion: "白線・恥骨",
-        nerve: "肋間神経・腸骨下腹・腸骨鼠径神経",
-        action: "腹圧の上昇・体幹の安定化・強制呼気",
-        hint: "腹筋群の最も深層にある天然のコルセット。息を強く吐く時に働く。"
+        id: "m54", group: "体幹・頭頸部", name: "頬筋",
+        nerve: "顔面神経",
+        action: "頬を歯列に押し付ける・口角を外側に引く（ラッパ吹き）",
+        originInsertion: "上顎骨・下顎骨の歯槽突起 → 口角",
+        hint: "咀嚼を助けるが「表情筋」なので顔面神経支配！国試の定番ひっかけ。"
       },
       {
-        id: "m041",
-        unit: "体幹・頭頸部",
-        name: "脊柱起立筋",
-        origin: "仙骨・腸骨稜・腰椎棘突起",
-        insertion: "肋骨・胸椎・頸椎・側頭骨",
-        nerve: "脊髄神経後枝",
-        action: "脊柱の伸展（背屈）・姿勢の保持",
-        hint: "腸肋筋・最長筋・棘筋の3つの総称。背骨をまっすぐ支える抗重力筋。"
-      },
-      {
-        id: "m042",
-        unit: "体幹・頭頸部",
-        name: "腰方形筋",
-        origin: "腸骨稜・腸腰靭帯",
-        insertion: "第12肋骨・L1〜L4横突起",
-        nerve: "肋下神経・腰神経叢（T12〜L3）",
-        action: "体幹の同側側屈・骨盤の挙上（ヒップハイク）",
-        hint: "片麻痺患者が足を振り出す時の『骨盤引き上げ（分回し）』で重要。"
-      },
-      {
-        id: "m043",
-        unit: "体幹・頭頸部",
-        name: "横隔膜",
-        origin: "胸骨部・肋骨部・腰椎部",
-        insertion: "腱中心",
-        nerve: "横隔神経（C3〜C5）",
-        action: "安静時吸気（収縮して下降し、胸腔を広げる）",
-        hint: "『C3・4・5で横隔膜が生きている』！高位頸髄損傷の呼吸管理で超重要。"
-      },
-      {
-        id: "m044",
-        unit: "体幹・頭頸部",
-        name: "外肋間筋",
-        origin: "上位肋骨の下縁",
-        insertion: "下位肋骨の上縁",
-        nerve: "肋間神経（T1〜T11）",
-        action: "肋骨の挙上（安静時吸気）",
-        hint: "横隔膜とともに安静時の『吸気（息を吸う）』を担う主役。"
-      },
-      {
-        id: "m045",
-        unit: "体幹・頭頸部",
-        name: "内肋間筋",
-        origin: "下位肋骨の上縁",
-        insertion: "上位肋骨の下縁",
-        nerve: "肋間神経（T1〜T11）",
-        action: "肋骨の下制（努力呼気）",
-        hint: "外肋間筋と逆の『呼気（息を強く吐く）』で働くのがポイント！"
-      },
-      {
-        id: "m046",
-        unit: "手の内在筋",
-        name: "母指対立筋",
-        origin: "大菱形骨・屈筋支帯",
-        insertion: "第1中手骨の外側縁",
-        nerve: "正中神経（C8〜T1）",
-        action: "母指の対立",
-        hint: "親指と小指を向かい合わせる（つまみ動作の要）筋。正中神経支配。"
-      },
-      {
-        id: "m047",
-        unit: "手の内在筋",
-        name: "短母指屈筋",
-        origin: "浅頭：屈筋支帯 / 深頭：大・小菱形骨・有頭骨",
-        insertion: "母指基節骨底（外側種子骨）",
-        nerve: "浅頭：正中神経 / 深頭：尺骨神経",
-        action: "母指MP関節の屈曲",
-        hint: "浅頭は正中神経、深頭は尺骨神経の『二重神経支配』が国試の超頻出！"
-      },
-      {
-        id: "m048",
-        unit: "手の内在筋",
-        name: "母指内転筋",
-        origin: "斜頭：有頭骨・第2〜3中手骨底 / 横頭：第3中手骨",
-        insertion: "母指基節骨底（内側種子骨）",
-        nerve: "尺骨神経（C8〜T1）",
-        action: "母指の内転",
-        hint: "紙を親指と人差し指で挟む筋。麻痺すると『フローマン徴候』が陽性！"
-      },
-      {
-        id: "m049",
-        unit: "手の内在筋",
-        name: "小指外転筋",
-        origin: "豆状骨・尺側手根屈筋腱",
-        insertion: "小指基節骨底（内側）",
-        nerve: "尺骨神経（C8〜T1）",
-        action: "小指の外転",
-        hint: "小指球の最も外側にある筋。小指球筋はすべて『尺骨神経』支配。"
-      },
-      {
-        id: "m050",
-        unit: "手の内在筋",
-        name: "小指対立筋",
-        origin: "有鈎骨鈎・屈筋支帯",
-        insertion: "第5中手骨の内側縁",
-        nerve: "尺骨神経（C8〜T1）",
-        action: "小指の対立（手掌のくぼみを作る）",
-        hint: "物を握るときに手のひらをカップ状に丸める（横アーチ形成）役割。"
-      },
-      {
-        id: "m051",
-        unit: "手の内在筋",
-        name: "短小指屈筋",
-        origin: "有鈎骨鈎・屈筋支帯",
-        insertion: "小指基節骨底",
-        nerve: "尺骨神経（C8〜T1）",
-        action: "小指MP関節の屈曲",
-        hint: "小指の付け根を曲げる筋。尺骨神経麻痺で小指球全体が萎縮する。"
-      },
-      {
-        id: "m052",
-        unit: "手の内在筋",
-        name: "背側骨間筋",
-        origin: "隣り合う中手骨の対向面（4個）",
-        insertion: "第2〜4指の基節骨底・指背腱膜",
-        nerve: "尺骨神経（C8〜T1）",
-        action: "第2〜4指の外転（パーを開く）・MP屈曲・IP伸展",
-        hint: "覚え方は『DAB（Dorsal＝背側はABduction＝外転）』！すべて尺骨神経。"
-      },
-      {
-        id: "m053",
-        unit: "手の内在筋",
-        name: "掌側骨間筋",
-        origin: "第2・4・5中手骨の掌側面（3個）",
-        insertion: "第2・4・5指の基節骨底・指背腱膜",
-        nerve: "尺骨神経（C8〜T1）",
-        action: "第2・4・5指の内転（指を閉じる）・MP屈曲・IP伸展",
-        hint: "覚え方は『PAD（Palmar＝掌側はADduction＝内転）』！中指には付かない。"
-      },
-      {
-        id: "m054",
-        unit: "手の内在筋",
-        name: "虫様筋",
-        origin: "深指屈筋腱（第2〜5指）",
-        insertion: "第2〜5指の指背腱膜（橈側）",
-        nerve: "第1・2：正中神経 / 第3・4：尺骨神経",
-        action: "MP関節の屈曲、PIP・DIP関節の伸展",
-        hint: "『内在筋プラス肢位』を作る超重要筋。第1・2と第3・4で二重神経支配！"
-      },
-      {
-        id: "m055",
-        unit: "手の内在筋",
-        name: "短掌筋",
-        origin: "手掌腱膜の内側縁",
-        insertion: "小指球の皮膚",
-        nerve: "尺骨神経（浅枝）",
-        action: "小指球の皮膚にシワを寄せる",
-        hint: "手掌の尺側で物をしっかり把持する補助をする皮筋。"
+        id: "m55", group: "体幹・頭頸部", name: "顎二腹筋",
+        nerve: "前腹：下顎神経 / 後腹：顔面神経（二重支配）",
+        action: "下顎の引き下げ（開口）・舌骨の挙上",
+        originInsertion: "側頭骨乳突切痕・下顎骨二腹筋窩 → 中間腱で舌骨の筋滑車",
+        hint: "中間腱が舌骨の「筋滑車」を通る！前腹と後腹で支配神経が異なる二重支配。"
       }
     ];
 
-    // ==========================================
-    // 状態管理
-    // ==========================================
-    const STORAGE_WEAK_KEY = "ot_muscle_weak_ids_v1";
-    const STORAGE_BEST_KEY = "ot_muscle_best_v1";
+    /**
+     * =========================================================================
+     * 2. タブ②「3つ集めチャレンジ」全5問データ
+     * =========================================================================
+     */
+    const COLLECT_QUESTIONS = [
+      {
+        id: "cq1",
+        title: "筋皮神経支配の筋を3つ選べ！",
+        cards: [
+          { key: "c1", label: "烏口腕筋", isCorrect: true, reason: "筋皮神経支配", refId: "m14" },
+          { key: "c2", label: "上腕二頭筋", isCorrect: true, reason: "筋皮神経支配", refId: "m15" },
+          { key: "c3", label: "上腕筋", isCorrect: true, reason: "筋皮神経（＋橈骨）支配", refId: "m16" },
+          { key: "w1", label: "腕橈骨筋", isCorrect: false, reason: "橈骨神経支配", refId: "m18" },
+          { key: "w2", label: "三角筋", isCorrect: false, reason: "腋窩神経支配", refId: "m08" },
+          { key: "w3", label: "上腕三頭筋", isCorrect: false, reason: "橈骨神経支配", refId: "m17" }
+        ],
+        hint: "上腕前面の「烏口腕筋・上腕二頭筋・上腕筋」の3つが筋皮神経支配！"
+      },
+      {
+        id: "cq2",
+        title: "回旋筋腱板（ローテーターカフ）を構成する筋を3つ選べ！",
+        cards: [
+          { key: "c1", label: "棘上筋", isCorrect: true, reason: "腱板構成筋（大結節）", refId: "m09" },
+          { key: "c2", label: "小円筋", isCorrect: true, reason: "腱板構成筋（大結節）", refId: "m11" },
+          { key: "c3", label: "肩甲下筋", isCorrect: true, reason: "腱板構成筋（小結節）", refId: "m13" },
+          { key: "w1", label: "大円筋", isCorrect: false, reason: "腱板に含まれない", refId: "m12" },
+          { key: "w2", label: "三角筋", isCorrect: false, reason: "腱板に含まれない", refId: "m08" },
+          { key: "w3", label: "前鋸筋", isCorrect: false, reason: "腱板に含まれない", refId: "m05" }
+        ],
+        hint: "腱板は「棘上・棘下・小円・肩甲下」の4筋！大円筋や三角筋はダミーの定番。"
+      },
+      {
+        id: "cq3",
+        title: "二重神経支配の筋を3つ選べ！",
+        cards: [
+          { key: "c1", label: "上腕筋", isCorrect: true, reason: "筋皮＋橈骨神経", refId: "m16" },
+          { key: "c2", label: "深指屈筋", isCorrect: true, reason: "正中＋尺骨神経", refId: "m25" },
+          { key: "c3", label: "大内転筋", isCorrect: true, reason: "閉鎖＋坐骨神経", refId: "m38" },
+          { key: "w1", label: "縫工筋", isCorrect: false, reason: "大腿神経の単一支配", refId: "m33" },
+          { key: "w2", label: "長内転筋", isCorrect: false, reason: "閉鎖神経の単一支配", refId: "m37" },
+          { key: "w3", label: "浅指屈筋", isCorrect: false, reason: "正中神経の単一支配", refId: "m24" }
+        ],
+        hint: "「上腕筋・深指屈筋・恥骨筋・大内転筋・大腿二頭筋・顎二腹筋」が二重神経支配の代表！"
+      },
+      {
+        id: "cq4",
+        title: "二関節筋を3つ選べ！",
+        cards: [
+          { key: "c1", label: "大腿直筋", isCorrect: true, reason: "股・膝関節を跨ぐ", refId: "m34" },
+          { key: "c2", label: "半膜様筋", isCorrect: true, reason: "股・膝関節を跨ぐ", refId: "m42" },
+          { key: "c3", label: "腓腹筋", isCorrect: true, reason: "膝・足関節を跨ぐ", refId: "m47" },
+          { key: "w1", label: "中間広筋", isCorrect: false, reason: "膝のみの単関節筋", refId: "m35" },
+          { key: "w2", label: "ヒラメ筋", isCorrect: false, reason: "足関節のみの単関節筋", refId: "m48" },
+          { key: "w3", label: "大内転筋", isCorrect: false, reason: "股関節のみの単関節筋", refId: "m38" }
+        ],
+        hint: "大腿直筋・薄筋・縫工筋・ハムストリングス・腓腹筋が下肢の代表的な二関節筋！"
+      },
+      {
+        id: "cq5",
+        title: "足関節を「背屈」させる筋（または鵞足3筋に注意：深腓骨神経支配）を3つ選べ！",
+        cards: [
+          { key: "c1", label: "前脛骨筋", isCorrect: true, reason: "深腓骨神経・足背屈", refId: "m43" },
+          { key: "c2", label: "第3腓骨筋", isCorrect: true, reason: "深腓骨神経・足背屈", refId: "m46" },
+          { key: "c3", label: "長趾伸筋", isCorrect: true, reason: "深腓骨神経・足背屈", refId: null },
+          { key: "w1", label: "後脛骨筋", isCorrect: false, reason: "脛骨神経・足底屈", refId: "m49" },
+          { key: "w2", label: "長腓骨筋", isCorrect: false, reason: "浅腓骨神経・足底屈", refId: "m44" },
+          { key: "w3", label: "ヒラメ筋", isCorrect: false, reason: "脛骨神経・足底屈", refId: "m48" }
+        ],
+        hint: "前脛骨筋・第3腓骨筋・長趾伸筋・長母趾伸筋はすべて深腓骨神経支配で足関節を背屈！"
+      }
+    ];
 
-    let selectedUnit = "上肢帯・上腕";
-    let selectedMode = "nerve";
+    /**
+     * =========================================================================
+     * 3. ストレージ・効果音・ユーティリティ
+     * =========================================================================
+     */
+    const STORAGE_MAIN_KEY = "ot_muscle_match_v1";
+
     let soundOn = true;
-    let isWeakMode = false;
-
-    let queue = [];
-    let currentBatch = [];
-    let selectedLeft = null;
-    let selectedRight = null;
-    let matchedInBatch = 0;
-
-    let timerInterval = null;
-    let startTime = 0;
-    let elapsedSec = 0;
-    let missCount = 0;
-    let combo = 0;
-    let maxCombo = 0;
-    let missedSet = new Set();
-    let playedMuscles = [];
-    let hintTimeout = null;
-
-    // Web Audio API 効果音
     let audioCtx = null;
-    function playTone(type) {
+
+    function playSound(type) {
       if (!soundOn) return;
       try {
-        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        const now = audioCtx.currentTime;
-        if (type === "ok") {
-          osc.type = "sine";
-          osc.frequency.setValueAtTime(660, now);
-          osc.frequency.exponentialRampToValueAtTime(990, now + 0.12);
-          gain.gain.setValueAtTime(0.15, now);
-          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
-          osc.start(now);
-          osc.stop(now + 0.15);
-        } else {
-          osc.type = "sawtooth";
-          osc.frequency.setValueAtTime(220, now);
-          osc.frequency.linearRampToValueAtTime(150, now + 0.18);
-          gain.gain.setValueAtTime(0.12, now);
-          gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-          osc.start(now);
-          osc.stop(now + 0.2);
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         }
+        if (audioCtx.state === "suspended") {
+          audioCtx.resume();
+        }
+        const now = audioCtx.currentTime;
+        const tone = (freq, dur, wave, vol, delay = 0) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = wave;
+          osc.frequency.setValueAtTime(freq, now + delay);
+          gain.gain.setValueAtTime(vol, now + delay);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + delay + dur);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(now + delay);
+          osc.stop(now + delay + dur);
+        };
+
+        if (type === "tap") {
+          tone(540, 0.05, "sine", 0.06);
+        } else if (type === "ok") {
+          tone(659.25, 0.09, "sine", 0.12, 0);
+          tone(987.77, 0.16, "sine", 0.13, 0.07);
+        } else if (type === "ng") {
+          tone(210, 0.15, "sawtooth", 0.1, 0);
+          tone(160, 0.2, "sawtooth", 0.1, 0.09);
+        } else if (type === "clear") {
+          tone(523.25, 0.11, "sine", 0.12, 0);
+          tone(659.25, 0.11, "sine", 0.12, 0.09);
+          tone(783.99, 0.11, "sine", 0.12, 0.18);
+          tone(1046.5, 0.34, "sine", 0.14, 0.27);
+        }
+      } catch (e) {}
+    }
+
+    const RANK_WEIGHT = { S: 3, A: 2, B: 1 };
+
+    function loadMainStorage() {
+      try {
+        const raw = JSON.parse(localStorage.getItem(STORAGE_MAIN_KEY) || "{}");
+        return {
+          weakIds: Array.isArray(raw.weakIds) ? raw.weakIds : [],
+          records: (raw.records && typeof raw.records === "object") ? raw.records : {}
+        };
+      } catch (e) {
+        return { weakIds: [], records: {} };
+      }
+    }
+
+    function saveMainStorage(data) {
+      try {
+        localStorage.setItem(STORAGE_MAIN_KEY, JSON.stringify({
+          weakIds: [...new Set(data.weakIds)],
+          records: data.records
+        }));
       } catch (e) {}
     }
 
     function getWeakIds() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_WEAK_KEY) || "[]");
-      } catch (e) {
-        return [];
+      const valid = new Set(MUSCLES.map(m => m.id));
+      return loadMainStorage().weakIds.filter(id => valid.has(id));
+    }
+
+    function addWeakId(id) {
+      if (!id) return;
+      const st = loadMainStorage();
+      if (!st.weakIds.includes(id)) {
+        st.weakIds.push(id);
+        saveMainStorage(st);
       }
     }
 
-    function saveWeakIds(ids) {
-      try {
-        localStorage.setItem(STORAGE_WEAK_KEY, JSON.stringify([...new Set(ids)]));
-      } catch (e) {}
+    function removeWeakId(id) {
+      const st = loadMainStorage();
+      st.weakIds = st.weakIds.filter(x => x !== id);
+      saveMainStorage(st);
     }
 
-    function getBestRecords() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_BEST_KEY) || "{}");
-      } catch (e) {
-        return {};
-      }
-    }
+    function updateCourseRecord(key, sec, rank) {
+      const st = loadMainStorage();
+      const prev = st.records[key];
+      let isNewBest = false;
 
-    function saveBestRecord(key, sec) {
-      try {
-        const data = getBestRecords();
-        if (!data[key] || sec < data[key]) {
-          data[key] = sec;
-          localStorage.setItem(STORAGE_BEST_KEY, JSON.stringify(data));
-          return true;
+      if (!prev) {
+        st.records[key] = { bestTime: sec, bestRank: rank };
+        isNewBest = true;
+      } else {
+        if (sec < prev.bestTime) {
+          prev.bestTime = sec;
+          isNewBest = true;
         }
-      } catch (e) {}
-      return false;
-    }
-
-    function getAnswerText(muscle, mode) {
-      if (mode === "nerve") return muscle.nerve;
-      if (mode === "action") return muscle.action;
-      return `【起】${muscle.origin}\n【停】${muscle.insertion}`;
+        if ((RANK_WEIGHT[rank] || 0) > (RANK_WEIGHT[prev.bestRank] || 0)) {
+          prev.bestRank = rank;
+        }
+      }
+      saveMainStorage(st);
+      return isNewBest;
     }
 
     function shuffle(arr) {
@@ -1138,85 +2173,278 @@
       return a;
     }
 
-    // ==========================================
-    // 初期化・画面切り替え
-    // ==========================================
+    /**
+     * =========================================================================
+     * 4. アプリ状態管理
+     * =========================================================================
+     */
+    const GROUPS = [
+      "上肢（肩・上腕）",
+      "上肢（前腕・手）",
+      "下肢（殿部・大腿）",
+      "下肢（下腿・足）",
+      "体幹・頭頸部"
+    ];
+
+    let activeTab = "match";
+    let selectedUnit = "上肢（肩・上腕）";
+    let selectedMode = "nerve";
+    let summaryFilter = "ALL";
+    let lastPlayedType = "match";
+
+    let timerInterval = null;
+    let startTime = 0;
+    let elapsedSec = 0;
+
+    let matchState = {
+      isWeakMode: false,
+      playedList: [],
+      batches: [],
+      batchIndex: 0,
+      currentBatch: [],
+      selectedLeft: null,
+      selectedRight: null,
+      matchedInBatch: 0,
+      clearedTotal: 0,
+      missCount: 0,
+      combo: 0,
+      maxCombo: 0,
+      missedSet: new Set(),
+      hintTimer: null
+    };
+
+    let collectState = {
+      qIndex: 0,
+      cards: [],
+      selectedKeys: new Set(),
+      attemptCount: 1,
+      missCount: 0,
+      missedRefIds: new Set(),
+      isLocked: false
+    };
+
     function showScreen(id) {
       document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
       document.getElementById(id).classList.add("active");
+      window.scrollTo({ top: 0, behavior: "instant" });
     }
 
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+    }
+
+    /**
+     * =========================================================================
+     * 5. スタート画面 & 55筋まとめ描画
+     * =========================================================================
+     */
     function renderStartScreen() {
-      const units = [...new Set(MUSCLES.map(m => m.unit))];
+      if (typeof KokushiModule !== "undefined") {
+        KokushiModule.updateEntryBadge();
+      }
+
+      document.getElementById("tabMatchBtn").classList.toggle("active", activeTab === "match");
+      document.getElementById("tabCollectBtn").classList.toggle("active", activeTab === "collect");
+      document.getElementById("tabSummaryBtn").classList.toggle("active", activeTab === "summary");
+
+      document.getElementById("panelMatch").classList.toggle("active", activeTab === "match");
+      document.getElementById("panelCollect").classList.toggle("active", activeTab === "collect");
+      document.getElementById("panelSummary").classList.toggle("active", activeTab === "summary");
+
+      // 単元ボタン生成
       const unitGrid = document.getElementById("unitGrid");
       unitGrid.innerHTML = "";
 
-      units.forEach(u => {
-        const count = MUSCLES.filter(m => m.unit === u).length;
+      const unitOptions = [
+        ...GROUPS.map(g => ({
+          id: g,
+          label: g,
+          sub: `${MUSCLES.filter(m => m.group === g).length}筋`
+        })),
+        { id: "ALL", label: "全55筋ランダム", sub: "10筋出題" }
+      ];
+
+      unitOptions.forEach(u => {
         const btn = document.createElement("button");
-        btn.className = "select-btn" + (selectedUnit === u ? " selected" : "");
-        btn.innerHTML = `${u}<span class="sub">${count}筋</span>`;
+        btn.type = "button";
+        btn.className = "select-btn" + (selectedUnit === u.id ? " selected" : "");
+        btn.innerHTML = `${u.label}<span class="sub">${u.sub}</span>`;
         btn.onclick = () => {
-          selectedUnit = u;
+          playSound("tap");
+          selectedUnit = u.id;
           renderStartScreen();
         };
         unitGrid.appendChild(btn);
       });
-
-      // 全単元ランダム（10筋）
-      const allBtn = document.createElement("button");
-      allBtn.className = "select-btn" + (selectedUnit === "ALL" ? " selected" : "");
-      allBtn.style.gridColumn = "span 2";
-      allBtn.innerHTML = `全単元ランダム出題<span class="sub">55筋からランダム10筋</span>`;
-      allBtn.onclick = () => {
-        selectedUnit = "ALL";
-        renderStartScreen();
-      };
-      unitGrid.appendChild(allBtn);
 
       // 弱点ボタン
       const weakIds = getWeakIds();
       const weakBtn = document.getElementById("weakBtn");
       if (weakIds.length > 0) {
         weakBtn.style.display = "block";
-        document.getElementById("weakCount").textContent = weakIds.length;
+        document.getElementById("weakCount").textContent = String(weakIds.length);
       } else {
         weakBtn.style.display = "none";
       }
 
-      // ベストタイム表示
-      const bestKey = `${selectedUnit}_${selectedMode}`;
-      const best = getBestRecords()[bestKey];
-      document.getElementById("bestRecord").textContent = best
-        ? `この条件のベストタイム：${best.toFixed(1)}秒`
-        : "まだクリア記録がありません";
-    }
-
-    // ==========================================
-    // ゲーム開始・進行
-    // ==========================================
-    function startGame(weakOnly = false) {
-      isWeakMode = weakOnly;
-      let targetMuscles = [];
-
-      if (weakOnly) {
-        const weakIds = getWeakIds();
-        targetMuscles = MUSCLES.filter(m => weakIds.includes(m.id));
-        if (targetMuscles.length === 0) return;
-      } else if (selectedUnit === "ALL") {
-        targetMuscles = shuffle(MUSCLES).slice(0, 10);
+      // ベスト記録表示
+      const st = loadMainStorage();
+      const mRec = st.records[`match_${selectedUnit}_${selectedMode}`];
+      const matchBestEl = document.getElementById("matchBestRecord");
+      if (mRec) {
+        matchBestEl.innerHTML = `この条件の最高記録：<span class="mini-rank ${mRec.bestRank}">ランク${mRec.bestRank}</span>${mRec.bestTime.toFixed(1)}秒`;
       } else {
-        targetMuscles = MUSCLES.filter(m => m.unit === selectedUnit);
+        matchBestEl.textContent = "まだクリア記録がありません";
       }
 
-      playedMuscles = [...targetMuscles];
-      queue = shuffle(targetMuscles);
-      missCount = 0;
-      combo = 0;
-      maxCombo = 0;
-      missedSet = new Set();
-      selectedLeft = null;
-      selectedRight = null;
+      const cRec = st.records["collect_5q"];
+      const collectBestEl = document.getElementById("collectBestRecord");
+      if (cRec) {
+        collectBestEl.innerHTML = `3つ集めチャレンジ最高記録：<span class="mini-rank ${cRec.bestRank}">ランク${cRec.bestRank}</span>${cRec.bestTime.toFixed(1)}秒`;
+      } else {
+        collectBestEl.textContent = "まだクリア記録がありません";
+      }
+    }
+
+    function renderSummaryFilters() {
+      const container = document.getElementById("summaryFilters");
+      container.innerHTML = "";
+      const options = [{ key: "ALL", label: `すべて (${MUSCLES.length})` }].concat(
+        GROUPS.map(g => ({ key: g, label: `${g} (${MUSCLES.filter(m => m.group === g).length})` }))
+      );
+
+      options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "filter-chip" + (summaryFilter === opt.key ? " active" : "");
+        btn.textContent = opt.label;
+        btn.onclick = () => {
+          playSound("tap");
+          summaryFilter = opt.key;
+          renderSummaryFilters();
+          renderCheatList();
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    function renderCheatList() {
+      const keyword = (document.getElementById("summarySearch").value || "").trim().toLowerCase();
+      const filtered = MUSCLES.filter(m => {
+        if (summaryFilter !== "ALL" && m.group !== summaryFilter) return false;
+        if (!keyword) return true;
+        const hay = `${m.name} ${m.group} ${m.nerve} ${m.action} ${m.originInsertion} ${m.hint}`.toLowerCase();
+        return hay.includes(keyword);
+      });
+
+      document.getElementById("summaryCountText").textContent = `${filtered.length}筋`;
+      const listEl = document.getElementById("cheatList");
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = `<div style="text-align:center; padding:18px; color:var(--muted); font-size:0.84rem; font-weight:700;">該当する筋がありません</div>`;
+        return;
+      }
+
+      listEl.innerHTML = filtered.map(m => `
+        <div class="cheat-item">
+          <div class="cheat-head">
+            <span class="cheat-name">${m.name}</span>
+            <span class="group-badge">${m.group}</span>
+          </div>
+          <div class="cheat-row"><strong>支配神経：</strong>${m.nerve}</div>
+          <div class="cheat-row"><strong>主な作用：</strong>${m.action}</div>
+          <div class="cheat-row"><strong>起始・停止：</strong>${m.originInsertion}</div>
+          <div class="cheat-hint">💡 ${m.hint}</div>
+        </div>
+      `).join("");
+    }
+
+    /**
+     * =========================================================================
+     * 6. タブ①：スピード・マッチング
+     * =========================================================================
+     */
+    function getMatchAnswerText(muscle, mode) {
+      if (mode === "nerve") return muscle.nerve;
+      if (mode === "action") return muscle.action;
+      return muscle.originInsertion;
+    }
+
+    function buildBalancedBatches(list, mode, batchSize = 5) {
+      const shuffled = shuffle(list);
+      const numBatches = Math.ceil(shuffled.length / batchSize);
+      if (numBatches <= 1) return [shuffled];
+
+      const batches = Array.from({ length: numBatches }, () => []);
+      const groups = new Map();
+
+      for (const item of shuffled) {
+        const ans = getMatchAnswerText(item, mode);
+        if (!groups.has(ans)) groups.set(ans, []);
+        groups.get(ans).push(item);
+      }
+
+      const sortedGroups = Array.from(groups.values()).sort((a, b) => b.length - a.length);
+
+      for (const group of sortedGroups) {
+        for (const item of group) {
+          const ans = getMatchAnswerText(item, mode);
+          const candidates = batches
+            .map((b, idx) => ({
+              idx,
+              len: b.length,
+              sameCount: b.filter(x => getMatchAnswerText(x, mode) === ans).length
+            }))
+            .filter(c => c.len < batchSize)
+            .sort((a, b) => (a.sameCount - b.sameCount) || (a.len - b.len));
+
+          batches[candidates[0].idx].push(item);
+        }
+      }
+
+      return shuffle(batches.filter(b => b.length > 0));
+    }
+
+    function startMatchGame(isWeakMode = false) {
+      playSound("tap");
+      lastPlayedType = isWeakMode ? "weak" : "match";
+
+      let targetList = [];
+      if (isWeakMode) {
+        const weakIds = getWeakIds();
+        targetList = MUSCLES.filter(m => weakIds.includes(m.id));
+        if (targetList.length === 0) {
+          renderStartScreen();
+          return;
+        }
+      } else if (selectedUnit === "ALL") {
+        targetList = shuffle(MUSCLES).slice(0, 10);
+      } else {
+        targetList = MUSCLES.filter(m => m.group === selectedUnit);
+      }
+
+      const batches = buildBalancedBatches(targetList, selectedMode, 5);
+
+      if (matchState.hintTimer) clearTimeout(matchState.hintTimer);
+      matchState = {
+        isWeakMode,
+        playedList: targetList,
+        batches,
+        batchIndex: 0,
+        currentBatch: [],
+        selectedLeft: null,
+        selectedRight: null,
+        matchedInBatch: 0,
+        clearedTotal: 0,
+        missCount: 0,
+        combo: 0,
+        maxCombo: 0,
+        missedSet: new Set(),
+        hintTimer: null
+      };
 
       const headerMap = {
         nerve: "支配神経",
@@ -1224,237 +2452,797 @@
         originInsertion: "起始・停止"
       };
       document.getElementById("rightColHeader").textContent = headerMap[selectedMode];
-      document.getElementById("combo").textContent = "0";
+      document.getElementById("matchCombo").textContent = "0";
       document.getElementById("hintToast").classList.remove("show");
 
-      showScreen("playScreen");
-      startTime = Date.now();
-      clearInterval(timerInterval);
+      showScreen("matchPlayScreen");
+
+      stopTimer();
+      startTime = performance.now();
+      elapsedSec = 0;
+      document.getElementById("matchTimer").textContent = "0.0";
       timerInterval = setInterval(() => {
-        elapsedSec = (Date.now() - startTime) / 1000;
-        document.getElementById("timer").textContent = elapsedSec.toFixed(1);
+        elapsedSec = (performance.now() - startTime) / 1000;
+        document.getElementById("matchTimer").textContent = elapsedSec.toFixed(1);
       }, 100);
 
-      nextBatch();
+      loadMatchBatch(0);
     }
 
-    function nextBatch() {
-      if (queue.length === 0) {
-        finishGame();
-        return;
-      }
+    function loadMatchBatch(idx) {
+      matchState.batchIndex = idx;
+      matchState.currentBatch = matchState.batches[idx];
+      matchState.matchedInBatch = 0;
+      matchState.selectedLeft = null;
+      matchState.selectedRight = null;
 
-      // 同じ解答テキストが極力かぶらないように最大5枚抽出
-      currentBatch = [];
-      const usedAnswers = new Set();
-      const leftover = [];
-
-      for (const m of queue) {
-        const ans = getAnswerText(m, selectedMode);
-        if (currentBatch.length < 5 && !usedAnswers.has(ans)) {
-          currentBatch.push(m);
-          usedAnswers.add(ans);
-        } else {
-          leftover.push(m);
-        }
-      }
-      while (currentBatch.length < 5 && leftover.length > 0) {
-        currentBatch.push(leftover.shift());
-      }
-      queue = leftover;
-      matchedInBatch = 0;
-      selectedLeft = null;
-      selectedRight = null;
-
-      updateRemaining();
-      renderBoard();
+      updateMatchRemaining();
+      renderMatchBoard();
     }
 
-    function updateRemaining() {
-      const rem = queue.length + (currentBatch.length - matchedInBatch);
-      document.getElementById("remaining").textContent = rem;
+    function updateMatchRemaining() {
+      const rem = matchState.playedList.length - matchState.clearedTotal;
+      document.getElementById("matchRemaining").textContent = String(rem);
     }
 
-    function renderBoard() {
+    function renderMatchBoard() {
       const leftCol = document.getElementById("leftCol");
       const rightCol = document.getElementById("rightCol");
       leftCol.innerHTML = "";
       rightCol.innerHTML = "";
 
-      const leftItems = shuffle(currentBatch);
-      const rightItems = shuffle(currentBatch);
-
-      leftItems.forEach(m => {
+      shuffle(matchState.currentBatch).forEach(m => {
         const card = document.createElement("div");
         card.className = "card";
         card.textContent = m.name;
-        card.dataset.id = m.id;
-        card.dataset.answer = getAnswerText(m, selectedMode);
-        card.onclick = () => selectCard("left", card, m);
+        card.dataset.answer = getMatchAnswerText(m, selectedMode);
+        card.onclick = () => selectMatchCard("left", card, m);
         leftCol.appendChild(card);
       });
 
-      rightItems.forEach(m => {
+      shuffle(matchState.currentBatch).forEach(m => {
         const card = document.createElement("div");
         card.className = "card answer-card";
-        card.style.whiteSpace = "pre-line";
-        card.textContent = getAnswerText(m, selectedMode);
-        card.dataset.id = m.id;
-        card.dataset.answer = getAnswerText(m, selectedMode);
-        card.onclick = () => selectCard("right", card, m);
+        card.textContent = getMatchAnswerText(m, selectedMode);
+        card.dataset.answer = getMatchAnswerText(m, selectedMode);
+        card.onclick = () => selectMatchCard("right", card, m);
         rightCol.appendChild(card);
       });
     }
 
-    function selectCard(side, el, muscle) {
+    function selectMatchCard(side, el, muscle) {
       if (el.classList.contains("correct")) return;
+      playSound("tap");
 
       if (side === "left") {
-        if (selectedLeft) selectedLeft.el.classList.remove("selected");
-        selectedLeft = { el, muscle };
+        if (matchState.selectedLeft) matchState.selectedLeft.el.classList.remove("selected");
+        matchState.selectedLeft = { el, muscle };
         el.classList.add("selected");
       } else {
-        if (selectedRight) selectedRight.el.classList.remove("selected");
-        selectedRight = { el, muscle };
+        if (matchState.selectedRight) matchState.selectedRight.el.classList.remove("selected");
+        matchState.selectedRight = { el, muscle };
         el.classList.add("selected");
       }
 
-      if (selectedLeft && selectedRight) {
-        checkMatch();
+      if (matchState.selectedLeft && matchState.selectedRight) {
+        checkMatchPair();
       }
     }
 
-    function checkMatch() {
-      const l = selectedLeft;
-      const r = selectedRight;
-      selectedLeft = null;
-      selectedRight = null;
+    function checkMatchPair() {
+      const l = matchState.selectedLeft;
+      const r = matchState.selectedRight;
+      matchState.selectedLeft = null;
+      matchState.selectedRight = null;
 
-      // 解答テキストが一致すれば正解（同一神経の筋が並んだ場合にも対応）
-      const isMatch = l.el.dataset.answer === r.el.dataset.answer;
+      const isCorrect = l.el.dataset.answer === r.el.dataset.answer;
 
-      if (isMatch) {
-        playTone("ok");
+      if (isCorrect) {
+        playSound("ok");
         l.el.classList.remove("selected");
         r.el.classList.remove("selected");
         l.el.classList.add("correct");
         r.el.classList.add("correct");
 
-        combo++;
-        if (combo > maxCombo) maxCombo = combo;
-        document.getElementById("combo").textContent = combo;
+        matchState.combo++;
+        if (matchState.combo > matchState.maxCombo) matchState.maxCombo = matchState.combo;
+        document.getElementById("matchCombo").textContent = String(matchState.combo);
 
-        matchedInBatch++;
-        updateRemaining();
-
-        // 弱点復習モードでノーミス正解なら弱点から解除
-        if (isWeakMode && !missedSet.has(l.muscle.id)) {
-          const weakIds = getWeakIds().filter(id => id !== l.muscle.id);
-          saveWeakIds(weakIds);
+        if (matchState.isWeakMode && !matchState.missedSet.has(l.muscle.id)) {
+          removeWeakId(l.muscle.id);
         }
 
-        if (matchedInBatch === currentBatch.length) {
-          setTimeout(nextBatch, 320);
+        matchState.matchedInBatch++;
+        matchState.clearedTotal++;
+        updateMatchRemaining();
+
+        if (matchState.matchedInBatch === matchState.currentBatch.length) {
+          setTimeout(() => {
+            if (matchState.batchIndex + 1 < matchState.batches.length) {
+              loadMatchBatch(matchState.batchIndex + 1);
+            } else {
+              finishMatchGame();
+            }
+          }, 320);
         }
       } else {
-        playTone("ng");
-        missCount++;
-        combo = 0;
-        document.getElementById("combo").textContent = "0";
+        playSound("ng");
+        matchState.missCount++;
+        matchState.combo = 0;
+        document.getElementById("matchCombo").textContent = "0";
 
-        missedSet.add(l.muscle.id);
-        const weakIds = getWeakIds();
-        weakIds.push(l.muscle.id);
-        saveWeakIds(weakIds);
+        matchState.missedSet.add(l.muscle.id);
+        addWeakId(l.muscle.id);
 
         l.el.classList.remove("selected");
         r.el.classList.remove("selected");
         l.el.classList.add("wrong");
         r.el.classList.add("wrong");
+
         setTimeout(() => {
           l.el.classList.remove("wrong");
           r.el.classList.remove("wrong");
         }, 380);
 
-        showHint(`💡 ${l.muscle.name}：${l.muscle.hint}`);
+        showMatchHint(`💡 ${l.muscle.name}：${l.muscle.hint}`);
       }
     }
 
-    function showHint(text) {
+    function showMatchHint(text) {
       const toast = document.getElementById("hintToast");
       toast.textContent = text;
       toast.classList.add("show");
-      clearTimeout(hintTimeout);
-      hintTimeout = setTimeout(() => toast.classList.remove("show"), 3500);
+      if (matchState.hintTimer) clearTimeout(matchState.hintTimer);
+      matchState.hintTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3600);
     }
 
-    // ==========================================
-    // リザルト画面
-    // ==========================================
-    function finishGame() {
-      clearInterval(timerInterval);
-      elapsedSec = (Date.now() - startTime) / 1000;
+    function finishMatchGame() {
+      stopTimer();
+      elapsedSec = (performance.now() - startTime) / 1000;
+      playSound("clear");
 
-      let rank = "B";
-      if (missCount === 0) rank = "S";
-      else if (missCount <= 2) rank = "A";
-
-      document.getElementById("rankBadge").textContent = rank;
-      document.getElementById("finalTime").textContent = `${elapsedSec.toFixed(1)}秒`;
-      document.getElementById("finalMiss").textContent = `${missCount}回`;
-      document.getElementById("finalMaxCombo").textContent = `${maxCombo}回`;
-
-      let subText = missCount === 0 ? "パーフェクト！素晴らしい！" : "ミスした筋を確認してリベンジしよう！";
-      if (!isWeakMode) {
-        const bestKey = `${selectedUnit}_${selectedMode}`;
-        if (saveBestRecord(bestKey, elapsedSec)) {
-          subText = "🎉 ベストタイム更新！ " + subText;
-        }
+      const rank = matchState.missCount === 0 ? "S" : (matchState.missCount <= 2 ? "A" : "B");
+      let isNewRecord = false;
+      if (!matchState.isWeakMode) {
+        isNewRecord = updateCourseRecord(`match_${selectedUnit}_${selectedMode}`, elapsedSec, rank);
       }
+
+      const missedList = matchState.playedList.filter(m => matchState.missedSet.has(m.id));
+      renderResultScreen({
+        rank,
+        timeSec: elapsedSec,
+        misses: matchState.missCount,
+        isNewRecord,
+        thirdLabel: "最大連続",
+        thirdValue: `${matchState.maxCombo}回`,
+        missedList,
+        topicPool: missedList.length > 0 ? missedList : matchState.playedList
+      });
+    }
+
+    /**
+     * =========================================================================
+     * 7. タブ②：3つ集めチャレンジ（全5問連続クリア）
+     * =========================================================================
+     */
+    function startCollectGame() {
+      playSound("tap");
+      lastPlayedType = "collect";
+
+      collectState = {
+        qIndex: 0,
+        cards: [],
+        selectedKeys: new Set(),
+        attemptCount: 1,
+        missCount: 0,
+        missedRefIds: new Set(),
+        isLocked: false
+      };
+
+      document.getElementById("collectTryCount").textContent = "1";
+      showScreen("collectPlayScreen");
+
+      stopTimer();
+      startTime = performance.now();
+      elapsedSec = 0;
+      document.getElementById("collectTimer").textContent = "0.0";
+      timerInterval = setInterval(() => {
+        elapsedSec = (performance.now() - startTime) / 1000;
+        document.getElementById("collectTimer").textContent = elapsedSec.toFixed(1);
+      }, 100);
+
+      loadCollectQuestion(0);
+    }
+
+    function loadCollectQuestion(qIdx) {
+      collectState.qIndex = qIdx;
+      collectState.selectedKeys = new Set();
+      collectState.isLocked = false;
+
+      const q = COLLECT_QUESTIONS[qIdx];
+      collectState.cards = shuffle(q.cards);
+
+      document.getElementById("collectProgress").textContent = `第${qIdx + 1}問 / 全${COLLECT_QUESTIONS.length}問`;
+      document.getElementById("collectQuestionTitle").textContent = q.title;
+      document.getElementById("collectSelectCount").textContent = "選択中: 0 / 3";
+
+      const fb = document.getElementById("collectFeedback");
+      fb.className = "collect-feedback";
+      fb.textContent = "";
+
+      renderCollectCards();
+    }
+
+    function renderCollectCards() {
+      const grid = document.getElementById("collectGrid");
+      grid.innerHTML = "";
+
+      collectState.cards.forEach(c => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "collect-card" + (collectState.selectedKeys.has(c.key) ? " selected" : "");
+        btn.dataset.key = c.key;
+        btn.textContent = c.label;
+        btn.onclick = () => onTapCollectCard(c);
+        grid.appendChild(btn);
+      });
+    }
+
+    function onTapCollectCard(card) {
+      if (collectState.isLocked) return;
+
+      if (collectState.selectedKeys.has(card.key)) {
+        playSound("tap");
+        collectState.selectedKeys.delete(card.key);
+      } else {
+        if (collectState.selectedKeys.size >= 3) return;
+        playSound("tap");
+        collectState.selectedKeys.add(card.key);
+      }
+
+      document.getElementById("collectSelectCount").textContent =
+        `選択中: ${collectState.selectedKeys.size} / 3`;
+      renderCollectCards();
+
+      if (collectState.selectedKeys.size === 3) {
+        judgeCollectQuestion();
+      }
+    }
+
+    function judgeCollectQuestion() {
+      collectState.isLocked = true;
+      const q = COLLECT_QUESTIONS[collectState.qIndex];
+      const chosen = collectState.cards.filter(c => collectState.selectedKeys.has(c.key));
+      const wrongs = chosen.filter(c => !c.isCorrect);
+
+      const cardEls = document.querySelectorAll("#collectGrid .collect-card");
+      const fb = document.getElementById("collectFeedback");
+
+      if (wrongs.length === 0) {
+        playSound("ok");
+        cardEls.forEach(el => {
+          if (collectState.selectedKeys.has(el.dataset.key)) {
+            el.classList.remove("selected");
+            el.classList.add("correct");
+          }
+        });
+        fb.className = "collect-feedback show-ok";
+        fb.textContent = `⭕ 正解！${q.hint}`;
+
+        setTimeout(() => {
+          if (collectState.qIndex + 1 >= COLLECT_QUESTIONS.length) {
+            finishCollectGame();
+          } else {
+            loadCollectQuestion(collectState.qIndex + 1);
+          }
+        }, 900);
+      } else {
+        playSound("ng");
+        collectState.missCount++;
+        collectState.attemptCount++;
+
+        wrongs.forEach(w => {
+          if (w.refId) {
+            collectState.missedRefIds.add(w.refId);
+            addWeakId(w.refId);
+          }
+        });
+
+        cardEls.forEach(el => {
+          if (collectState.selectedKeys.has(el.dataset.key)) {
+            el.classList.remove("selected");
+            const isWrong = wrongs.some(w => w.key === el.dataset.key);
+            el.classList.add(isWrong ? "wrong" : "correct");
+          }
+        });
+
+        const wrongDesc = wrongs.map(w => `${w.label}（${w.reason}）`).join("・");
+        fb.className = "collect-feedback show-ng";
+        fb.textContent = `❌ 不正解！ダミー：${wrongDesc}。${q.hint}（第1問からやり直し！）`;
+
+        setTimeout(() => {
+          document.getElementById("collectTryCount").textContent = String(collectState.attemptCount);
+          loadCollectQuestion(0);
+        }, 2000);
+      }
+    }
+
+    function finishCollectGame() {
+      stopTimer();
+      elapsedSec = (performance.now() - startTime) / 1000;
+      playSound("clear");
+
+      const rank = collectState.missCount === 0 ? "S" : (collectState.missCount <= 2 ? "A" : "B");
+      const isNewRecord = updateCourseRecord("collect_5q", elapsedSec, rank);
+      const missedList = MUSCLES.filter(m => collectState.missedRefIds.has(m.id));
+
+      renderResultScreen({
+        rank,
+        timeSec: elapsedSec,
+        misses: collectState.missCount,
+        isNewRecord,
+        thirdLabel: "挑戦回数",
+        thirdValue: `${collectState.attemptCount}回目`,
+        missedList,
+        topicPool: missedList.length > 0 ? missedList : MUSCLES
+      });
+    }
+
+    /**
+     * =========================================================================
+     * 8. 共通リザルト画面（基礎学習用）
+     * =========================================================================
+     */
+    function renderResultScreen({ rank, timeSec, misses, isNewRecord, thirdLabel, thirdValue, missedList, topicPool }) {
+      const subText = rank === "S"
+        ? "パーフェクト！解剖学の筋知識がしっかり定着しています！"
+        : (rank === "A" ? "素晴らしい！あと少しでパーフェクトSランクです！" : "粘り強くクリア！ミスした筋を復習してリベンジしよう！");
+
+      document.getElementById("newRecordBadge").style.display = isNewRecord ? "inline-block" : "none";
+      const rankEl = document.getElementById("rankBadge");
+      rankEl.textContent = rank;
+      rankEl.className = `rank-badge ${rank}`;
+
       document.getElementById("resultSub").textContent = subText;
+      document.getElementById("finalTime").textContent = `${timeSec.toFixed(1)}秒`;
+      document.getElementById("finalMiss").textContent = `${misses}回`;
+      document.getElementById("finalThirdLabel").textContent = thirdLabel;
+      document.getElementById("finalThirdValue").textContent = thirdValue;
 
-      // グループ学習お題（ミスした筋があればそこから、なければ今回プレイした筋からランダム）
-      const missedMuscles = playedMuscles.filter(m => missedSet.has(m.id));
-      const topicPool = missedMuscles.length > 0 ? missedMuscles : playedMuscles;
       const topic = topicPool[Math.floor(Math.random() * topicPool.length)];
-
-      document.getElementById("topicMuscle").textContent = `お題：${topic.name}`;
+      document.getElementById("topicTarget").textContent = `お題：${topic.name}（${topic.group}）`;
       const topicAns = document.getElementById("topicAnswer");
       topicAns.classList.remove("open");
       topicAns.innerHTML = `
-        <div><strong>起始：</strong>${topic.origin}</div>
-        <div><strong>停止：</strong>${topic.insertion}</div>
         <div><strong>支配神経：</strong>${topic.nerve}</div>
-        <div><strong>作用：</strong>${topic.action}</div>
+        <div><strong>主な作用：</strong>${topic.action}</div>
+        <div><strong>起始・停止：</strong>${topic.originInsertion}</div>
         <div style="margin-top:4px; color:var(--primary);"><strong>💡 ヒント：</strong>${topic.hint}</div>
       `;
 
-      // ミス一覧
-      const missSection = document.getElementById("missSection");
-      const missList = document.getElementById("missList");
-      if (missedMuscles.length > 0) {
-        missSection.style.display = "block";
-        missList.innerHTML = missedMuscles.map(m => `
+      const missTitle = document.getElementById("missSectionTitle");
+      const missListEl = document.getElementById("missList");
+      if (missedList.length > 0) {
+        missTitle.textContent = "今回ミスした筋（弱点リストに登録済み）";
+        missListEl.innerHTML = missedList.map(m => `
           <div class="miss-item">
             <div class="miss-name">${m.name}</div>
             <div><strong>支配神経：</strong>${m.nerve}</div>
-            <div><strong>作用：</strong>${m.action}</div>
-            <div><strong>起始：</strong>${m.origin} ／ <strong>停止：</strong>${m.insertion}</div>
+            <div><strong>主な作用：</strong>${m.action}</div>
+            <div><strong>起始・停止：</strong>${m.originInsertion}</div>
             <div style="color:var(--muted); margin-top:2px;">💡 ${m.hint}</div>
           </div>
         `).join("");
       } else {
-        missSection.style.display = "none";
+        missTitle.textContent = "今回の結果";
+        missListEl.innerHTML = `<div class="perfect-box">🎉 ミスなしパーフェクト！この調子で次のモードにも挑戦しよう！</div>`;
       }
 
       showScreen("resultScreen");
     }
 
-    // ==========================================
-    // イベント登録
-    // ==========================================
+    /**
+     * =========================================================================
+     * 9. 【共通モジュール】国家試験過去問に挑戦（KokushiModule）
+     *    localStorageキー: ot_kokushi_muscle / 全42問完全収録
+     * =========================================================================
+     */
+    const KOKUSHI_STORAGE_KEY = "ot_kokushi_muscle";
+
+    const KOKUSHI_DATA = [
+      {"id": "52-AM-55", "meta": "第52回 午前 問55", "question": "胸椎に付着する筋はどれか。", "choices": ["外腹斜筋", "肩甲挙筋", "前鋸筋", "僧帽筋", "内腹斜筋"], "answers": [4], "point": "僧帽筋は第7頸椎以下全胸椎の棘突起などから起こり、肩甲骨・鎖骨に停止する。", "choiceNotes": ["× 第5〜12肋骨から起こる。", "× 第1〜4頸椎横突起から起こる。", "× 第1〜9肋骨から起こる。", "○ 第7頸椎以下全胸椎の棘突起などから起こる。", "× 腸骨稜などから起こる。"]},
+      {"id": "52-AM-54", "meta": "第52回 午前 問54", "question": "第2中手骨底に付着する筋はどれか。", "choices": ["円回内筋", "尺側手根屈筋", "浅指屈筋", "長掌筋", "橈側手根屈筋"], "answers": [5], "point": "橈側手根屈筋は第2・3中手骨底の掌側面に停止する。", "choiceNotes": ["× 橈骨外側面の中央部に停止する。", "× 豆状骨、有鉤骨鉤、第5中手骨底に停止する。", "× 第2〜5指の中節骨底掌面に停止する。", "× 手掌腱膜に停止する。", "○ 第2・3中手骨底の掌側面に停止する。"]},
+      {"id": "52-AM-53", "meta": "第52回 午前 問53", "question": "回旋筋腱板を構成する筋はどれか。2つ選べ。", "choices": ["棘上筋", "肩甲挙筋", "広背筋", "小円筋", "前鋸筋"], "answers": [1, 4], "point": "回旋筋腱板（ローテーターカフ）は棘上筋、棘下筋、小円筋、肩甲下筋の4筋で構成される。", "choiceNotes": ["○ 腱板を構成する。", "× 腱板には含まれない。", "× 腱板には含まれない。", "○ 腱板を構成する。", "× 腱板には含まれない。"]},
+      {"id": "56-AM-52", "meta": "第56回 午前 問52", "question": "橈骨粗面に付着する筋はどれか。", "choices": ["肘筋", "上腕筋", "腕橈骨筋", "上腕二頭筋", "橈側手根屈筋"], "answers": [4], "point": "上腕二頭筋は橈骨粗面（および上腕二頭筋腱膜）に停止する。", "choiceNotes": ["× 尺骨近位部橈側面に停止する。", "× 尺骨粗面・鉤状突起に停止する。", "× 橈骨茎状突起基部に停止する。", "○ 橈骨粗面に停止する。", "× 第2・3中手骨底に停止する。"]},
+      {"id": "60-PM-57", "meta": "第60回 午後 問57", "question": "筋とその停止部の組合せで正しいのはどれか。", "choices": ["肩甲挙筋 － 肩甲骨の肩甲切痕", "小円筋 － 上腕骨の大結節", "上腕筋 － 橈骨粗面", "半膜様筋 － 腓骨頭", "前脛骨筋 － 第2中足骨底"], "answers": [2], "point": "小円筋は上腕骨大結節後面下部に停止する。", "choiceNotes": ["× 肩甲骨の上角および内側縁上部に停止する。", "○ 上腕骨大結節に停止する。", "× 尺骨粗面および鉤状突起に停止する。", "× 脛骨内側顆後部などに停止する（腓骨頭は大腿二頭筋）。", "× 内側楔状骨および第1中足骨底に停止する。"]},
+      {"id": "44-PM-07", "meta": "第44回 午後 問7", "question": "二関節筋はどれか。2つ選べ。", "choices": ["半膜様筋", "大内転筋", "大腿四頭筋の中間広筋", "ヒラメ筋", "腓腹筋"], "answers": [1, 5], "point": "半膜様筋（股・膝関節）と腓腹筋（膝・足関節）は2つの関節を跨ぐ二関節筋である。", "choiceNotes": ["○ 股関節と膝関節を跨ぐ二関節筋である。", "× 股関節のみを跨ぐ単関節筋である。", "× 膝関節のみを跨ぐ単関節筋である。", "× 足関節のみを跨ぐ単関節筋である。", "○ 膝関節と足関節を跨ぐ二関節筋である。"]},
+      {"id": "52-PM-52", "meta": "第52回 午後 問52", "question": "皮下組織の直下に筋腹を触知する筋はどれか。", "choices": ["棘上筋", "方形回内筋", "小殿筋", "中間広筋", "長腓骨筋"], "answers": [5], "point": "長腓骨筋の筋腹は下腿最外側部、腓骨頭から下腿近位3/4まで皮下直下で触知できる。", "choiceNotes": ["× 僧帽筋中部線維の深部に位置する。", "× 前腕屈筋群の深部に位置する。", "× 中殿筋の深部に位置する。", "× 大腿直筋などの深部に位置する。", "○ 腓骨頭直下から下腿近位部で皮下直下に触知できる。"]},
+      {"id": "57-PM-52", "meta": "第57回 午後 問52", "question": "筋滑車がみられる筋はどれか。2つ選べ。", "choices": ["烏口腕筋", "顎二腹筋", "示指伸筋", "小胸筋", "上斜筋"], "answers": [2, 5], "point": "顎二腹筋（舌骨の線維性滑車）と上斜筋（眼窩内上縁の滑車）に筋滑車がみられる。", "choiceNotes": ["× 筋滑車はみられない。", "○ 中間腱が舌骨の線維性筋滑車を通る。", "× 筋滑車はみられない。", "× 筋滑車はみられない。", "○ 眼窩内上縁の滑車を通って方向を変える。"]},
+      {"id": "47-PM-53", "meta": "第47回 午後 問53", "question": "尺骨と橈骨の両方に起始または停止するのはどれか。2つ選べ。", "choices": ["肘筋", "上腕筋", "長母指屈筋", "上腕三頭筋", "長母指外転筋"], "answers": [3, 5], "point": "長母指屈筋（橈骨前面・尺骨鉤状突起等）と長母指外転筋（橈骨後面・尺骨後面）が両骨に起始をもつ（厚労省複数正解）。", "choiceNotes": ["× 上腕骨外側上顆から尺骨に付着する。", "× 上腕骨から尺骨粗面・鉤状突起に付着する。", "○ 橈骨前面および尺骨鉤状突起などから起こる。", "× 肩甲骨・上腕骨から尺骨肘頭に付着する。", "○ 橈骨後面および尺骨後面から起こる。"]},
+      {"id": "50-AM-55", "meta": "第50回 午前 問55", "question": "二重神経支配の筋はどれか。", "choices": ["肘筋", "上腕筋", "浅指屈筋", "手の骨間筋", "尺側手根屈筋"], "answers": [2], "point": "上腕筋は筋皮神経と橈骨神経（外側部）の二重神経支配を受ける。", "choiceNotes": ["× 橈骨神経の単一支配である。", "○ 筋皮神経と橈骨神経の二重神経支配である。", "× 正中神経の単一支配である。", "× 尺骨神経の単一支配である。", "× 尺骨神経の単一支配である。"]},
+      {"id": "53-AM-53", "meta": "第53回 午前 問53", "question": "外側腋窩隙を構成する筋はどれか。", "choices": ["棘上筋", "棘下筋", "広背筋", "大円筋", "肩甲下筋"], "answers": [4], "point": "外側腋窩隙（四角隙）は大円筋、小円筋、上腕三頭筋長頭、上腕骨で構成される。", "choiceNotes": ["× 四角隙の構成筋ではない。", "× 四角隙の構成筋ではない。", "× 四角隙の構成筋ではない。", "○ 下縁を大円筋が構成する。", "× 四角隙の構成筋ではない。"]},
+      {"id": "43-PM-08", "meta": "第43回 午後 問8", "question": "橈骨と尺骨の両者に付着部を持つ筋で正しいのはどれか。 2つ選べ。", "choices": ["方形回内筋", "橈側手根屈筋", "尺側手根屈筋", "浅指屈筋", "深指屈筋"], "answers": [1, 4], "point": "方形回内筋（尺骨前面〜橈骨前面）と浅指屈筋（上腕尺骨頭・橈骨頭）が両骨に付着する。", "choiceNotes": ["○ 尺骨遠位前面から起こり橈骨遠位前面に停止する。", "× 上腕骨内側上顆から第2・3中手骨底に付着する。", "× 上腕骨内側上顆・尺骨から第5中手骨底等に付着する。", "○ 上腕尺骨頭と橈骨頭の両方から起こる。", "× 尺骨および前腕骨間膜から起こる。"]},
+      {"id": "49-PM-60", "meta": "第49回 午後 問60", "question": "二重に神経支配を受けないのはどれか。", "choices": ["手の虫様筋", "上腕筋", "恥骨筋", "大内転筋", "縫工筋"], "answers": [5], "point": "縫工筋は大腿神経のみの単一支配である。", "choiceNotes": ["× 第1・2は正中神経、第3・4は尺骨神経の支配を受ける。", "× 筋皮神経と橈骨神経の二重支配。", "× 大腿神経と閉鎖神経の二重支配。", "× 閉鎖神経と坐骨神経の二重支配。", "○ 大腿神経のみの単一神経支配である。"]},
+      {"id": "46-AM-52", "meta": "第46回 午前 問52", "question": "筋と付着部との組合せで正しいのはどれか。", "choices": ["腸腰筋―大転子", "長内転筋―坐骨結節", "半腱様筋―腓骨頭", "長腓骨筋―舟状骨", "前脛骨筋―内側楔状骨"], "answers": [5], "point": "前脛骨筋は内側楔状骨の内側面・足底面および第1中足骨底に停止する。", "choiceNotes": ["× 小転子に付着する。", "× 恥骨に付着する（坐骨結節は大内転筋等）。", "× 脛骨粗面の内側（鵞足）に付着する。", "× 内側楔状骨および第1・2中足骨底に付着する。", "○ 内側楔状骨および第1中足骨底に付着する。"]},
+      {"id": "55-PM-54", "meta": "第55回 午後 問54", "question": "筋皮神経支配の筋はどれか。2つ選べ。", "choices": ["肘筋", "棘下筋", "三角筋", "烏口腕筋", "上腕二頭筋"], "answers": [4, 5], "point": "烏口腕筋、上腕二頭筋、上腕筋は筋皮神経支配である。", "choiceNotes": ["× 橈骨神経支配である。", "× 肩甲上神経支配である。", "× 腋窩神経支配である。", "○ 筋皮神経支配である。", "○ 筋皮神経支配である。"]},
+      {"id": "51-PM-54", "meta": "第51回 午後 問54", "question": "腸骨翼の外面に付着する筋はどれか。", "choices": ["大腰筋", "腸骨筋", "中殿筋", "梨状筋", "大腿筋膜張筋"], "answers": [3], "point": "中殿筋は腸骨翼外面の前・後殿筋線の間から起こり、大転子に停止する。", "choiceNotes": ["× 第12胸椎〜第4腰椎椎体などから起こる。", "× 腸骨窩（内面）から起こる。", "○ 腸骨翼外面から起こる。", "× 仙骨前面から起こる。", "× 上前腸骨棘から起こる。"]},
+      {"id": "43-PM-07", "meta": "第43回 午後 問7", "question": "足根管を通るのはどれか。2つ選べ。", "choices": ["前脛骨筋", "後脛骨筋", "長腓骨筋", "長指屈筋", "長指伸筋"], "answers": [2, 4], "point": "内果後方の足根管を通る筋腱は、後脛骨筋、長趾屈筋、長母趾屈筋である。", "choiceNotes": ["× 内果前方・足背を通る。", "○ 足根管を通る。", "× 外果後方を通る。", "○ 足根管を通る。", "× 足背を通る。"]},
+      {"id": "54-PM-53", "meta": "第54回 午後 問53", "question": "外眼筋の中で動眼神経の支配でないのはどれか。", "choices": ["上斜筋", "下斜筋", "上直筋", "下直筋", "上眼瞼挙筋"], "answers": [1], "point": "上斜筋は滑車神経支配、外側直筋は外転神経支配であり、動眼神経支配ではない。", "choiceNotes": ["○ 滑車神経支配である。", "× 動眼神経支配である。", "× 動眼神経支配である。", "× 動眼神経支配である。", "× 動眼神経支配である。"]},
+      {"id": "54-PM-55", "meta": "第54回 午後 問55", "question": "筋と支配神経との組合せで正しいのはどれか。2つ選べ。", "choices": ["下双子筋 － 閉鎖神経", "短内転筋 － 坐骨神経", "縫工筋 － 大腿神経", "前脛骨筋 － 深腓骨神経", "後脛骨筋 － 総腓骨神経"], "answers": [3, 4], "point": "縫工筋は大腿神経、前脛骨筋は深腓骨神経支配である。", "choiceNotes": ["× 仙骨神経叢の枝（下双子筋神経など）の支配を受ける。", "× 閉鎖神経前枝の支配を受ける。", "○ 大腿神経の支配を受ける。", "○ 深腓骨神経の支配を受ける。", "× 脛骨神経の支配を受ける。"]},
+      {"id": "47-PM-52", "meta": "第47回 午後 問52", "question": "筋と上腕骨の付着部の組合せで正しいのはどれか。2つ選べ。", "choices": ["三角筋―大結節", "棘上筋―大結節", "棘下筋―小結節", "小円筋―大結節", "肩甲下筋―大結節"], "answers": [2, 4], "point": "上腕骨大結節には棘上筋、棘下筋、小円筋が付着（停止）する。", "choiceNotes": ["× 三角筋粗面に停止する。", "○ 上腕骨大結節の上面に停止する。", "× 上腕骨大結節の中部に停止する。", "○ 上腕骨大結節の後面下部に停止する。", "× 上腕骨小結節に停止する。"]},
+      {"id": "56-AM-58", "meta": "第56回 午前 問58", "question": "筋と支配神経の組合せで正しいのはどれか。2つ選べ。", "choices": ["下斜筋 ー 外転神経", "下直筋 ー 視神経", "上眼瞼挙筋 ー 動眼神経", "上斜筋 ー 滑車神経", "内側直筋 ー 眼神経"], "answers": [3, 4], "point": "上眼瞼挙筋は動眼神経、上斜筋は滑車神経支配である。", "choiceNotes": ["× 動眼神経支配である。", "× 動眼神経支配である（視神経は感覚神経）。", "○ 動眼神経支配である。", "○ 滑車神経支配である。", "× 動眼神経支配である。"]},
+      {"id": "52-PM-55", "meta": "第52回 午後 問55", "question": "脛骨と腓骨の両方に付着する筋はどれか。2つ選べ。", "choices": ["大腿二頭筋", "半腱様筋", "前脛骨筋", "後脛骨筋", "短腓骨筋"], "answers": [1, 4], "point": "後脛骨筋は脛骨と腓骨から起始し、大腿二頭筋も腓骨頭および脛骨外側顆等に付着する（厚労省複数正解）。", "choiceNotes": ["○ 坐骨結節・大腿骨粗線から起こり、腓骨頭・脛骨外側顆等に停止する。", "× 坐骨結節から起こり脛骨内側部（鵞足）に停止する。", "× 脛骨外側面等から起こり内側楔状骨・第1中足骨底等に停止する。", "○ 下腿骨間膜に接する脛骨と腓骨から起こり舟状骨粗面などに停止する。", "× 腓骨外側面等から起こり第5中足骨粗面に停止する。"]},
+      {"id": "50-PM-55", "meta": "第50回 午後 問55", "question": "筋と付着部の組合せで正しいのはどれか。2つ選べ。", "choices": ["恥骨筋―大腿骨頸部", "縫工筋―下前腸骨棘", "短内転筋―恥骨上枝", "長内転筋―恥骨結節", "大腿二頭筋―腓骨頭"], "answers": [4, 5], "point": "長内転筋は恥骨結節、大腿二頭筋は腓骨頭に付着する。", "choiceNotes": ["× 恥骨櫛から起こり大腿骨恥骨筋線に停止する。", "× 上前腸骨棘から起こり脛骨粗面内側（鵞足）に停止する。", "× 恥骨下枝から起こり大腿骨粗線内側唇に停止する。", "○ 恥骨結節から起こり大腿骨粗線内側唇に停止する。", "○ 腓骨頭・下腿筋膜等に停止する。"]},
+      {"id": "56-PM-55", "meta": "第56回 午後 問55", "question": "足関節外側面において、外果の前方を走行する筋はどれか。", "choices": ["後脛骨筋", "短腓骨筋", "長腓骨筋", "第3腓骨筋", "長母指屈筋"], "answers": [4], "point": "第3腓骨筋は伸筋支帯の深層を通り、外果の前方を走行して第5中足骨底に停止する。", "choiceNotes": ["× 内果の後方（足根管）を走行する。", "× 外果の後方（腓骨筋支帯下）を走行する。", "× 外果の後方を走行する。", "○ 伸筋支帯深層を通り、外果の前方を走行する。", "× 内果の後方（足根管）を走行する。"]},
+      {"id": "46-PM-54", "meta": "第46回 午後 問54", "question": "下肢の筋と神経支配との組合せで正しいのはどれか。2つ選べ。", "choices": ["中殿筋 ―下殿神経", "縫工筋 ―閉鎖神経", "膝窩筋 ― 脛骨神経", "後脛骨筋 ― 総腓骨神経", "短指屈筋 ―内側足底神経"], "answers": [3, 5], "point": "膝窩筋は脛骨神経、短趾屈筋は内側足底神経支配である。", "choiceNotes": ["× 上殿神経支配である。", "× 大腿神経支配である。", "○ 脛骨神経支配である。", "× 脛骨神経支配である。", "○ 内側足底神経支配である。"]},
+      {"id": "58-AM-51", "meta": "第58回 午前 問51", "question": "手の外来筋はどれか。", "choices": ["短母指外転筋", "短小指屈筋", "短母指屈筋", "短母指伸筋", "短掌筋"], "answers": [4], "point": "短母指伸筋は前腕（橈骨遠位部後面・前腕骨間膜）に起始をもつ手の上肢外来筋である。", "choiceNotes": ["× 舟状骨結節等から起こる手内在筋（母指球筋）である。", "× 有鉤骨鉤等から起こる手内在筋（小指球筋）である。", "× 屈筋支帯・大小菱形骨等から起こる手内在筋（母指球筋）である。", "○ 前腕に起始をもつ手の外来筋である。", "× 手掌腱膜から起こる手内在筋（小指球筋）である。"]},
+      {"id": "61-AM-52", "meta": "第61回 午前 問52", "question": "白線がある筋はどれか。", "choices": ["僧帽筋", "上腕二頭筋", "大胸筋", "腹直筋", "半膜様筋"], "answers": [4], "point": "腹直筋の中央線には胸骨剣状突起から恥骨結合を結ぶ腱膜組織の白線が存在する。", "choiceNotes": ["× 白線はみられない。", "× 白線はみられない。", "× 白線はみられない。", "○ 左右の腹直筋鞘が正中部で癒合した白線がある。", "× 白線はみられない。"]},
+      {"id": "42-PM-06", "meta": "第42回 午後 問6", "question": "肩甲骨に付着する筋で誤っている組合せはどれか。", "choices": ["小胸筋―烏口突起", "大円筋―下角", "前鋸筋―内側縁", "肩甲挙筋―上角", "上腕三頭筋―関節上結節"], "answers": [5], "point": "肩甲骨関節上結節に付着するのは上腕二頭筋長頭であり、上腕三頭筋長頭は関節下結節に付着する。", "choiceNotes": ["○ 烏口突起に停止する。", "○ 肩甲骨下角に起始する。", "○ 肩甲骨内側縁に停止する。", "○ 肩甲骨上角に停止する。", "× 上腕三頭筋長頭は関節下結節に付着する（関節上結節は上腕二頭筋長頭）。"]},
+      {"id": "42-PM-07", "meta": "第42回 午後 問7", "question": "二関節筋はどれか。2つ選べ。", "choices": ["薄筋", "恥骨筋", "大内転筋", "大腿直筋", "膝窩筋"], "answers": [1, 4], "point": "薄筋（股関節・膝関節）と大腿直筋（股関節・膝関節）は2つの関節を跨ぐ二関節筋である。", "choiceNotes": ["○ 股関節と膝関節を跨ぐ二関節筋である。", "× 股関節のみを跨ぐ単関節筋である。", "× 股関節のみを跨ぐ単関節筋である。", "○ 股関節と膝関節を跨ぐ二関節筋である。", "× 膝関節のみを跨ぐ単関節筋である。"]},
+      {"id": "49-AM-54", "meta": "第49回 午前 問54", "question": "足関節の背屈を起こす筋はどれか。2つ選べ。", "choices": ["前脛骨筋", "長腓骨筋", "後脛骨筋", "長趾屈筋", "第三腓骨筋"], "answers": [1, 5], "point": "前脛骨筋と第3腓骨筋は足関節の背屈（屈曲）を起こす。", "choiceNotes": ["○ 足関節を背屈（および内がえし）させる。", "× 足関節を底屈（および外がえし）させる。", "× 足関節を底屈（および内がえし）させる。", "× 主に第2〜5趾末節の屈曲と足関節底屈に作用する。", "○ 足関節を背屈（および外がえし）させる。"]},
+      {"id": "58-AM-59", "meta": "第58回 午前 問59", "question": "皮下組織の直下に筋腹を触知できる筋はどれか。", "choices": ["棘上筋", "深指屈筋", "方形回内筋", "中間広筋", "後脛骨筋"], "answers": [2], "point": "深指屈筋は前腕中央部で尺骨を取り巻き、尺骨骨幹尺側縁をあてると皮膚の直下で筋腹を触知できる。", "choiceNotes": ["× 僧帽筋中部線維の深層に位置する。", "○ 尺骨骨幹尺側縁部で皮下組織直下に筋腹を触知できる。", "× 前腕屈筋群の深層に位置する。", "× 大腿直筋などの深層に位置する。", "× 下腿三頭筋などの深層に位置する。"]},
+      {"id": "52-PM-51", "meta": "第52回 午後 問51", "question": "上腕骨小結節に付着する筋はどれか。", "choices": ["棘下筋", "棘上筋", "肩甲下筋", "小円筋", "上腕二頭筋"], "answers": [3], "point": "肩甲下筋は上腕骨小結節に停止する（棘上筋・棘下筋・小円筋は大結節に停止）。", "choiceNotes": ["× 上腕骨大結節に停止する。", "× 上腕骨大結節に停止する。", "○ 上腕骨小結節に停止する。", "× 上腕骨大結節に停止する。", "× 橈骨粗面に停止する。"]},
+      {"id": "50-AM-52", "meta": "第50回 午前 問52", "question": "筋と支配神経の組合せで正しいのはどれか。", "choices": ["腸骨筋―大腿神経", "大殿筋―上殿神経", "小殿筋―下殿神経", "前脛骨筋―脛骨神経", "内閉鎖筋―閉鎖神経"], "answers": [1], "point": "腸骨筋は大腿神経（および腰神経叢筋枝）支配である。", "choiceNotes": ["○ 大腿神経の支配を受ける。", "× 下殿神経支配である。", "× 上殿神経支配である。", "× 深腓骨神経支配である。", "× 仙骨神経叢の枝（内閉鎖筋神経）支配である。"]},
+      {"id": "53-AM-56", "meta": "第53回 午前 問56", "question": "筋と支配神経の組合せで正しいのはどれか。2つ選べ。", "choices": ["円回内筋―尺骨神経", "深指屈筋―橈骨神経", "長掌筋―正中神経", "長母指伸筋―後骨間神経", "腕橈骨筋―前骨間神経"], "answers": [3, 4], "point": "長掌筋は正中神経、長母指伸筋は後骨間神経（橈骨神経深枝）支配である。", "choiceNotes": ["× 正中神経支配である。", "× 正中神経と尺骨神経の二重支配である。", "○ 正中神経支配である。", "○ 後骨間神経（橈骨神経深枝）支配である。", "× 橈骨神経本幹の支配である。"]},
+      {"id": "48-AM-53", "meta": "第48回 午前 問53", "question": "筋と支配神経の組合せで正しいのはどれか。", "choices": ["前鋸筋―胸背神経", "僧帽筋―長胸神経", "鎖骨下筋―腋窩神経", "小胸筋―肩甲上神経", "肩甲挙筋―肩甲背神経"], "answers": [5], "point": "肩甲挙筋は肩甲背神経（および第3・4頸神経前枝）支配である。", "choiceNotes": ["× 長胸神経支配である（胸背神経は広背筋）。", "× 副神経および頸神経叢枝支配である。", "× 鎖骨下筋神経支配である。", "× 内側・外側胸筋神経支配である。", "○ 肩甲背神経支配である。"]},
+      {"id": "50-PM-53", "meta": "第50回 午後 問53", "question": "肋骨に付着する筋はどれか。", "choices": ["広背筋", "僧帽筋", "小円筋", "大菱形筋", "肩甲下筋"], "answers": [1], "point": "広背筋は胸腰筋膜を介する起始のほか、第9〜12肋骨外面からも起始する。", "choiceNotes": ["○ 第9（10）〜12肋骨から起始する。", "× 肋骨には付着しない（後頭骨・頸胸椎棘突起・鎖骨・肩甲骨）。", "× 肋骨には付着しない（肩甲骨外側縁〜上腕骨大結節）。", "× 肋骨には付着しない（胸椎棘突起〜肩甲骨内側縁）。", "× 肋骨には付着しない（肩甲下窩〜上腕骨小結節）。"]},
+      {"id": "56-PM-54", "meta": "第56回 午後 問54", "question": "腱板を構成する筋はどれか。", "choices": ["肩甲下筋", "三角筋", "上腕筋", "僧帽筋", "大円筋"], "answers": [1], "point": "回旋筋腱板（ローテーターカフ）を構成するのは肩甲下筋、棘上筋、棘下筋、小円筋である。", "choiceNotes": ["○ 腱板の前面を構成する。", "× 腱板には含まれない。", "× 腱板には含まれない。", "× 腱板には含まれない。", "× 腱板には含まれない。"]},
+      {"id": "55-AM-54", "meta": "第55回 午前 問54", "question": "手根管を通過しないのはどれか。", "choices": ["深指屈筋腱", "浅指屈筋腱", "長母指屈筋腱", "尺側手根屈筋腱", "橈側手根屈筋腱"], "answers": [4], "point": "尺側手根屈筋腱は手根管を通らず、豆状骨や有鉤骨鉤に停止する。", "choiceNotes": ["× 手根管を通過する。", "× 手根管を通過する。", "× 手根管を通過する。", "○ 手根管を通過しない。", "× 手根管（腱鞘）を通過する。"]},
+      {"id": "49-PM-53", "meta": "第49回 午後 問53", "question": "筋と付着部の組合せで正しいのはどれか。2つ選べ。", "choices": ["腸腰筋―小転子", "縫工筋―腸骨稜", "大腿直筋―下前腸骨棘", "長内転筋―坐骨結節", "内側広筋―粗線外側唇"], "answers": [1, 3], "point": "腸腰筋は小転子、大腿直筋は下前腸骨棘に付着する。", "choiceNotes": ["○ 筋裂孔を通り大腿骨小転子に停止する。", "× 上前腸骨棘から起こり鵞足に付着する。", "○ 下前腸骨棘および寛骨臼上縁から起こり膝蓋骨等に付着する。", "× 恥骨結節（恥骨上枝）に付着する。", "× 大腿骨粗線内側唇に付着する。"]},
+      {"id": "45-AM-53", "meta": "第45回 午前 問53", "question": "表情筋はどれか。2つ選べ。", "choices": ["咬筋", "頬筋", "側頭筋", "オトガイ筋", "外側翼突筋"], "answers": [2, 4], "point": "頬筋とオトガイ筋は顔面神経支配の表情筋である（咬筋・側頭筋・外側翼突筋は三叉神経第3枝支配の咀嚼筋）。", "choiceNotes": ["× 下顎神経支配の咀嚼筋である。", "○ 顔面神経支配の表情筋である。", "× 下顎神経支配の咀嚼筋である。", "○ 顔面神経支配の表情筋である。", "× 下顎神経支配の咀嚼筋である。"]},
+      {"id": "52-AM-56", "meta": "第52回 午前 問56", "question": "二重神経支配の筋はどれか。", "choices": ["長内転筋", "大内転筋", "中間広筋", "半膜様筋", "ヒラメ筋"], "answers": [2], "point": "大内転筋は閉鎖神経と坐骨神経（脛骨神経部）の二重神経支配を受ける。", "choiceNotes": ["× 閉鎖神経の単一支配である。", "○ 閉鎖神経と坐骨神経の二重神経支配である。", "× 大腿神経の単一支配である。", "× 坐骨神経（脛骨神経部）の単一支配である。", "× 脛骨神経の単一支配である。"]},
+      {"id": "58-AM-60", "meta": "第58回 午前 問60", "question": "腸骨稜に付着する筋はどれか。", "choices": ["広背筋", "小殿筋", "僧帽筋", "多裂筋", "大腰筋"], "answers": [1], "point": "広背筋は胸腰腱膜を介して腸骨稜や胸腰椎棘突起などから起こり、上腕骨小結節稜に停止する。", "choiceNotes": ["○ 腸骨稜および胸腰腱膜から起始する。", "× 腸骨翼外面（前・下殿筋線の間）から起始する。", "× 腸骨稜には付着しない（項靭帯・棘突起〜肩甲骨等）。", "× 仙骨後面や各椎骨から起始する。", "× 腰椎の肋骨突起・椎体から起始する。"]}
+    ];
+
+    const KokushiModule = (() => {
+      let sessionQuestions = [];
+      let currentIdx = 0;
+      let selectedNums = new Set();
+      let isAnswered = false;
+      let correctCount = 0;
+      let sessionMissed = [];
+
+      function loadRecord() {
+        try {
+          const raw = JSON.parse(localStorage.getItem(KOKUSHI_STORAGE_KEY) || "{}");
+          const validIds = new Set(KOKUSHI_DATA.map(q => q.id));
+          const clearedIds = Array.isArray(raw.clearedIds)
+            ? raw.clearedIds.filter(id => validIds.has(id))
+            : [];
+          const weakIds = Array.isArray(raw.weakIds)
+            ? raw.weakIds.filter(id => validIds.has(id))
+            : [];
+          return { clearedIds: [...new Set(clearedIds)], weakIds: [...new Set(weakIds)] };
+        } catch (e) {
+          return { clearedIds: [], weakIds: [] };
+        }
+      }
+
+      function saveRecord(rec) {
+        try {
+          localStorage.setItem(KOKUSHI_STORAGE_KEY, JSON.stringify({
+            clearedIds: [...new Set(rec.clearedIds)],
+            weakIds: [...new Set(rec.weakIds)]
+          }));
+        } catch (e) {}
+      }
+
+      function updateEntryBadge() {
+        const rec = loadRecord();
+        const el = document.getElementById("kokushiEntryBadge");
+        if (el) {
+          el.textContent = `クリア済 ${rec.clearedIds.length} / ${KOKUSHI_DATA.length}問`;
+        }
+      }
+
+      function openStartScreen() {
+        stopTimer();
+        playSound("tap");
+
+        const rec = loadRecord();
+        const total = KOKUSHI_DATA.length;
+        const cleared = rec.clearedIds.length;
+        const pct = total > 0 ? Math.round((cleared / total) * 100) : 0;
+
+        document.getElementById("kokushiStartProgressText").textContent = `クリア済 ${cleared} / ${total}問`;
+        document.getElementById("kokushiStartProgressPct").textContent = `${pct}%`;
+        document.getElementById("kokushiStartProgressBar").style.width = `${pct}%`;
+
+        const weakCount = rec.weakIds.length;
+        const weakBtn = document.getElementById("kokushiBtnWeak");
+        if (weakCount > 0) {
+          weakBtn.style.display = "flex";
+          document.getElementById("kokushiWeakCount").textContent = String(weakCount);
+        } else {
+          weakBtn.style.display = "none";
+        }
+
+        showScreen("kokushiStartScreen");
+      }
+
+      function startSession(course) {
+        playSound("tap");
+        const rec = loadRecord();
+
+        if (course === "weak") {
+          sessionQuestions = shuffle(KOKUSHI_DATA.filter(q => rec.weakIds.includes(q.id)));
+          if (sessionQuestions.length === 0) {
+            openStartScreen();
+            return;
+          }
+        } else if (course === "rand5") {
+          sessionQuestions = shuffle(KOKUSHI_DATA).slice(0, 5);
+        } else if (course === "rand10") {
+          sessionQuestions = shuffle(KOKUSHI_DATA).slice(0, 10);
+        } else {
+          sessionQuestions = shuffle(KOKUSHI_DATA);
+        }
+
+        currentIdx = 0;
+        correctCount = 0;
+        sessionMissed = [];
+
+        showScreen("kokushiPlayScreen");
+        renderQuestion();
+      }
+
+      function renderQuestion() {
+        const q = sessionQuestions[currentIdx];
+        const isMulti = q.answers.length > 1;
+
+        selectedNums = new Set();
+        isAnswered = false;
+
+        document.getElementById("kokushiMetaBadge").textContent = q.meta;
+        const typeBadge = document.getElementById("kokushiTypeBadge");
+        typeBadge.textContent = isMulti ? "2つ選べ" : "1つ選べ";
+        typeBadge.className = `kokushi-type-badge ${isMulti ? "multi" : "single"}`;
+
+        document.getElementById("kokushiPlayProgress").textContent = `${currentIdx + 1} / ${sessionQuestions.length}`;
+        document.getElementById("kokushiQuestionText").textContent = q.question;
+
+        const expCard = document.getElementById("kokushiExplainCard");
+        expCard.className = "kokushi-explain-card";
+
+        renderChoices();
+      }
+
+      function renderChoices() {
+        const q = sessionQuestions[currentIdx];
+        const listEl = document.getElementById("kokushiChoicesList");
+        listEl.innerHTML = "";
+
+        q.choices.forEach((choiceText, idx) => {
+          const num = idx + 1;
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "kokushi-choice-btn";
+
+          if (!isAnswered) {
+            if (selectedNums.has(num)) btn.classList.add("selected");
+          } else {
+            btn.disabled = true;
+            const isAns = q.answers.includes(num);
+            const isSel = selectedNums.has(num);
+            if (isAns) {
+              btn.classList.add("is-correct");
+            } else if (isSel && !isAns) {
+              btn.classList.add("is-wrong");
+            }
+          }
+
+          btn.innerHTML = `
+            <span class="kokushi-choice-num">${num}</span>
+            <span>${choiceText}</span>
+          `;
+
+          btn.onclick = () => onTapChoice(num);
+          listEl.appendChild(btn);
+        });
+      }
+
+      function onTapChoice(num) {
+        if (isAnswered) return;
+        const q = sessionQuestions[currentIdx];
+        const required = q.answers.length;
+
+        if (required === 1) {
+          selectedNums.add(num);
+          judgeCurrentQuestion();
+        } else {
+          if (selectedNums.has(num)) {
+            playSound("tap");
+            selectedNums.delete(num);
+            renderChoices();
+          } else {
+            selectedNums.add(num);
+            if (selectedNums.size >= required) {
+              judgeCurrentQuestion();
+            } else {
+              playSound("tap");
+              renderChoices();
+            }
+          }
+        }
+      }
+
+      function judgeCurrentQuestion() {
+        isAnswered = true;
+        const q = sessionQuestions[currentIdx];
+        const sortedSel = [...selectedNums].sort((a, b) => a - b);
+        const sortedAns = [...q.answers].sort((a, b) => a - b);
+
+        const isCorrect =
+          sortedSel.length === sortedAns.length &&
+          sortedSel.every((v, i) => v === sortedAns[i]);
+
+        const rec = loadRecord();
+        if (isCorrect) {
+          playSound("ok");
+          correctCount++;
+          if (!rec.clearedIds.includes(q.id)) rec.clearedIds.push(q.id);
+          rec.weakIds = rec.weakIds.filter(id => id !== q.id);
+        } else {
+          playSound("ng");
+          sessionMissed.push(q);
+          if (!rec.weakIds.includes(q.id)) rec.weakIds.push(q.id);
+        }
+        saveRecord(rec);
+        updateEntryBadge();
+
+        renderChoices();
+
+        const expCard = document.getElementById("kokushiExplainCard");
+        expCard.className = `kokushi-explain-card open ${isCorrect ? "ok" : "ng"}`;
+
+        const judgeTitle = document.getElementById("kokushiJudgeTitle");
+        judgeTitle.className = `kokushi-judge-title ${isCorrect ? "ok" : "ng"}`;
+        judgeTitle.innerHTML = `
+          <span>${isCorrect ? "⭕ 正解！" : "❌ 不正解…"}</span>
+          <span style="font-size:0.84rem;">正解：${sortedAns.join("・")}</span>
+        `;
+
+        document.getElementById("kokushiPointBox").innerHTML =
+          `<strong>💡 要点解説：</strong>${q.point}`;
+
+        const notesEl = document.getElementById("kokushiNotesList");
+        notesEl.innerHTML = q.choices.map((cText, i) => {
+          const num = i + 1;
+          const isAns = q.answers.includes(num);
+          const note = (q.choiceNotes && q.choiceNotes[i]) ? q.choiceNotes[i] : (isAns ? "○ 正解" : "×");
+          return `
+            <div class="kokushi-note-row ${isAns ? "ans-row" : ""}">
+              <span class="kokushi-note-num">${num}.</span>
+              <span>${note}</span>
+            </div>
+          `;
+        }).join("");
+
+        const nextBtn = document.getElementById("kokushiNextBtn");
+        nextBtn.textContent = (currentIdx + 1 < sessionQuestions.length)
+          ? "次の問題へ ▶"
+          : "結果を見る ▶";
+      }
+
+      function nextQuestion() {
+        playSound("tap");
+        currentIdx++;
+        if (currentIdx >= sessionQuestions.length) {
+          finishSession();
+        } else {
+          renderQuestion();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }
+
+      function finishSession() {
+        playSound("clear");
+        const total = sessionQuestions.length;
+        const rate = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+
+        let rank = "B";
+        let subText = "間違えた問題の解説を見直して、弱点復習でリベンジしよう！";
+        if (rate >= 90) {
+          rank = "S";
+          subText = "素晴らしい！国家試験の筋領域は合格圏内バッチリです！";
+        } else if (rate >= 70) {
+          rank = "A";
+          subText = "あと少し！間違えた問題を潰せば完璧に仕上がります！";
+        }
+
+        const rec = loadRecord();
+        const rankEl = document.getElementById("kokushiRankBadge");
+        rankEl.textContent = rank;
+        rankEl.className = `rank-badge ${rank}`;
+
+        document.getElementById("kokushiResultSub").textContent = subText;
+        document.getElementById("kokushiFinalScore").textContent = `${correctCount} / ${total}問`;
+        document.getElementById("kokushiFinalRate").textContent = `${rate}%`;
+        document.getElementById("kokushiFinalCleared").textContent = `${rec.clearedIds.length} / ${KOKUSHI_DATA.length}問`;
+
+        const missTitle = document.getElementById("kokushiMissTitle");
+        const missListEl = document.getElementById("kokushiMissList");
+
+        if (sessionMissed.length > 0) {
+          missTitle.textContent = `今回間違えた問題（${sessionMissed.length}問・弱点リストに登録済み）`;
+          missListEl.innerHTML = sessionMissed.map(q => `
+            <div class="kokushi-miss-item">
+              <div class="kokushi-miss-meta">${q.meta}（正解：${q.answers.join("・")}）</div>
+              <div class="kokushi-miss-q">${q.question}</div>
+              <div style="color:var(--muted);">💡 ${q.point}</div>
+            </div>
+          `).join("");
+        } else {
+          missTitle.textContent = "今回の結果";
+          missListEl.innerHTML = `<div class="perfect-box">🎉 全問正解パーフェクト！全42問制覇を目指そう！</div>`;
+        }
+
+        const weakBtn = document.getElementById("kokushiResultWeakBtn");
+        if (rec.weakIds.length > 0) {
+          weakBtn.style.display = "block";
+          document.getElementById("kokushiResultWeakCount").textContent = String(rec.weakIds.length);
+        } else {
+          weakBtn.style.display = "none";
+        }
+
+        showScreen("kokushiResultScreen");
+      }
+
+      function init() {
+        document.getElementById("kokushiEntryBtn").onclick = openStartScreen;
+        document.getElementById("kokushiBtnRand5").onclick = () => startSession("rand5");
+        document.getElementById("kokushiBtnRand10").onclick = () => startSession("rand10");
+        document.getElementById("kokushiBtnAll").onclick = () => startSession("all");
+        document.getElementById("kokushiBtnWeak").onclick = () => startSession("weak");
+        document.getElementById("kokushiNextBtn").onclick = nextQuestion;
+        document.getElementById("kokushiQuitBtn").onclick = openStartScreen;
+        document.getElementById("kokushiResultWeakBtn").onclick = () => startSession("weak");
+        document.getElementById("kokushiToTopBtn").onclick = openStartScreen;
+
+        const backToBase = () => {
+          playSound("tap");
+          renderStartScreen();
+          showScreen("startScreen");
+        };
+        document.getElementById("kokushiBackToBaseBtn").onclick = backToBase;
+        document.getElementById("kokushiResultBackBtn").onclick = backToBase;
+      }
+
+      return { init, updateEntryBadge };
+    })();
+
+    /**
+     * =========================================================================
+     * 10. イベント登録・初期化
+     * =========================================================================
+     */
+    document.getElementById("soundToggle").onclick = (e) => {
+      soundOn = !soundOn;
+      e.target.textContent = soundOn ? "🔊 音 ON" : "🔇 音 OFF";
+      if (soundOn) playSound("tap");
+    };
+
+    document.getElementById("tabMatchBtn").onclick = () => {
+      playSound("tap");
+      activeTab = "match";
+      renderStartScreen();
+    };
+    document.getElementById("tabCollectBtn").onclick = () => {
+      playSound("tap");
+      activeTab = "collect";
+      renderStartScreen();
+    };
+    document.getElementById("tabSummaryBtn").onclick = () => {
+      playSound("tap");
+      activeTab = "summary";
+      renderStartScreen();
+    };
+
     document.querySelectorAll(".mode-btn").forEach(btn => {
       btn.onclick = () => {
+        playSound("tap");
         document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("selected"));
         btn.classList.add("selected");
         selectedMode = btn.dataset.mode;
@@ -1462,28 +3250,55 @@
       };
     });
 
-    document.getElementById("soundToggle").onclick = (e) => {
-      soundOn = !soundOn;
-      e.target.textContent = soundOn ? "🔊 音 ON" : "🔇 音 OFF";
+    document.getElementById("startMatchBtn").onclick = () => startMatchGame(false);
+    document.getElementById("weakBtn").onclick = () => startMatchGame(true);
+    document.getElementById("startCollectBtn").onclick = () => startCollectGame();
+
+    document.getElementById("quitMatchBtn").onclick = () => {
+      stopTimer();
+      playSound("tap");
+      renderStartScreen();
+      showScreen("startScreen");
+    };
+    document.getElementById("quitCollectBtn").onclick = () => {
+      stopTimer();
+      playSound("tap");
+      renderStartScreen();
+      showScreen("startScreen");
     };
 
-    document.getElementById("startBtn").onclick = () => startGame(false);
-    document.getElementById("weakBtn").onclick = () => startGame(true);
-    document.getElementById("quitBtn").onclick = () => {
-      clearInterval(timerInterval);
-      renderStartScreen();
-      showScreen("startScreen");
-    };
-    document.getElementById("retryBtn").onclick = () => startGame(isWeakMode);
-    document.getElementById("backHomeBtn").onclick = () => {
-      renderStartScreen();
-      showScreen("startScreen");
-    };
+    document.getElementById("summarySearch").addEventListener("input", renderCheatList);
+
     document.getElementById("toggleTopicAnswer").onclick = () => {
+      playSound("tap");
       document.getElementById("topicAnswer").classList.toggle("open");
     };
 
+    document.getElementById("retryBtn").onclick = () => {
+      if (lastPlayedType === "collect") {
+        startCollectGame();
+      } else if (lastPlayedType === "weak") {
+        if (getWeakIds().length === 0) {
+          renderStartScreen();
+          showScreen("startScreen");
+        } else {
+          startMatchGame(true);
+        }
+      } else {
+        startMatchGame(false);
+      }
+    };
+
+    document.getElementById("backHomeBtn").onclick = () => {
+      playSound("tap");
+      renderStartScreen();
+      showScreen("startScreen");
+    };
+
     // 初期描画
+    KokushiModule.init();
+    renderSummaryFilters();
+    renderCheatList();
     renderStartScreen();
   </script>
 </body>
