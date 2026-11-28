@@ -1255,7 +1255,7 @@
     <header>
       <div class="header-title-wrap">
         <h1>💪 筋マッチング（主要55筋）</h1>
-        <span class="header-sub">OT 1・2年次 解剖学・運動学（国試過去問42問収録）</span>
+        <span class="header-sub">OT 1・2年次 解剖学・運動学（国試過去問63問収録）</span>
       </div>
       <button id="soundToggle" class="sound-btn" type="button">🔊 音 ON</button>
     </header>
@@ -1268,7 +1268,7 @@
       <button id="kokushiEntryBtn" class="kokushi-banner-btn" type="button">
         <span class="kokushi-banner-left">
           <span>🎓 国家試験過去問に挑戦</span>
-          <span id="kokushiEntryBadge" class="kokushi-banner-sub">クリア済 0 / 42問</span>
+          <span id="kokushiEntryBadge" class="kokushi-banner-sub">クリア済 0 / 63問</span>
         </span>
         <span>▶</span>
       </button>
@@ -1471,9 +1471,9 @@
     <!-- 5-1. 過去問スタート画面 -->
     <section id="kokushiStartScreen" class="screen">
       <div class="kokushi-hero-card">
-        <h2 class="kokushi-hero-title">🎓 国家試験過去問に挑戦（筋・全42問）</h2>
+        <h2 class="kokushi-hero-title">🎓 国家試験過去問に挑戦（筋・全63問）</h2>
         <div class="kokushi-progress-row">
-          <span id="kokushiStartProgressText">クリア済 0 / 42問</span>
+          <span id="kokushiStartProgressText">クリア済 0 / 63問</span>
           <span id="kokushiStartProgressPct">0%</span>
         </div>
         <div class="kokushi-progress-track">
@@ -1501,7 +1501,7 @@
 
         <button id="kokushiBtnAll" class="kokushi-course-btn" type="button">
           <div>
-            <span class="kokushi-course-main">🏆 全42問チャレンジ</span>
+            <span class="kokushi-course-main">🏆 全63問チャレンジ</span>
             <span class="kokushi-course-sub">収録している筋の過去問を完全制覇</span>
           </div>
           <span>▶</span>
@@ -1554,7 +1554,7 @@
         <div class="stats-row">
           <div>正答数<strong id="kokushiFinalScore">0 / 5問</strong></div>
           <div>正答率<strong id="kokushiFinalRate">0%</strong></div>
-          <div>累計クリア<strong id="kokushiFinalCleared">0 / 42問</strong></div>
+          <div>累計クリア<strong id="kokushiFinalCleared">0 / 63問</strong></div>
         </div>
       </div>
 
@@ -2846,7 +2846,7 @@
     /**
      * =========================================================================
      * 9. 【共通モジュール】国家試験過去問に挑戦（KokushiModule）
-     *    localStorageキー: ot_kokushi_muscle / 全42問完全収録
+     *    localStorageキー: ot_kokushi_muscle / 全63問完全収録
      * =========================================================================
      */
     const KOKUSHI_STORAGE_KEY = "ot_kokushi_muscle";
@@ -2893,9 +2893,33 @@
       {"id": "49-PM-53", "meta": "第49回 午後 問53", "question": "筋と付着部の組合せで正しいのはどれか。2つ選べ。", "choices": ["腸腰筋―小転子", "縫工筋―腸骨稜", "大腿直筋―下前腸骨棘", "長内転筋―坐骨結節", "内側広筋―粗線外側唇"], "answers": [1, 3], "point": "腸腰筋は小転子、大腿直筋は下前腸骨棘に付着する。", "choiceNotes": ["○ 筋裂孔を通り大腿骨小転子に停止する。", "× 上前腸骨棘から起こり鵞足に付着する。", "○ 下前腸骨棘および寛骨臼上縁から起こり膝蓋骨等に付着する。", "× 恥骨結節（恥骨上枝）に付着する。", "× 大腿骨粗線内側唇に付着する。"]},
       {"id": "45-AM-53", "meta": "第45回 午前 問53", "question": "表情筋はどれか。2つ選べ。", "choices": ["咬筋", "頬筋", "側頭筋", "オトガイ筋", "外側翼突筋"], "answers": [2, 4], "point": "頬筋とオトガイ筋は顔面神経支配の表情筋である（咬筋・側頭筋・外側翼突筋は三叉神経第3枝支配の咀嚼筋）。", "choiceNotes": ["× 下顎神経支配の咀嚼筋である。", "○ 顔面神経支配の表情筋である。", "× 下顎神経支配の咀嚼筋である。", "○ 顔面神経支配の表情筋である。", "× 下顎神経支配の咀嚼筋である。"]},
       {"id": "52-AM-56", "meta": "第52回 午前 問56", "question": "二重神経支配の筋はどれか。", "choices": ["長内転筋", "大内転筋", "中間広筋", "半膜様筋", "ヒラメ筋"], "answers": [2], "point": "大内転筋は閉鎖神経と坐骨神経（脛骨神経部）の二重神経支配を受ける。", "choiceNotes": ["× 閉鎖神経の単一支配である。", "○ 閉鎖神経と坐骨神経の二重神経支配である。", "× 大腿神経の単一支配である。", "× 坐骨神経（脛骨神経部）の単一支配である。", "× 脛骨神経の単一支配である。"]},
-      {"id": "58-AM-60", "meta": "第58回 午前 問60", "question": "腸骨稜に付着する筋はどれか。", "choices": ["広背筋", "小殿筋", "僧帽筋", "多裂筋", "大腰筋"], "answers": [1], "point": "広背筋は胸腰腱膜を介して腸骨稜や胸腰椎棘突起などから起こり、上腕骨小結節稜に停止する。", "choiceNotes": ["○ 腸骨稜および胸腰腱膜から起始する。", "× 腸骨翼外面（前・下殿筋線の間）から起始する。", "× 腸骨稜には付着しない（項靭帯・棘突起〜肩甲骨等）。", "× 仙骨後面や各椎骨から起始する。", "× 腰椎の肋骨突起・椎体から起始する。"]}
+      {"id": "58-AM-60", "meta": "第58回 午前 問60", "question": "腸骨稜に付着する筋はどれか。", "choices": ["広背筋", "小殿筋", "僧帽筋", "多裂筋", "大腰筋"], "answers": [1], "point": "広背筋は胸腰腱膜を介して腸骨稜や胸腰椎棘突起などから起こり、上腕骨小結節稜に停止する。", "choiceNotes": ["○ 腸骨稜および胸腰腱膜から起始する。", "× 腸骨翼外面（前・下殿筋線の間）から起始する。", "× 腸骨稜には付着しない（項靭帯・棘突起〜肩甲骨等）。", "× 仙骨後面や各椎骨から起始する。", "× 腰椎の肋骨突起・椎体から起始する。"]},
+      {"id": "59-AM-53", "meta": "第59回 午前 問53", "question": "肩甲背神経に支配される筋はどれか。2つ選べ。", "choices": ["肩甲挙筋", "鎖骨下筋", "前鋸筋", "僧帽筋", "菱形筋"], "answers": [1, 5], "point": "肩甲背神経に支配されるのは肩甲挙筋と（大小）菱形筋である。", "choiceNotes": ["○ 肩甲背神経に支配される。", "× 鎖骨下筋神経に支配される。", "× 長胸神経に支配される。", "× 副神経（および頸神経叢枝）に支配される。", "○ 肩甲背神経に支配される。"]},
+      {"id": "51-PM-53", "meta": "第51回 午後 問53", "question": "肩甲上神経に支配されるのはどれか。", "choices": ["三角筋", "棘上筋", "小円筋", "大円筋", "肩甲下筋"], "answers": [2], "point": "肩甲上神経に支配されるのは棘上筋（および棘下筋）である。", "choiceNotes": ["× 腋窩神経支配である。", "○ 肩甲上神経支配である。", "× 腋窩神経支配である。", "× 肩甲下神経支配である。", "× 肩甲下神経支配である。"]},
+      {"id": "47-AM-57", "meta": "第47回 午前 問57", "question": "顔面神経支配でないのはどれか。", "choices": ["鼻筋", "前頭筋", "眼輪筋", "口輪筋", "上眼瞼挙筋"], "answers": [5], "point": "上眼瞼挙筋は動眼神経支配であり、顔面神経支配ではない。", "choiceNotes": ["× 顔面神経支配である。", "× 顔面神経支配である。", "× 顔面神経支配である。", "× 顔面神経支配である。", "○ 動眼神経支配である。"]},
+      {"id": "59-AM-54", "meta": "第59回 午前 問54", "question": "脳神経と支配筋の組合せで正しいのはどれか。2つ選べ。", "choices": ["動眼神経 － 眼輪筋", "三叉神経 － 咬筋", "顏面神経 － 広頸筋", "舌咽神経 － 舌筋", "副神経 － 側頭筋"], "answers": [2, 3], "point": "三叉神経は咬筋、顔面神経は広頸筋（および眼輪筋）を支配する。", "choiceNotes": ["× 眼輪筋は顔面神経支配である。", "○ 咬筋は三叉神経（下顎神経）支配である。", "○ 広頸筋は顔面神経支配である。", "× 舌筋は舌下神経支配である。", "× 側頭筋は三叉神経支配である。"]},
+      {"id": "48-PM-52", "meta": "第48回 午後 問52", "question": "二重神経支配の筋はどれか。", "choices": ["薄筋", "大殿筋", "大内転筋", "大腿筋膜張筋", "大腿二頭筋長頭"], "answers": [3], "point": "大内転筋は閉鎖神経と脛骨神経（坐骨神経）の二重神経支配を受ける。", "choiceNotes": ["× 閉鎖神経の単一支配である。", "× 下殿神経の単一支配である。", "○ 閉鎖神経と脛骨神経の二重神経支配である。", "× 上殿神経の単一支配である。", "× 脛骨神経の単一支配である。"]},
+      {"id": "60-AM-54", "meta": "第60回 午前 問54", "question": "尺骨神経の支配を受けるのはどれか。", "choices": ["長母指屈筋", "母指内転筋", "第1虫様筋", "短母指外転筋", "短母指屈筋浅頭"], "answers": [2], "point": "母指内転筋は尺骨神経深枝支配である。", "choiceNotes": ["× 正中神経（前骨間神経）支配である。", "○ 尺骨神経支配である。", "× 正中神経支配である（第1・2虫様筋）。", "× 正中神経支配である。", "× 正中神経支配である。"]},
+      {"id": "59-PM-53", "meta": "第59回 午後 問53", "question": "滑車神経が支配する外眼筋はどれか。", "choices": ["下斜筋", "下直筋", "上斜筋", "上直筋", "外側直筋"], "answers": [3], "point": "滑車神経が支配する外眼筋は上斜筋である。", "choiceNotes": ["× 動眼神経支配である。", "× 動眼神経支配である。", "○ 滑車神経支配である。", "× 動眼神経支配である。", "× 外転神経支配である。"]},
+      {"id": "57-AM-55", "meta": "第57回 午前 問55", "question": "反回神経支配でないのはどれか。", "choices": ["横披裂筋", "甲状披裂筋", "輪状甲状筋", "後輪状披裂筋", "披裂喉頭蓋筋"], "answers": [3], "point": "輪状甲状筋は上喉頭神経外枝支配であり、反回神経支配ではない。", "choiceNotes": ["× 反回神経支配である。", "× 反回神経支配である。", "○ 上喉頭神経外枝支配である。", "× 反回神経支配である。", "× 反回神経支配である。"]},
+      {"id": "46-AM-54", "meta": "第46回 午前 問54", "question": "筋と支配神経との組合せで正しいのはどれか。2つ選べ。", "choices": ["僧帽筋―長胸神経", "小菱形筋―肩甲下神経", "棘下筋―肩甲上神経", "小円筋―腋窩神経", "大円筋―肩甲背神経"], "answers": [3, 4], "point": "棘下筋は肩甲上神経、小円筋は腋窩神経支配である。", "choiceNotes": ["× 副神経および頸神経叢枝支配である。", "× 肩甲背神経支配である。", "○ 肩甲上神経支配である。", "○ 腋窩神経支配である。", "× 肩甲下神経支配である。"]},
+      {"id": "50-PM-54", "meta": "第50回 午後 問54", "question": "筋と支配神経の組合せで正しいのはどれか。", "choices": ["小円筋―腋窩神経", "棘上筋―肩甲下神経", "三角筋―肩甲上神経", "大円筋―肩甲上神経", "肩甲下筋―腋窩神経"], "answers": [1], "point": "小円筋は腋窩神経支配である。", "choiceNotes": ["○ 腋窩神経支配である。", "× 肩甲上神経支配である。", "× 腋窩神経支配である。", "× 肩甲下神経支配である。", "× 肩甲下神経支配である。"]},
+      {"id": "59-PM-56", "meta": "第59回 午後 問56", "question": "腋窩神経で正しいのはどれか。", "choices": ["三角筋を支配する。", "広背筋を支配する。", "後骨間神経を分枝する。", "上腕内側の皮膚感覚を支配する。", "腕神経叢の外側神経束から分枝する。"], "answers": [1], "point": "腋窩神経は腕神経叢の後神経束から分枝し、三角筋と小円筋を支配する。", "choiceNotes": ["○ 三角筋と小円筋を支配する。", "× 胸背神経が支配する。", "× 橈骨神経が分枝する。", "× 内側上腕皮神経が支配する。", "× 後神経束から分枝する。"]},
+      {"id": "51-AM-54", "meta": "第51回 午前 問54", "question": "閉鎖神経に支配されるのはどれか。", "choices": ["薄筋", "縫工筋", "半腱様筋", "半膜様筋", "大腿二頭筋長頭"], "answers": [1], "point": "薄筋は閉鎖神経前枝に支配される。", "choiceNotes": ["○ 閉鎖神経支配である。", "× 大腿神経支配である。", "× 脛骨神経支配である。", "× 脛骨神経支配である。", "× 脛骨神経支配である。"]},
+      {"id": "56-PM-57", "meta": "第56回 午後 問57", "question": "橈骨神経が支配する筋はどれか。2つ選べ。", "choices": ["肘筋", "回外筋", "背側骨間筋", "方形回内筋", "短母指外転筋"], "answers": [1, 2], "point": "肘筋と回外筋は橈骨神経支配である。", "choiceNotes": ["○ 橈骨神経支配である。", "○ 橈骨神経（深枝）支配である。", "× 尺骨神経支配である。", "× 正中神経（前骨間神経）支配である。", "× 正中神経支配である。"]},
+      {"id": "58-PM-52", "meta": "第58回 午後 問52", "question": "前骨間神経に支配される筋はどれか。", "choices": ["短母指伸筋", "長母指屈筋", "長母指伸筋", "尺側手根屈筋", "長母指外転筋"], "answers": [2], "point": "前骨間神経（正中神経枝）は長母指屈筋、方形回内筋、深指屈筋橈側半を支配する。", "choiceNotes": ["× 橈骨神経深枝支配である。", "○ 前骨間神経支配である。", "× 橈骨神経深枝支配である。", "× 尺骨神経支配である。", "× 橈骨神経深枝支配である。"]},
+      {"id": "61-PM-55", "meta": "第61回 午後 問55", "question": "広背筋を支配している神経はどれか。", "choices": ["腋窩神経", "胸背神経", "筋皮神経", "肩甲上神経", "長胸神経"], "answers": [2], "point": "広背筋を支配している神経は胸背神経（C6～8）である。", "choiceNotes": ["× 小円筋と三角筋を支配する。", "○ 広背筋を支配する。", "× 烏口腕筋、上腕二頭筋、上腕筋を支配する。", "× 棘上筋と棘下筋を支配する。", "× 前鋸筋を支配する。"]},
+      {"id": "48-AM-57", "meta": "第48回 午前 問57", "question": "脛骨神経支配でないのはどれか。", "choices": ["膝窩筋", "足底筋", "腓腹筋", "前脛骨筋", "ヒラメ筋"], "answers": [4], "point": "前脛骨筋は深腓骨神経支配であり、脛骨神経支配ではない。", "choiceNotes": ["× 脛骨神経支配である。", "× 脛骨神経支配である。", "× 脛骨神経支配である。", "○ 深腓骨神経支配である。", "× 脛骨神経支配である。"]},
+      {"id": "44-PM-12", "meta": "第44回 午後 問12", "question": "正中神経支配でないのはどれか。", "choices": ["円回内筋", "長母指屈筋", "回外筋", "短母指外転筋", "長掌筋"], "answers": [3], "point": "回外筋は橈骨神経深枝支配であり、正中神経支配ではない。", "choiceNotes": ["× 正中神経支配である。", "× 正中神経（前骨間神経）支配である。", "○ 橈骨神経支配である。", "× 正中神経支配である。", "× 正中神経支配である。"]},
+      {"id": "54-AM-52", "meta": "第54回 午前 問52", "question": "脳神経と支配筋の組合せで正しいのはどれか。2つ選べ。", "choices": ["滑車神経－眼輪筋", "三叉神経－咬筋", "顔面神経－広頸筋", "舌咽神経－舌筋", "副神経－側頭筋"], "answers": [2, 3], "point": "三叉神経は咬筋、顔面神経は広頸筋を支配する。", "choiceNotes": ["× 眼輪筋は顔面神経支配である。", "○ 咬筋は三叉神経支配である。", "○ 広頸筋は顔面神経支配である。", "× 舌筋は舌下神経支配である。", "× 側頭筋は三叉神経支配である。"]},
+      {"id": "47-AM-53", "meta": "第47回 午前 問53", "question": "筋と支配神経の組合せで誤っているのはどれか。", "choices": ["長掌筋―正中神経", "円回内筋―正中神経", "腕橈骨筋―橈骨神経", "方形回内筋―尺骨神経", "尺側手根伸筋―橈骨神経"], "answers": [4], "point": "方形回内筋は正中神経（前骨間神経）支配である。", "choiceNotes": ["○ 正中神経支配である。", "○ 正中神経支配である。", "○ 橈骨神経支配である。", "× 正中神経（前骨間神経）支配である。", "○ 橈骨神経深枝支配である。"]},
+      {"id": "50-PM-57", "meta": "第50回 午後 問57", "question": "深腓骨神経が支配する筋はどれか。2つ選べ。", "choices": ["長指伸筋", "後脛骨筋", "短腓骨筋", "第三腓骨筋", "腓腹筋"], "answers": [1, 4], "point": "深腓骨神経が支配する筋は長指伸筋と第3腓骨筋（および前脛骨筋など）である。", "choiceNotes": ["○ 深腓骨神経支配である。", "× 脛骨神経支配である。", "× 浅腓骨神経支配である。", "○ 深腓骨神経支配である。", "× 脛骨神経支配である。"]},
+      {"id": "61-PM-53", "meta": "第61回 午後 問53", "question": "橈骨神経で正しいのはどれか。2つ選べ。", "choices": ["円回内筋を支配する。", "腕橈骨筋を支配する。", "前骨間神経を分枝する。", "手掌の皮膚感覚を支配する。", "腕神経叢の後神経束から分枝する。"], "answers": [2, 5], "point": "橈骨神経は後神経束から分枝し、腕橈骨筋などの伸筋群や手背の皮膚感覚を支配する。", "choiceNotes": ["× 円回内筋は正中神経支配である。", "○ 腕橈骨筋を支配する。", "× 前骨間神経は正中神経から分枝する。", "× 手掌の感覚は正中神経と尺骨神経が支配する。", "○ 腕神経叢の後神経束から分枝する。"]}
     ];
 
+    /**
+     * 国家試験過去問モード制御モジュール（KokushiModule）
+     */
     const KokushiModule = (() => {
       let sessionQuestions = [];
       let currentIdx = 0;
@@ -2996,9 +3020,15 @@
         isAnswered = false;
 
         document.getElementById("kokushiMetaBadge").textContent = q.meta;
+
         const typeBadge = document.getElementById("kokushiTypeBadge");
-        typeBadge.textContent = isMulti ? "2つ選べ" : "1つ選べ";
-        typeBadge.className = `kokushi-type-badge ${isMulti ? "multi" : "single"}`;
+        if (isMulti) {
+          typeBadge.className = "kokushi-type-badge multi";
+          typeBadge.textContent = "【2つ選べ】";
+        } else {
+          typeBadge.className = "kokushi-type-badge single";
+          typeBadge.textContent = "1つ選べ";
+        }
 
         document.getElementById("kokushiPlayProgress").textContent = `${currentIdx + 1} / ${sessionQuestions.length}`;
         document.getElementById("kokushiQuestionText").textContent = q.question;
@@ -3146,7 +3176,7 @@
         let subText = "間違えた問題の解説を見直して、弱点復習でリベンジしよう！";
         if (rate >= 90) {
           rank = "S";
-          subText = "素晴らしい！国家試験の筋領域は合格圏内バッチリです！";
+          subText = "素晴らしい！国家試験の筋・支配神経領域は合格圏内バッチリです！";
         } else if (rate >= 70) {
           rank = "A";
           subText = "あと少し！間違えた問題を潰せば完璧に仕上がります！";
@@ -3176,7 +3206,7 @@
           `).join("");
         } else {
           missTitle.textContent = "今回の結果";
-          missListEl.innerHTML = `<div class="perfect-box">🎉 全問正解パーフェクト！全42問制覇を目指そう！</div>`;
+          missListEl.innerHTML = `<div class="perfect-box">🎉 全問正解パーフェクト！全${KOKUSHI_DATA.length}問制覇を目指そう！</div>`;
         }
 
         const weakBtn = document.getElementById("kokushiResultWeakBtn");
@@ -3190,7 +3220,7 @@
         showScreen("kokushiResultScreen");
       }
 
-      function init() {
+      function bindEvents() {
         document.getElementById("kokushiEntryBtn").onclick = openStartScreen;
         document.getElementById("kokushiBtnRand5").onclick = () => startSession("rand5");
         document.getElementById("kokushiBtnRand10").onclick = () => startSession("rand10");
@@ -3198,6 +3228,7 @@
         document.getElementById("kokushiBtnWeak").onclick = () => startSession("weak");
         document.getElementById("kokushiNextBtn").onclick = nextQuestion;
         document.getElementById("kokushiQuitBtn").onclick = openStartScreen;
+
         document.getElementById("kokushiResultWeakBtn").onclick = () => startSession("weak");
         document.getElementById("kokushiToTopBtn").onclick = openStartScreen;
 
@@ -3210,7 +3241,7 @@
         document.getElementById("kokushiResultBackBtn").onclick = backToBase;
       }
 
-      return { init, updateEntryBadge };
+      return { init: bindEvents, updateEntryBadge };
     })();
 
     /**
@@ -3224,6 +3255,7 @@
       if (soundOn) playSound("tap");
     };
 
+    // 3タブ切り替え
     document.getElementById("tabMatchBtn").onclick = () => {
       playSound("tap");
       activeTab = "match";
@@ -3240,6 +3272,7 @@
       renderStartScreen();
     };
 
+    // レベル選択
     document.querySelectorAll(".mode-btn").forEach(btn => {
       btn.onclick = () => {
         playSound("tap");
@@ -3250,10 +3283,12 @@
       };
     });
 
+    // ゲーム開始ボタン
     document.getElementById("startMatchBtn").onclick = () => startMatchGame(false);
     document.getElementById("weakBtn").onclick = () => startMatchGame(true);
     document.getElementById("startCollectBtn").onclick = () => startCollectGame();
 
+    // プレイ中断
     document.getElementById("quitMatchBtn").onclick = () => {
       stopTimer();
       playSound("tap");
@@ -3267,8 +3302,10 @@
       showScreen("startScreen");
     };
 
+    // 55筋まとめ検索
     document.getElementById("summarySearch").addEventListener("input", renderCheatList);
 
+    // リザルト操作
     document.getElementById("toggleTopicAnswer").onclick = () => {
       playSound("tap");
       document.getElementById("topicAnswer").classList.toggle("open");
@@ -3296,9 +3333,9 @@
     };
 
     // 初期描画
-    KokushiModule.init();
     renderSummaryFilters();
     renderCheatList();
+    KokushiModule.init();
     renderStartScreen();
   </script>
 </body>
